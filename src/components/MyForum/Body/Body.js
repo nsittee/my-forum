@@ -7,17 +7,16 @@ import {
   Link
 } from "react-router-dom";
 import Login from './Login';
-import MainForum from './MainForum';
+import Forums from './Forums';
 
 
 const Body = (props) => {
   let body = null;
 
-
   if (props.isSignedIn) { // Signed in
-    body = MainForum();
+    body = <Forums />;
   } else {
-    body = Login();
+    body = <Login />;
   }
 
   return (

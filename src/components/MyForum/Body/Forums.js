@@ -1,6 +1,6 @@
 import React from 'react';
 
-function MainForum() {
+function Forums() {
   return (
     <div>
 
@@ -8,4 +8,4 @@ function MainForum() {
   )
 }
 
-export default MainForum;
+export default Forums;
