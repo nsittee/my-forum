@@ -12,7 +12,14 @@ class MyForum extends Component {
   }
 
   onLoginListener = (event) => {
-    this.setState({ currentSession: event.target[0].value })
+    let username = event.target[0].value
+    let password = event.target[1].value
+    if (username === 'bon' && password === 'bon') {
+      this.setState({ currentUser: username })
+      alert('Welcome')
+    } else {
+      alert('Incorrect credential')
+    }
   }
 
   render() {

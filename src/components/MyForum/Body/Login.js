@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useContext } from 'react';
 import { TextField, Button } from '@material-ui/core';
 import {
   BrowserRouter as Router,
@@ -8,25 +8,19 @@ import {
 } from "react-router-dom";
 import AuthContext from '../../../context/auth-context'
 
-const onSubmitLogin = (event) => {
-  alert(event)
-}
+const Login = (props) => {
+  const context = useContext(AuthContext)
 
-class Login extends Component {
-  static contextType = AuthContext;
-  render() {
-    // console.log(contextType);
-    return (
-      <div>
-        <form autoComplete="off" onSubmit={onSubmitLogin}>
-          <br />
-          <TextField label="Username" />  <br />
-          <TextField label="Password" type="password" /> < br /> <br />
-          <Button type="submit" variant="contained" color="primary">Sign in</Button>
-        </form>
-      </div >
-    )
-  }
+  return (
+    <div>
+      <form autoComplete="off" onSubmit={context.loginHandler}>
+        <br />
+        <TextField label="Username" />  <br />
+        <TextField label="Password" type="password" /> < br /> <br />
+        <Button type="submit" variant="contained" color="primary">Sign in</Button>
+      </form>
+    </div >
+  )
 }
 
 export default Login;

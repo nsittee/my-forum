@@ -20,9 +20,9 @@ const Body = (props) => {
   }
 
   return (
-    <body>
+    <div>
       {body}
-    </body>
+    </div>
   );
 }
 
