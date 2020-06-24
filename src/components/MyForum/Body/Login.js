@@ -1,11 +1,5 @@
 import React, { useContext } from 'react';
 import { TextField, Button } from '@material-ui/core';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
 import AuthContext from '../../../context/auth-context'
 
 const Login = (props) => {

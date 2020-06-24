@@ -8,7 +8,8 @@ import AuthContext from '../../context/auth-context'
 
 class MyForum extends Component {
   state = {
-    currentUser: null
+    currentUser: null, 
+    isSignedIn: true
   }
 
   onLoginListener = (event) => {
@@ -16,6 +17,7 @@ class MyForum extends Component {
     let password = event.target[1].value
     if (username === 'bon' && password === 'bon') {
       this.setState({ currentUser: username })
+      this.setState({ isSignedIn: true })
       alert('Welcome')
     } else {
       alert('Incorrect credential')
