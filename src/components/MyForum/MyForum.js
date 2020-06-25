@@ -3,12 +3,11 @@ import Header from './Header/Header'
 import Body from './Body/Body'
 import Footer from './Footer/Footer'
 import { Container } from '@material-ui/core'
-import { BrowserRouter } from 'react-router-dom'
 import AuthContext from '../../context/auth-context'
 
 class MyForum extends Component {
   state = {
-    currentUser: null, 
+    currentUser: null,
     isSignedIn: true
   }
 

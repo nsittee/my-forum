@@ -1,20 +1,20 @@
 import React from 'react';
 import Login from './Login';
-import Forums from '../../Forums/Forums';
-import Forum from '../../Forums/Forum';
+import Threads from '../../Threads/Forums';
 
 
 const Body = (props) => {
   let body = null;
 
   if (props.isSignedIn) { // Signed in
-    body = <Forums title={'XD'}/>;
+    body = <Threads />;
   } else {
     body = <Login />;
   }
 
   return (
     <div>
+      <br />
       {body}
     </div>
   );
