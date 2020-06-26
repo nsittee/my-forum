@@ -1,6 +1,6 @@
 import React from 'react';
 import Login from './Login';
-import Threads from '../../Threads/Forums';
+import Threads from '../../Threads/Threads';
 
 
 const Body = (props) => {
