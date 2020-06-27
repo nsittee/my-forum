@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Card, TextField, Button, CardContent, Paper, Typography } from '@material-ui/core'
+import { Grid, Card, TextField, Button, CardContent } from '@material-ui/core'
 
 const NewThread = () => {
   return (
