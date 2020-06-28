@@ -1,14 +1,14 @@
 import React from 'react'
 import { Grid, Card, TextField, Button, CardContent } from '@material-ui/core'
 
-const NewThread = () => {
+const NewThread = (props) => {
   return (
     <div>
       <Grid container>
         <Grid item xs={12}>
           <Card>
             <CardContent>
-              <form>
+              <form autoComplete="off" onSubmit={props.newThread}>
                 <TextField
                   label='Title'
                   fullWidth />

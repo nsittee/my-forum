@@ -11,7 +11,7 @@ const Thread = props => {
 			<Card>
 				<CardContent>
 					<Grid container>
-						<Grid item xs={1} justify='center'>
+						<Grid item xs={1}>
 							<Typography variant='h5'>{props.thread.upVote}</Typography>
 							<Typography variant='h5'>{props.thread.downVote}</Typography>
 						</Grid>

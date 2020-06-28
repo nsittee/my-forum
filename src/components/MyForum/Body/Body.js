@@ -7,7 +7,10 @@ const Body = (props) => {
   let body = null;
 
   if (props.isSignedIn) { // Signed in
-    body = <Threads />;
+    body = <Threads
+      threads={props.threads}
+      newThread={props.newThread}
+    />;
   } else {
     body = <Login />;
   }
@@ -19,5 +22,6 @@ const Body = (props) => {
     </div>
   );
 }
+
 
 export default Body;
