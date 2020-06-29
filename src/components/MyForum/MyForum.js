@@ -48,8 +48,12 @@ class MyForum extends Component {
   }
 
   createNewThread = (event) => {
+    event.preventDefault();
     const title = event.target[0].value;
     const content = event.target[1].value;
+    const date = new Date();
+    const isoDate = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
+    const time = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
     let oldThreadState = this.state.threads;
     let newThreads = {
       threadId: oldThreadState.length,
@@ -57,10 +61,10 @@ class MyForum extends Component {
       subRedditId: 0,
       subReddit: 'TIFU',
       content: content,
-      author: 'no-data',
+      author: this.state.currentUser,
       published: {
-        date: 'no-data',
-        time: 'no-data'
+        date: isoDate,
+        time: time
       },
       upVote: 0,
       downVote: 0,
@@ -69,15 +73,17 @@ class MyForum extends Component {
     oldThreadState.push(newThreads);
     this.setState({ newThreads: oldThreadState });
 
+
   }
 
   onLoginListener = (event) => {
+    event.preventDefault();
     let username = event.target[0].value;
     let password = event.target[1].value;
     if (username === 'bon' && password === 'bon') {
       this.setState({ currentUser: username });
       this.setState({ isSignedIn: true });
-      alert('Welcome');
+      // alert('Welcome');
     } else {
       alert('Incorrect credential');
     }

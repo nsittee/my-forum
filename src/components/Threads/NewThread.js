@@ -20,13 +20,11 @@ const NewThread = (props) => {
                   rowsMax={4}
                 />
                 <br /><br />
-
                 <Button
                   type="submit"
                   variant="contained"
                   color="primary">
-                  Create
-              </Button>
+                  Create </Button>
               </form>
             </CardContent>
           </Card>
