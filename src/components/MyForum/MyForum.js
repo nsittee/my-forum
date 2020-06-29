@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 import Header from './Header/Header'
 import Body from './Body/Body'
 import Footer from './Footer/Footer'
-import { Container, Button, Modal, Card } from '@material-ui/core'
+import { Container, Button, Modal, Card, Grid } from '@material-ui/core'
 import AuthContext from '../../context/auth-context'
+import ThreadModal from '../Threads/ThreadModal'
 
 class MyForum extends Component {
-  // threads = this.getContent;
   state = {
     threads: [
       {
@@ -40,18 +40,23 @@ class MyForum extends Component {
       }
     ],
     currentUser: null,
-    isSignedIn: false
+    isSignedIn: false,
+
+    modalThreadOn: false,
+    modalThreadKey: null,
   }
-  // body = (
-  //   <Card>
-  //     <h2 id="simple-modal-title">Text in a modal</h2>
-  //     <p id="simple-modal-description">
-  //       Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-  //     </p>
-  //   </Card>
-  // );
 
   debug = () => {
+  }
+  onModalClicked = (id) => {
+    const prevState = this.state.modalThreadOn;
+    this.setState({ modalThreadOn: !prevState });
+    this.setState({ modalThreadKey: id });
+  }
+
+  closeModal = () => {
+    this.setState({ modalThreadOn: false });
+    this.setState({ modalThreadKey: null });
   }
 
   createNewThread = (event) => {
@@ -134,6 +139,16 @@ class MyForum extends Component {
   }
 
   render() {
+    let modal = null;
+    if (this.state.modalThreadKey != null) {
+      const currentId = this.state.modalThreadKey;
+      const currentThread = this.state.threads[currentId];
+      modal = <Modal
+        open={this.state.modalThreadOn}
+        onBackdropClick={this.closeModal} >
+        <ThreadModal thread={currentThread} />
+      </Modal>;
+    }
     return (
       <AuthContext.Provider value={{
         currentUser: this.state.currentUser,
@@ -146,18 +161,13 @@ class MyForum extends Component {
               isSignedIn={this.state.isSignedIn}
               threads={this.state.threads}
               newThread={this.createNewThread}
+              createModal={this.onModalClicked}
             />
             <Button
               onClick={this.debug}
               variant="contained"
               color="secondary"> Debug</Button>
-            {/* <Modal
-              open={true}
-              aria-labelledby="simple-modal-title"
-              aria-describedby="simple-modal-description">
-              {this.body}
-            </Modal> */}
-
+            {modal}
             <Footer />
           </Container>
         </div>

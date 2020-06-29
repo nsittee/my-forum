@@ -10,6 +10,7 @@ const Body = (props) => {
     body = <Threads
       threads={props.threads}
       newThread={props.newThread}
+      createModal={props.createModal}
     />;
   } else {
     body = <Login />;

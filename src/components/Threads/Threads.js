@@ -5,7 +5,7 @@ import NewThread from './NewThread';
 
 const Threads = (props) => {
   let mainThreads = props.threads.map((thread) => {
-    return <Thread key={thread.threadId} thread={thread} />
+    return <Thread key={thread.threadId} thread={thread} createModal={props.createModal} />
   })
 
   return (
