@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Header from './Header/Header'
 import Body from './Body/Body'
 import Footer from './Footer/Footer'
-import { Container, Button } from '@material-ui/core'
+import { Container, Button, Modal, Card } from '@material-ui/core'
 import AuthContext from '../../context/auth-context'
 
 class MyForum extends Component {
@@ -42,9 +42,16 @@ class MyForum extends Component {
     currentUser: null,
     isSignedIn: false
   }
+  // body = (
+  //   <Card>
+  //     <h2 id="simple-modal-title">Text in a modal</h2>
+  //     <p id="simple-modal-description">
+  //       Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+  //     </p>
+  //   </Card>
+  // );
 
   debug = () => {
-    console.log(this.state.threads)
   }
 
   createNewThread = (event) => {
@@ -72,8 +79,7 @@ class MyForum extends Component {
     };
     oldThreadState.push(newThreads);
     this.setState({ newThreads: oldThreadState });
-
-
+    event.target.reset();
   }
 
   onLoginListener = (event) => {
@@ -134,15 +140,23 @@ class MyForum extends Component {
         loginHandler: this.onLoginListener
       }}>
         <div>
-          <Header />
+          <Header currentUser={this.state.currentUser} />
           <Container maxWidth="md">
-
             <Body
               isSignedIn={this.state.isSignedIn}
               threads={this.state.threads}
               newThread={this.createNewThread}
             />
-            <Button onClick={this.debug}> Debug</Button>
+            <Button
+              onClick={this.debug}
+              variant="contained"
+              color="secondary"> Debug</Button>
+            {/* <Modal
+              open={true}
+              aria-labelledby="simple-modal-title"
+              aria-describedby="simple-modal-description">
+              {this.body}
+            </Modal> */}
 
             <Footer />
           </Container>
@@ -151,5 +165,6 @@ class MyForum extends Component {
     )
   }
 }
+
 
 export default MyForum
