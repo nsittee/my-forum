@@ -4,7 +4,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 
 import Grid from '@material-ui/core/Grid';
-import { Button, CardActionArea } from '@material-ui/core';
+import { CardActionArea } from '@material-ui/core';
 
 const Thread = props => {
 	return (

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Header from './Header/Header'
 import Body from './Body/Body'
 import Footer from './Footer/Footer'
-import { Container, Button, Dialog, Card, CardActionArea, CardMedia, CardContent, Typography, CardActions } from '@material-ui/core'
+import { Container, Button } from '@material-ui/core'
 import AuthContext from '../../context/auth-context'
 import ThreadDialog from '../Threads/ThreadDialog'
 
@@ -45,7 +45,6 @@ class MyForum extends Component {
     dialogThreadOn: false,
     dialogThreadKey: null,
 
-    test: true,
   }
 
   debug = () => {
@@ -145,13 +144,11 @@ class MyForum extends Component {
     if (this.state.dialogThreadKey != null) {
       const currentId = this.state.dialogThreadKey;
       const currentThread = this.state.threads[currentId];
-      threadDialog = <Dialog
-        open={this.state.dialogThreadOn}
-        onBackdropClick={this.closeModal}
-        maxWidth='lg'
-        fullWidth={true} >
-        <ThreadDialog thread={currentThread} />
-      </Dialog>;
+      threadDialog = <ThreadDialog
+        thread={currentThread}
+        dialogThreadOn={this.state.dialogThreadOn}
+        closeModal={this.closeModal}
+      />
     }
     return (
       <AuthContext.Provider value={{
