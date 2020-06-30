@@ -2,15 +2,14 @@ import React from 'react';
 import Login from './Login';
 import Threads from '../../Threads/Threads';
 import { Grid } from '@material-ui/core';
-import NewThread from '../../Threads/NewThread';
+import NewThreadButton from '../../Threads/NewThreadButton';
 
 
 const Body = (props) => {
   let body = null;
   let newThread = null;
-  if (props.isSignedIn) { // Signed in
-    newThread = <NewThread newThread={props.newThread} />;
-    body = <Threads threads={props.threads} createModal={props.createModal} />;
+  if (props.isSignedIn) {
+    body = <Threads threads={props.threads} onThreadDialogClicked={props.onThreadDialogClicked} />;
   } else {
     body = <Login />;
   }
@@ -20,6 +19,9 @@ const Body = (props) => {
       <br />
       <Grid container spacing={1}>
         <Grid item xs={12}>
+          <NewThreadButton
+            openCreateNewThread={props.openCreateNewThread}
+            closeNewThreadModal={props.closeNewThreadModal} />
           {newThread}
         </Grid>
         <Grid item xs={12}>

@@ -11,7 +11,7 @@ const Thread = props => {
 		<Grid item xs={12}>
 			<Card>
 
-				<CardActionArea onClick={() => props.createModal(props.thread.threadId)}>
+				<CardActionArea onClick={() => props.onThreadDialogClicked(props.thread.threadId)}>
 					<CardContent>
 						<Grid container>
 							<Grid item xs={1}>

@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid';
 
 const Threads = (props) => {
   let mainThreads = props.threads.map((thread) => {
-    return <Thread key={thread.threadId} thread={thread} createModal={props.createModal} />
+    return <Thread key={thread.threadId} thread={thread} onThreadDialogClicked={props.onThreadDialogClicked} />
   })
 
   return (

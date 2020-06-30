@@ -5,6 +5,7 @@ import Footer from './Footer/Footer'
 import { Container, Button } from '@material-ui/core'
 import AuthContext from '../../context/auth-context'
 import ThreadDialog from '../Threads/ThreadDialog'
+import NewThreadDialog from '../Threads/NewThreadDialog'
 
 class MyForum extends Component {
   state = {
@@ -45,13 +46,21 @@ class MyForum extends Component {
     dialogThreadOn: false,
     dialogThreadKey: null,
 
+    dialogNewThreadOn: false,
   }
 
   debug = () => {
   }
-  onModalClicked = (id) => {
-    const prevState = this.state.dialogThreadOn;
-    this.setState({ dialogThreadOn: !prevState });
+
+  openCreateNewThread = () => {
+    this.setState({ dialogNewThreadOn: true });
+  }
+  closeNewThreadModal = () => {
+    this.setState({ dialogNewThreadOn: false });
+  }
+
+  onThreadDialogClicked = (id) => {
+    this.setState({ dialogThreadOn: true });
     this.setState({ dialogThreadKey: id });
   }
 
@@ -86,6 +95,7 @@ class MyForum extends Component {
     oldThreadState.push(newThreads);
     this.setState({ newThreads: oldThreadState });
     event.target.reset();
+    this.setState({ dialogNewThreadOn: false })
   }
 
   onLoginListener = (event) => {
@@ -141,6 +151,15 @@ class MyForum extends Component {
 
   render() {
     let threadDialog = null;
+    let createDialog = null;
+
+    if (this.state.dialogNewThreadOn) {
+      createDialog = <NewThreadDialog
+        dialogNewThreadOn={this.state.dialogNewThreadOn}
+        closeModal={this.closeNewThreadModal}
+        submitNewThread={this.createNewThread}
+      />
+    }
     if (this.state.dialogThreadKey != null) {
       const currentId = this.state.dialogThreadKey;
       const currentThread = this.state.threads[currentId];
@@ -161,14 +180,17 @@ class MyForum extends Component {
             <Body
               isSignedIn={this.state.isSignedIn}
               threads={this.state.threads}
-              newThread={this.createNewThread}
-              createModal={this.onModalClicked}
+              onThreadDialogClicked={this.onThreadDialogClicked}
+              openCreateNewThread={this.openCreateNewThread}
+              closeNewThreadModal={this.closeNewThreadModal}
             />
             <Button
               onClick={this.debug}
               variant="contained"
               color="secondary"> Debug</Button>
+
             {threadDialog}
+            {createDialog}
             <Footer />
           </Container>
         </div>
