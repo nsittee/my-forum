@@ -1,10 +1,10 @@
 import React from 'react'
-import { Card, Grid, Container, Typography, CardContent, CardActions, Button } from '@material-ui/core'
+import { Card, Grid, Container, Typography, CardContent } from '@material-ui/core'
 
-const ThreadModal = (props) => {
+const ThreadDialog = (props) => {
   const t = props.thread;
   return (
-    <Container maxWidth="lg">
+    <Container>
       <Grid container alignContent='center'>
         <Grid item xs={12}>
           < br /> <br />< br /> <br />
@@ -21,10 +21,8 @@ const ThreadModal = (props) => {
                 {t.content}
               </Typography>
             </CardContent>
-            <CardActions>
-              <Button size="small">Learn More</Button>
-            </CardActions>
           </Card>
+          < br /> <br />
         </Grid>
       </Grid>
     </Container>
@@ -33,4 +31,4 @@ const ThreadModal = (props) => {
   )
 }
 
-export default ThreadModal;
+export default ThreadDialog;

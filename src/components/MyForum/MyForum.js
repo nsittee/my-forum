@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import Header from './Header/Header'
 import Body from './Body/Body'
 import Footer from './Footer/Footer'
-import { Container, Button, Modal, Card, Grid } from '@material-ui/core'
+import { Container, Button, Dialog, Card, CardActionArea, CardMedia, CardContent, Typography, CardActions } from '@material-ui/core'
 import AuthContext from '../../context/auth-context'
-import ThreadModal from '../Threads/ThreadModal'
+import ThreadDialog from '../Threads/ThreadDialog'
 
 class MyForum extends Component {
   state = {
@@ -39,24 +39,26 @@ class MyForum extends Component {
         comments: null
       }
     ],
-    currentUser: null,
-    isSignedIn: false,
+    currentUser: 'bon',
+    isSignedIn: true,
 
-    modalThreadOn: false,
-    modalThreadKey: null,
+    dialogThreadOn: false,
+    dialogThreadKey: null,
+
+    test: true,
   }
 
   debug = () => {
   }
   onModalClicked = (id) => {
-    const prevState = this.state.modalThreadOn;
-    this.setState({ modalThreadOn: !prevState });
-    this.setState({ modalThreadKey: id });
+    const prevState = this.state.dialogThreadOn;
+    this.setState({ dialogThreadOn: !prevState });
+    this.setState({ dialogThreadKey: id });
   }
 
   closeModal = () => {
-    this.setState({ modalThreadOn: false });
-    this.setState({ modalThreadKey: null });
+    this.setState({ dialogThreadOn: false });
+    this.setState({ dialogThreadKey: null });
   }
 
   createNewThread = (event) => {
@@ -139,15 +141,17 @@ class MyForum extends Component {
   }
 
   render() {
-    let modal = null;
-    if (this.state.modalThreadKey != null) {
-      const currentId = this.state.modalThreadKey;
+    let threadDialog = null;
+    if (this.state.dialogThreadKey != null) {
+      const currentId = this.state.dialogThreadKey;
       const currentThread = this.state.threads[currentId];
-      modal = <Modal
-        open={this.state.modalThreadOn}
-        onBackdropClick={this.closeModal} >
-        <ThreadModal thread={currentThread} />
-      </Modal>;
+      threadDialog = <Dialog
+        open={this.state.dialogThreadOn}
+        onBackdropClick={this.closeModal}
+        maxWidth='lg'
+        fullWidth={true} >
+        <ThreadDialog thread={currentThread} />
+      </Dialog>;
     }
     return (
       <AuthContext.Provider value={{
@@ -167,7 +171,7 @@ class MyForum extends Component {
               onClick={this.debug}
               variant="contained"
               color="secondary"> Debug</Button>
-            {modal}
+            {threadDialog}
             <Footer />
           </Container>
         </div>
