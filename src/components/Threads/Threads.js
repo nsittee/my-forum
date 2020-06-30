@@ -1,7 +1,6 @@
 import React from 'react';
 import Thread from './Thread'
 import Grid from '@material-ui/core/Grid';
-import NewThread from './NewThread';
 
 const Threads = (props) => {
   let mainThreads = props.threads.map((thread) => {
@@ -10,10 +9,6 @@ const Threads = (props) => {
 
   return (
     <Grid container spacing={1}>
-      <Grid item xs={12}>
-        <NewThread
-          newThread={props.newThread} />
-      </Grid>
       <Grid item xs={12}>
         <Grid container spacing={1}>
           {mainThreads}
