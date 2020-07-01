@@ -1,22 +1,21 @@
 import React from 'react';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-
-import Grid from '@material-ui/core/Grid';
-import { CardActionArea } from '@material-ui/core';
+import { Card, CardContent, Typography, CardActionArea, Grid } from '@material-ui/core';
+import { KeyboardArrowUp, KeyboardArrowDown } from '@material-ui/icons'
 
 const Thread = props => {
+	const displayVote = props.thread.upVote - props.thread.downVote;
+
 	return (
 		<Grid item xs={12}>
-			<Card>
-
-				<CardActionArea onClick={() => props.onThreadDialogClicked(props.thread.threadId)}>
+			<Card onClick={() => props.onThreadDialogClicked(props.thread.threadId)}>
+				<CardActionArea >
 					<CardContent>
-						<Grid container>
-							<Grid item xs={1}>
-								<Typography variant='h5'>{props.thread.upVote}</Typography>
-								<Typography variant='h5'>{props.thread.downVote}</Typography>
+						<Grid container spacing={1}>
+							<Grid item>
+								<KeyboardArrowUp />
+								<Typography variant='h6'>{displayVote}</Typography>
+								<KeyboardArrowDown />
+
 							</Grid>
 							<Grid item xs={11}>
 								<Typography color="textSecondary">
