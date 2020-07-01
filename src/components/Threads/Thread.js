@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardContent, Typography, CardActionArea, Grid } from '@material-ui/core';
+import { Card, CardContent, Typography, CardActionArea, Grid, Button } from '@material-ui/core';
 import { KeyboardArrowUp, KeyboardArrowDown } from '@material-ui/icons'
 
 const Thread = props => {
@@ -9,25 +9,23 @@ const Thread = props => {
 		<Grid item xs={12}>
 			<Card onClick={() => props.onThreadDialogClicked(props.thread.threadId)}>
 				<CardActionArea >
-					<CardContent>
-						<Grid container spacing={1}>
-							<Grid item>
-								<KeyboardArrowUp />
-								<Typography variant='h6'>{displayVote}</Typography>
-								<KeyboardArrowDown />
+					<Grid container spacing={1}>
+						<Grid item>
+							<Button><KeyboardArrowUp /></Button>
+							<Typography align='center' variant='h6'>{displayVote}</Typography>
+							<Button><KeyboardArrowDown /></Button>
 
-							</Grid>
-							<Grid item xs={11}>
-								<Typography color="textSecondary">
-									{props.thread.subReddit}: posted by {props.thread.author + ' '}
-                                on {props.thread.published.date} {props.thread.published.time}
-								</Typography>
-								<Typography variant="h6" component="h2">
-									{props.thread.threadTitle}
-								</Typography>
-							</Grid>
 						</Grid>
-					</CardContent>
+						<Grid item xs={11}>
+							<Typography color="textSecondary">
+								{props.thread.subReddit}: posted by {props.thread.author + ' '}
+                                on {props.thread.published.date} {props.thread.published.time}
+							</Typography>
+							<Typography variant="h6" component="h2">
+								{props.thread.threadTitle}
+							</Typography>
+						</Grid>
+					</Grid>
 				</CardActionArea>
 			</Card>
 		</Grid>
