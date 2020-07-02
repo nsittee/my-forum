@@ -9,7 +9,10 @@ const Body = (props) => {
   let body = null;
   let newThread = null;
   if (props.isSignedIn) {
-    body = <Threads threads={props.threads} onThreadDialogClicked={props.onThreadDialogClicked} />;
+    body = <Threads
+      threads={props.threads}
+      onThreadDialogClicked={props.onThreadDialogClicked}
+      voteThreadHandler={props.voteThreadHandler} />;
   } else {
     body = <Login />;
   }

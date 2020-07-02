@@ -5,6 +5,8 @@ const NewThreadDialog = (props) => {
   return (
     <Dialog
       open={props.dialogNewThreadOn}
+      maxWidth='lg'
+      fullWidth={true}
       onBackdropClick={props.closeModal}>
       <Card>
         <CardContent>

@@ -52,9 +52,25 @@ class MyForum extends Component {
   debug = () => {
   }
 
+  voteThreadHandler = (e, thread, vote) => {
+    e.stopPropagation();
+    const index = thread.threadId;
+    let newThreads = [...this.state.threads];
+    let newThread = { ...this.state.threads[index] };
+
+    if (vote === 'up') newThread.upVote++;
+    else if (vote === 'down') newThread.downVote++;
+
+    newThreads[index] = newThread;
+    this.setState({
+      threads: newThreads
+    })
+  }
+
   openCreateNewThread = () => {
     this.setState({ dialogNewThreadOn: true });
   }
+
   closeNewThreadModal = () => {
     this.setState({ dialogNewThreadOn: false });
   }
@@ -167,6 +183,7 @@ class MyForum extends Component {
         thread={currentThread}
         dialogThreadOn={this.state.dialogThreadOn}
         closeModal={this.closeModal}
+        voteThreadHandler={this.voteThreadHandler}
       />
     }
     return (
@@ -180,6 +197,7 @@ class MyForum extends Component {
             <Body
               isSignedIn={this.state.isSignedIn}
               threads={this.state.threads}
+              voteThreadHandler={this.voteThreadHandler}
               onThreadDialogClicked={this.onThreadDialogClicked}
               openCreateNewThread={this.openCreateNewThread}
               closeNewThreadModal={this.closeNewThreadModal}
@@ -188,9 +206,9 @@ class MyForum extends Component {
               onClick={this.debug}
               variant="contained"
               color="secondary"> Debug</Button>
-
             {threadDialog}
             {createDialog}
+
             <Footer />
           </Container>
         </div>

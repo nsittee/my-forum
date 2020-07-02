@@ -1,6 +1,7 @@
 import React from 'react';
-import { Card, CardContent, Typography, CardActionArea, Grid, Button } from '@material-ui/core';
+import { Card, Typography, CardActionArea, Grid, Button } from '@material-ui/core';
 import { KeyboardArrowUp, KeyboardArrowDown } from '@material-ui/icons'
+
 
 const Thread = props => {
 	const displayVote = props.thread.upVote - props.thread.downVote;
@@ -11,9 +12,9 @@ const Thread = props => {
 				<CardActionArea >
 					<Grid container spacing={1}>
 						<Grid item>
-							<Button><KeyboardArrowUp /></Button>
+							<Button onClick={e => props.voteThreadHandler(e, props.thread, 'up')}><KeyboardArrowUp /></Button>
 							<Typography align='center' variant='h6'>{displayVote}</Typography>
-							<Button><KeyboardArrowDown /></Button>
+							<Button onClick={e => props.voteThreadHandler(e, props.thread, 'down')}><KeyboardArrowDown /></Button>
 
 						</Grid>
 						<Grid item xs={11}>
