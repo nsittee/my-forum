@@ -4,6 +4,7 @@ import Body from './Body/Body'
 import Footer from './Footer/Footer'
 import { Container, Button } from '@material-ui/core'
 import AuthContext from '../../context/auth-context'
+import ThreadContext from '../../context/thread-context'
 import ThreadDialog from '../Threads/ThreadDialog'
 import NewThreadDialog from '../Threads/NewThreadDialog'
 
@@ -187,32 +188,35 @@ class MyForum extends Component {
       />
     }
     return (
-      <AuthContext.Provider value={{
-        currentUser: this.state.currentUser,
-        loginHandler: this.onLoginListener
+      <ThreadContext.Provider value={{
+        voteThreadHandler: this.voteThreadHandler
       }}>
-        <div>
-          <Header currentUser={this.state.currentUser} />
-          <Container maxWidth="md">
-            <Body
-              isSignedIn={this.state.isSignedIn}
-              threads={this.state.threads}
-              voteThreadHandler={this.voteThreadHandler}
-              onThreadDialogClicked={this.onThreadDialogClicked}
-              openCreateNewThread={this.openCreateNewThread}
-              closeNewThreadModal={this.closeNewThreadModal}
-            />
-            <Button
-              onClick={this.debug}
-              variant="contained"
-              color="secondary"> Debug</Button>
-            {threadDialog}
-            {createDialog}
+        <AuthContext.Provider value={{
+          currentUser: this.state.currentUser,
+          loginHandler: this.onLoginListener
+        }}>
+          <div>
+            <Header currentUser={this.state.currentUser} />
+            <Container maxWidth="md">
+              <Body
+                isSignedIn={this.state.isSignedIn}
+                threads={this.state.threads}
+                onThreadDialogClicked={this.onThreadDialogClicked}
+                openCreateNewThread={this.openCreateNewThread}
+                closeNewThreadModal={this.closeNewThreadModal}
+              />
+              <Button
+                onClick={this.debug}
+                variant="contained"
+                color="secondary"> Debug</Button>
+              {threadDialog}
+              {createDialog}
 
-            <Footer />
-          </Container>
-        </div>
-      </AuthContext.Provider>
+              <Footer />
+            </Container>
+          </div>
+        </AuthContext.Provider>
+      </ThreadContext.Provider>
     )
   }
 }

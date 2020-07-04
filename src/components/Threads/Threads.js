@@ -7,8 +7,7 @@ const Threads = (props) => {
     return <Thread
       key={thread.threadId}
       thread={thread}
-      onThreadDialogClicked={props.onThreadDialogClicked}
-      voteThreadHandler={props.voteThreadHandler} />
+      onThreadDialogClicked={props.onThreadDialogClicked} />
   })
 
   return (
