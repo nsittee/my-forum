@@ -4,13 +4,11 @@ var cors = require("cors");
 var mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 
-// คำสั่งเชื่อม MongoDB Atlas
 var mongo_uri = "mongodb+srv://" + config.username + ":" + config.password + "@cluster-bon.sjs10.gcp.mongodb.net/" + config.dbname + "?retryWrites=true&w=majority";
 mongoose.Promise = global.Promise;
-mongoose.connect(mongo_uri, { useNewUrlParser: true }).then(
-  () => {
-    console.log("[success] task 2 : connected to the database ");
-  },
+mongoose.connect(mongo_uri, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
+  console.log("[success] task 2 : connected to the database ");
+},
   error => {
     console.log("[failed] task 2 " + error);
     process.exit();
@@ -18,10 +16,7 @@ mongoose.connect(mongo_uri, { useNewUrlParser: true }).then(
 );
 
 var app = express();
-
 app.use(cors());
-
-// คำสั่งสำหรับแปลงค่า JSON ให้สามารถดึงและส่งค่าไปยัง MongoDB Atlas ได้
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -32,11 +27,14 @@ app.listen(port, () => {
 });
 
 app.get("/", (req, res) => {
-  res.status(200).send("หน้าแรกของ api express");
+  res.status(200).send("Hi");
 });
 
+var Thread = require("./threadrouter");
+app.use("/api/thread", Thread);
+
 app.use((req, res, next) => {
-  var err = new Error("ไม่พบ path ที่คุณต้องการ");
+  var err = new Error("not found");
   err.status = 404;
   next(err);
 });
