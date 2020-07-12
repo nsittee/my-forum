@@ -2,10 +2,10 @@ var express = require('express');
 const app = express();
 
 // var cors = require('cors');
-// const bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 // app.use(cors);
-// app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 
 var config = require('./config');
@@ -36,7 +36,7 @@ app.get('/init', (req, res) => {
   newUser.save((err, currentUser) => {
     var _posterId = mongoose.mongo.ObjectId(currentUser._id);
     const threadCount = num % 10;
-    console.log(`this ${newUser.userName} posted ${threadCount} thread(s)`);
+    console.log(`${newUser.userName} posted ${threadCount} thread(s)`);
     for (let i = 0; i < threadCount; i++) {
       var newThread = new Thread({
         threadTitle: `Title ${num} part${i + 1}/${threadCount}`,
@@ -52,19 +52,17 @@ app.get('/init', (req, res) => {
 
       newThread.save((err, newThread) => {
         var _threadId = newThread._id;
-        console.log(newThread)
-
         User.findById(_posterId).exec((err, user) => {
-          console.log('append thread');
-          console.log(user);
-          console.log(_threadId);
           user.userThread.push(_threadId);
           user.save();
         });
       });
     }
   });
-  res.status(200).send('HELLO WORLD!!');
+  var _retUserId = User.findOne({ userName: "testUser" + userNumberRand }).exec();
+
+  res.status(200).json(_retUserId);
+
 });
 
 app.get('/threads', (req, res) => {
@@ -82,11 +80,11 @@ app.get('/users', (req, res) => {
   });
 });
 
-app.use((req, res, next) => {
-  var err = new Error("not found");
-  err.status = 404;
-  next(err);
-});
+// app.use((req, res, next) => {
+//   var err = new Error("not found");
+//   err.status = 404;
+//   next(err);
+// });
 
 var port = 5000;
 app.listen(port, () => console.log("API is running on " + port));

@@ -1,7 +1,10 @@
 var mongoose = require("mongoose");
 var threadSchema = mongoose.Schema({
   threadTitle: String,
-  threadPoster: mongoose.Types.ObjectId,
+  threadPoster: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "mf_users"
+  },
   subForumId: Number,
   subForum: String,
   content: String,
@@ -17,7 +20,7 @@ var userSchema = mongoose.Schema({
   userPassword: String,
   userThread: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: "mf_threads",
+    ref: "mf_threads"
   }]
 });
 
