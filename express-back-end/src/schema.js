@@ -1,5 +1,6 @@
 var mongoose = require("mongoose");
 var threadSchema = mongoose.Schema({
+  // _id: mongoose.Schema.Types.ObjectId,
   threadTitle: String,
   threadPoster: {
     type: mongoose.Schema.Types.ObjectId,
@@ -16,6 +17,7 @@ var threadSchema = mongoose.Schema({
   downVote: Number
 });
 var userSchema = mongoose.Schema({
+  // _id: mongoose.Schema.Types.ObjectId,
   userName: String,
   userPassword: String,
   userThread: [{
