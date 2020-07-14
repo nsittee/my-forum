@@ -63,11 +63,10 @@ app.get('/init', (req, res) => {
             if (i === threadCount - 1) {
               User.findById(new mongoose.Types.ObjectId(updatedUser._id)).exec().then(x => {
                 console.log(x);
-                res.status(200).json(x);
+                return res.status(200).json(x);
               }).catch(err => {
                 console.log(err);
               });
-              return;
             }
           });
         });
