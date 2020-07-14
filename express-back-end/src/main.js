@@ -35,6 +35,7 @@ app.get('/init', (req, res) => {
   const userNumberRand = Math.random();
   const num = Math.floor(Math.random() * 10) + 1;
   var newUser = new User({
+    // _id: mongoose.Types.ObjectId,
     userName: "testUser" + userNumberRand,
     userPassword: "password"
   });
@@ -43,16 +44,19 @@ app.get('/init', (req, res) => {
     const threadCount = num % 10;
     console.log(`${newUser.userName} posted ${threadCount} thread(s)`);
     for (let i = 0; i < threadCount; i++) {
+      const upVoteCount = Math.floor(Math.random() * 1000) + 1;
+      const downVoteCount = Math.floor(Math.random() * 1000) + 1;
       var newThread = new Thread({
-        threadTitle: `Title ${num} part${i + 1}/${threadCount}`,
-        threadPoster: currentUser._id.str,
+        // _id: mongoose.Types.ObjectId,
+        threadTitle: `The story of ${newUser.userName}: Part ${i + 1}/${threadCount}`,
+        threadPoster: currentUser._id,
         content: `Content ${num}`,
         published: {
           date: "Date",
           time: "Time"
         },
-        upVote: 0,
-        downVote: 0
+        upVote: upVoteCount,
+        downVote: downVoteCount
       });
 
       newThread.save().then(newThread => {
@@ -76,17 +80,13 @@ app.get('/init', (req, res) => {
 });
 
 app.get('/threads', (req, res) => {
-  console.log('THREAD');
-  Thread.find().exec((err, data) => {
-    if (err) res.status(400).send(err);
-    else res.status(200).send(data);
+  Thread.find().exec().then(threads => {
+    res.status(200).json(threads);
   });
 });
 app.get('/users', (req, res) => {
-  console.log('USER');
-  User.find().exec((err, data) => {
-    if (err) res.status(400).send(err);
-    else res.status(200).send(data);
+  User.find().exec().then(users => {
+    res.status(200).json(users);
   });
 });
 
