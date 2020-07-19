@@ -1,9 +1,9 @@
 var express = require('express');
 const app = express();
 
-// var cors = require('cors');
+var cors = require('cors');
 const bodyParser = require('body-parser');
-// app.use(cors);
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -50,13 +50,17 @@ app.get('/init', (req, res) => {
         // _id: mongoose.Types.ObjectId,
         threadTitle: `The story of ${newUser.userName}: Part ${i + 1}/${threadCount}`,
         threadPoster: currentUser._id,
+        subRedditId: 0,
+        subReddit: "TIFU",
         content: `Content ${num}`,
+        author: "Author",
         published: {
-          date: "Date",
-          time: "Time"
+          date: "2020-06-12",
+          time: "08:30:25"
         },
         upVote: upVoteCount,
-        downVote: downVoteCount
+        downVote: downVoteCount,
+        comments: [1, 2, 3]
       });
 
       newThread.save().then(newThread => {
