@@ -9,7 +9,7 @@ const Thread = props => {
 
 	return (
 		<Grid item xs={12}>
-			<Card onClick={() => props.onThreadDialogClicked(props.thread.threadId)}>
+			<Card onClick={() => props.onThreadDialogClicked(props.thread._id)}>
 				<CardActionArea >
 					<Grid container spacing={1}>
 						<Grid item>
