@@ -10,21 +10,8 @@ app.use(bodyParser.json());
 const morgan = require('morgan');
 app.use(morgan('dev'));
 
-var config = require('./src/config');
-var mongoose = require('mongoose');
-// mongoose.Promise = global.Promise;
-mongoose.connect(config.connString, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-}).then(
-  () => {
-    console.log("Connected to the database ");
-  },
-  error => {
-    console.log("Connection failed: " + error);
-    process.exit();
-  }
-);
+require('./src/configs/database');
+
 
 var ThreadModel = require('./src/models/Thread');
 var UserModel = require('./src/models/User');
