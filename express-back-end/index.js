@@ -10,7 +10,7 @@ app.use(bodyParser.json());
 const morgan = require('morgan');
 app.use(morgan('dev'));
 
-var config = require('./config');
+var config = require('./src/config');
 var mongoose = require('mongoose');
 // mongoose.Promise = global.Promise;
 mongoose.connect(config.connString, {
@@ -26,15 +26,13 @@ mongoose.connect(config.connString, {
   }
 );
 
-var Model = require('./schema');
-var Thread = Model.Thread;
-var User = Model.User;
-
+var ThreadModel = require('./src/models/Thread');
+var UserModel = require('./src/models/User');
 
 app.get('/init', (req, res) => {
   const userNumberRand = Math.random();
   const num = Math.floor(Math.random() * 10) + 1;
-  var newUser = new User({
+  var newUser = new UserModel({
     // _id: mongoose.Types.ObjectId,
     userName: "testUser" + userNumberRand,
     userPassword: "password"
@@ -46,7 +44,7 @@ app.get('/init', (req, res) => {
     for (let i = 0; i < threadCount; i++) {
       const upVoteCount = Math.floor(Math.random() * 1000) + 1;
       const downVoteCount = Math.floor(Math.random() * 1000) + 1;
-      var newThread = new Thread({
+      var newThread = new ThreadModel({
         // _id: mongoose.Types.ObjectId,
         threadTitle: `The story of ${newUser.userName}: Part ${i + 1}/${threadCount}`,
         threadPoster: currentUser._id,
@@ -65,11 +63,11 @@ app.get('/init', (req, res) => {
 
       newThread.save().then(newThread => {
         var _threadId = newThread._id;
-        User.findById(_posterId).exec().then(user => {
+        UserModel.findById(_posterId).exec().then(user => {
           user.userThread.push(_threadId);
           user.save().then(updatedUser => {
             if (i === threadCount - 1) {
-              User.findById(new mongoose.Types.ObjectId(updatedUser._id)).exec().then(x => {
+              UserModel.findById(new mongoose.Types.ObjectId(updatedUser._id)).exec().then(x => {
                 console.log(x);
                 return res.status(200).json(x);
               }).catch(err => {
@@ -84,12 +82,12 @@ app.get('/init', (req, res) => {
 });
 
 app.get('/threads', (req, res) => {
-  Thread.find().exec().then(threads => {
+  ThreadModel.find().exec().then(threads => {
     res.status(200).json(threads);
   });
 });
 app.get('/users', (req, res) => {
-  User.find().exec().then(users => {
+  UserModel.find().exec().then(users => {
     res.status(200).json(users);
   });
 });
