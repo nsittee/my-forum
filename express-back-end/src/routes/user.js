@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
+const UserModel = require('../models/user');
+
 router.get('/', (req, res, next) => {
-  res.status(200).json({
-    message: "get => user"
+  UserModel.find().exec().then(users => {
+    res.status(200).json(users);
   });
 });
 

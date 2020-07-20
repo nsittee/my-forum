@@ -12,75 +12,16 @@ app.use(morgan('dev'));
 
 require('./src/configs/database');
 
-const ThreadModel = require('./src/models/Thread');
-const UserModel = require('./src/models/User');
+const ThreadModel = require('./src/models/thread');
+const UserModel = require('./src/models/user');
 
 const threadRoutes = require('./src/routes/thread');
 const userRoutes = require('./src/routes/user');
+const utilRoutes = require('./src/routes/util');
 app.use('/api/threads', threadRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/util', utilRoutes);
 
-app.get('/init', (req, res) => {
-  const userNumberRand = Math.random();
-  const num = Math.floor(Math.random() * 10) + 1;
-  var newUser = new UserModel({
-    // _id: mongoose.Types.ObjectId,
-    userName: "testUser" + userNumberRand,
-    userPassword: "password"
-  });
-  newUser.save().then(currentUser => {
-    var _posterId = mongoose.mongo.ObjectId(currentUser._id);
-    const threadCount = num % 10;
-    console.log(`${newUser.userName} posted ${threadCount} thread(s)`);
-    for (let i = 0; i < threadCount; i++) {
-      const upVoteCount = Math.floor(Math.random() * 1000) + 1;
-      const downVoteCount = Math.floor(Math.random() * 1000) + 1;
-      var newThread = new ThreadModel({
-        // _id: mongoose.Types.ObjectId,
-        threadTitle: `The story of ${newUser.userName}: Part ${i + 1}/${threadCount}`,
-        threadPoster: currentUser._id,
-        subRedditId: 0,
-        subReddit: "TIFU",
-        content: `Content ${num}`,
-        author: "Author",
-        published: {
-          date: "2020-06-12",
-          time: "08:30:25"
-        },
-        upVote: upVoteCount,
-        downVote: downVoteCount,
-        comments: [1, 2, 3]
-      });
-
-      newThread.save().then(newThread => {
-        var _threadId = newThread._id;
-        UserModel.findById(_posterId).exec().then(user => {
-          user.userThread.push(_threadId);
-          user.save().then(updatedUser => {
-            if (i === threadCount - 1) {
-              UserModel.findById(new mongoose.Types.ObjectId(updatedUser._id)).exec().then(x => {
-                console.log(x);
-                return res.status(200).json(x);
-              }).catch(err => {
-                console.log(err);
-              });
-            }
-          });
-        });
-      });
-    }
-  });
-});
-app.get('/threads', (req, res) => {
-  ThreadModel.find().exec().then(threads => {
-    res.status(200).json(threads);
-  });
-});
-app.get('/users', (req, res) => {
-  UserModel.find().exec().then(users => {
-    res.status(200).json(users);
-  });
-});
 app.use((req, res, next) => {
   var err = new Error("Not found");
   err.status = 404;

@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
+const ThreadModel = require('../models/thread');
 
 router.get('/', (req, res, next) => {
-  res.status(200).json({
-    message: "get => thread"
+  ThreadModel.find().exec().then(threads => {
+    res.status(200).json(threads);
   });
 });
 
@@ -18,7 +20,6 @@ router.get('/:id', (req, res, next) => {
 router.post('/', (req, res, next) => {
   const thread = {
     threadTitle: req.body.threadTitle
-
   }
   res.status(200).json({
     message: "post => thread",
