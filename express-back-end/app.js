@@ -1,19 +1,8 @@
 var express = require('express');
 const app = express();
 
-var cors = require('cors');
-const bodyParser = require('body-parser');
-app.use(cors());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-
-const morgan = require('morgan');
-app.use(morgan('dev'));
-
+require('./src/configs/middleware')(app);
 require('./src/configs/database');
-
-const ThreadModel = require('./src/models/thread');
-const UserModel = require('./src/models/user');
 
 const threadRoutes = require('./src/routes/thread');
 const userRoutes = require('./src/routes/user');
@@ -36,5 +25,4 @@ app.use((error, req, res, next) => {
   })
 })
 
-var port = 5000;
-app.listen(port, () => console.log("API is running on " + port));
+module.exports = app;
