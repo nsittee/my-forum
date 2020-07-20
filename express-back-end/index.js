@@ -12,9 +12,13 @@ app.use(morgan('dev'));
 
 require('./src/configs/database');
 
+const ThreadModel = require('./src/models/Thread');
+const UserModel = require('./src/models/User');
 
-var ThreadModel = require('./src/models/Thread');
-var UserModel = require('./src/models/User');
+const threadRoutes = require('./src/routes/thread');
+const userRoutes = require('./src/routes/user');
+app.use('/api/threads', threadRoutes);
+app.use('/api/users', userRoutes);
 
 app.get('/init', (req, res) => {
   const userNumberRand = Math.random();
@@ -67,7 +71,6 @@ app.get('/init', (req, res) => {
     }
   });
 });
-
 app.get('/threads', (req, res) => {
   ThreadModel.find().exec().then(threads => {
     res.status(200).json(threads);
@@ -78,7 +81,6 @@ app.get('/users', (req, res) => {
     res.status(200).json(users);
   });
 });
-
 app.use((req, res, next) => {
   var err = new Error("Not found");
   err.status = 404;

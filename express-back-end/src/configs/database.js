@@ -1,4 +1,4 @@
-var config = require('./config');
+var config = require('../config');
 var mongoose = require('mongoose');
 // mongoose.Promise = global.Promise;
 mongoose.connect(config.connString, {
