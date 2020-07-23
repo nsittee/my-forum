@@ -1,8 +1,9 @@
 var mongoose = require("mongoose");
 var userSchema = mongoose.Schema({
   // _id: mongoose.Schema.Types.ObjectId,
-  userName: String,
-  userPassword: String,
+  _id: mongoose.Schema.Types.ObjectId,
+  userName: { type: String, required: true },
+  userPassword: { type: String, required: true },
   userThread: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: "mf_threads"
