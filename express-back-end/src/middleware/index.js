@@ -5,7 +5,7 @@ const cors = require('cors');
 module.exports = (app) => {
 
   // Connect MongoDB
-  require('./database');
+  require('../configs/database');
 
   // CORS
   app.use(cors())

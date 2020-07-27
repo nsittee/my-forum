@@ -36,13 +36,9 @@ router.post('/login', (req, res, next) => {
         if (err) return res.status(401).json({ message: "auth failed" });
         if (hashResult) {
           const token = jwt.sign(
-            {
-              username: user.userName
-            },
+            { username: user.userName },
             config.secretKey,
-            {
-              expiresIn: "1h"
-            }
+            { expiresIn: "1h" }
           );
           return res.status(200).json({
             message: "login!!",

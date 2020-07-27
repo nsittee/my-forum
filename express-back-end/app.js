@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 
-require('./src/configs/middleware')(app);
+require('./src/middleware')(app);
 require('./src/configs/database');
 
 app.use('/api', require('./src/routes'));
