@@ -11,5 +11,3 @@ var userSchema = mongoose.Schema({
 });
 
 module.exports = mongoose.model("mf_users", userSchema);
-
-// 097 183 7599
