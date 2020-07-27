@@ -1,18 +1,19 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-
-const UserModel = require('../models/user');
+const bcrypt = require('bcrypt');
+const User = require('../models/user');
+const user = require('../models/user');
 
 router.get('/', (req, res, next) => {
-  UserModel.find().exec().then(users => {
+  User.find().exec().then(users => {
     res.status(200).json(users);
   });
 });
 
 router.get('/:id', (req, res, next) => {
   const id = req.params.id;
-  UserModel.find({ _id: id }).exec().then(user => {
+  User.find({ _id: id }).populate('userThread').exec().then(user => {
     res.status(200).json({
       message: "found user",
       data: user,
@@ -25,22 +26,51 @@ router.get('/:id', (req, res, next) => {
   });
 });
 
+router.post('/login', (req, res, next) => {
+  User.find({ userName: req.body.username }).exec().then(userList => {
+    if (userList.length == 1) {
+      const user = userList[0];
+      console.log(user.userPassword);
+      res.status(200).json({
+        message: "login!!",
+        data: user,
+      });
+    } else {
+      res.status(409).send({ message: "error" });
+    }
+  });
+})
+
 router.post('/', (req, res, next) => {
   if (req.body.username == null || req.body.password == null) {
     res.status(400).json({ message: "invalid argument" });
     return;
   }
-  var user = new UserModel({
-    _id: mongoose.Types.ObjectId(),
-    userName: req.body.username,
-    userPassword: req.body.password,
+  User.find({ userName: req.body.username }).exec().then(userList => {
+    if (userList.length == 0) {
+      bcrypt.hash(req.body.password, 10, (err, hash) => {
+        if (err) {
+          res.status(500).send({ message: "error" });
+        } else {
+          var newUser = new User({
+            _id: mongoose.Types.ObjectId(),
+            userName: req.body.username,
+            userPassword: hash,
+          });
+          newUser.save().then(newUser => {
+            res.status(200).json({
+              message: "created new user",
+              data: newUser,
+            });
+          });
+        }
+      });
+    } else {
+      res.status(409).send({ message: "duplicate username" });
+    }
   });
-  user.save().then(newUser => {
-    res.status(200).json({
-      message: "created new user",
-      data: newUser,
-    });
-  });
+
+
 });
 
 module.exports = router;

@@ -2,7 +2,7 @@ var mongoose = require("mongoose");
 var userSchema = mongoose.Schema({
   // _id: mongoose.Schema.Types.ObjectId,
   _id: mongoose.Schema.Types.ObjectId,
-  userName: { type: String, required: true },
+  userName: { type: String, required: true, unique: true },
   userPassword: { type: String, required: true },
   userThread: [{
     type: mongoose.Schema.Types.ObjectId,
