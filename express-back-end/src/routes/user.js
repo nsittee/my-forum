@@ -2,8 +2,10 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const config = require('../configs/config');
+
 const User = require('../models/user');
-const user = require('../models/user');
 
 router.get('/', (req, res, next) => {
   User.find().exec().then(users => {
@@ -30,14 +32,25 @@ router.post('/login', (req, res, next) => {
   User.find({ userName: req.body.username }).exec().then(userList => {
     if (userList.length == 1) {
       const user = userList[0];
-      console.log(user.userPassword);
-      res.status(200).json({
-        message: "login!!",
-        data: user,
+      bcrypt.compare(req.body.password, user.userPassword, (err, hashResult) => {
+        if (err) return res.status(401).json({ message: "auth failed" });
+        if (hashResult) {
+          const token = jwt.sign(
+            {
+              username: user.userName
+            },
+            config.secretKey,
+            {
+              expiresIn: "1h"
+            }
+          );
+          return res.status(200).json({
+            message: "login!!",
+            token: token,
+          });
+        }
       });
-    } else {
-      res.status(409).send({ message: "error" });
-    }
+    } else res.status(409).send({ message: "error" });
   });
 })
 
