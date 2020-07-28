@@ -9,7 +9,7 @@ app.get('/init', (req, res) => {
   const userNumberRand = Math.random();
   const num = Math.floor(Math.random() * 10) + 1;
   var newUser = new UserModel({
-    // _id: mongoose.Types.ObjectId,
+    _id: mongoose.Types.ObjectId(),
     userName: "testUser" + userNumberRand,
     userPassword: "password"
   });
@@ -21,7 +21,7 @@ app.get('/init', (req, res) => {
       const upVoteCount = Math.floor(Math.random() * 1000) + 1;
       const downVoteCount = Math.floor(Math.random() * 1000) + 1;
       var newThread = new ThreadModel({
-        // _id: mongoose.Types.ObjectId,
+        _id: mongoose.Types.ObjectId(),
         threadTitle: `The story of ${newUser.userName}: Part ${i + 1}/${threadCount}`,
         threadPoster: currentUser._id,
         subRedditId: 0,
