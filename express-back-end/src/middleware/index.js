@@ -8,14 +8,14 @@ module.exports = (app) => {
   require('../configs/database');
 
   // CORS
-  app.use(cors())
+  app.use(cors());
 
   // Parser Body
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
 
   // Logger
-  app.use(morgan('dev'))
+  app.use(morgan('dev'));
 
   // Passport
   // require('../configs/passport');
@@ -25,5 +25,4 @@ module.exports = (app) => {
 
   // Custom Response Format
   // app.use(require('../configs/responseFormat'))
-
 }

@@ -3,7 +3,8 @@ var mongoose = require('mongoose');
 // mongoose.Promise = global.Promise;
 mongoose.connect(config.connString, {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  useCreateIndex: true
 }).then(
   () => {
     console.log("Connected to the database ");

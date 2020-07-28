@@ -50,7 +50,7 @@ router.post('/login', (req, res, next) => {
   });
 })
 
-router.post('/', (req, res, next) => {
+router.post('/signup', (req, res, next) => {
   if (req.body.username == null || req.body.password == null) {
     res.status(400).json({ message: "invalid argument" });
     return;
