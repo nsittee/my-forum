@@ -18,7 +18,7 @@ const Thread = props => {
 							<Button onClick={e => context.voteThreadHandler(e, props.thread, 'down')}><KeyboardArrowDown /></Button>
 
 						</Grid>
-						<Grid item xs={11}>
+						<Grid item>
 							<Typography color="textSecondary">
 								{props.thread.subReddit}: posted by {props.thread.author + ' '}
                                 on {props.thread.published.date} {props.thread.published.time}

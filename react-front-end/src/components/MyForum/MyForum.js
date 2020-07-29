@@ -66,7 +66,7 @@ class MyForum extends Component {
     const time = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
     let oldThreadState = this.state.threads;
     let newThreads = {
-      threadId: oldThreadState.length,
+      _id: oldThreadState.length,
       threadTitle: title,
       subRedditId: 0,
       subReddit: 'TIFU',
@@ -104,7 +104,7 @@ class MyForum extends Component {
   }
 
   getContent = () => {
-    axios.get(`http://localhost:5000/threads`)
+    axios.get(`http://localhost:5000/api/threads`)
       .then(res => {
         this.setState({ threads: res.data });
         return res.data;
