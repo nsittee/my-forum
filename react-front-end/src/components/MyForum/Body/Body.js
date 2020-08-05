@@ -1,22 +1,12 @@
 import React from 'react';
-import Login from './Login';
-import Threads from '../../Threads/Threads';
 import { Grid } from '@material-ui/core';
 import NewThreadButton from '../../Threads/NewThreadButton';
-
+import Profile from './Profile';
+import UserSetting from './UserSetting';
+import { Route } from 'react-router-dom';
+import MainThread from './MainThread';
 
 const Body = (props) => {
-  let body = null;
-  let newThread = null;
-  if (props.isSignedIn) {
-    body = <Threads
-      threads={props.threads}
-      onThreadDialogClicked={props.onThreadDialogClicked}
-      voteThreadHandler={props.voteThreadHandler} />;
-  } else {
-    body = <Login />;
-  }
-
   return (
     <div>
       <br />
@@ -25,10 +15,12 @@ const Body = (props) => {
           <NewThreadButton
             openCreateNewThread={props.openCreateNewThread}
             closeNewThreadModal={props.closeNewThreadModal} />
-          {newThread}
+          {/* {newThread} */}
         </Grid>
         <Grid item xs={12}>
-          {body}
+          <Route path="/" exact component={MainThread} />
+          <Route path="/profile" component={Profile} />
+          <Route path="/setting" component={UserSetting} />
         </Grid>
       </Grid >
       <br />
