@@ -2,6 +2,7 @@ import React from 'react'
 import { Card, TextField, Button, CardContent, Dialog } from '@material-ui/core'
 
 const NewThreadDialog = (props) => {
+
   return (
     <Dialog
       open={props.dialogNewThreadOn}

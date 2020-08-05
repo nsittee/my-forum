@@ -12,12 +12,6 @@ const Body = (props) => {
       <br />
       <Grid container spacing={1}>
         <Grid item xs={12}>
-          <NewThreadButton
-            openCreateNewThread={props.openCreateNewThread}
-            closeNewThreadModal={props.closeNewThreadModal} />
-          {/* {newThread} */}
-        </Grid>
-        <Grid item xs={12}>
           <Route path="/" exact component={MainThread} />
           <Route path="/profile" component={Profile} />
           <Route path="/setting" component={UserSetting} />

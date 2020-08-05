@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import Thread from '../../../components/Threads/Thread';
 import { Grid } from '@material-ui/core';
+import NewThreadDialog from '../../Threads/NewThreadDialog';
+import ThreadDialog from '../../Threads/ThreadDialog';
+import NewThreadButton from '../../Threads/NewThreadButton';
 
 class MainThread extends Component {
   state = {
@@ -77,19 +80,6 @@ class MainThread extends Component {
     this.setState({ dialogNewThreadOn: false })
   }
 
-  onLoginListener = (event) => {
-    event.preventDefault();
-    let username = event.target[0].value;
-    let password = event.target[1].value;
-    if (username === 'bon' && password === 'bon') {
-      this.setState({ currentUser: username });
-      this.setState({ isSignedIn: true });
-      // alert('Welcome');
-    } else {
-      alert('Incorrect credential');
-    }
-  }
-
   componentDidMount() {
     this.getContent();
   }
@@ -107,6 +97,34 @@ class MainThread extends Component {
   }
 
   render() {
+    let threadDialog = null;
+    let createDialog = null;
+
+    if (this.state.dialogNewThreadOn) {
+      createDialog = <NewThreadDialog
+        dialogNewThreadOn={this.state.dialogNewThreadOn}
+        closeModal={this.closeNewThreadModal}
+        submitNewThread={this.createNewThread}
+      />
+    }
+    if (this.state.dialogThreadKey != null) {
+      var currentThread;
+      const currentId = this.state.dialogThreadKey;
+      for (const thread of this.state.threads) {
+        if (currentId === thread._id) {
+          console.log(thread._id);
+          currentThread = thread;
+          break;
+        }
+      }
+      threadDialog = <ThreadDialog
+        thread={currentThread}
+        dialogThreadOn={this.state.dialogThreadOn}
+        closeModal={this.closeModal}
+        voteThreadHandler={this.voteThreadHandler}
+      />
+    }
+
     let mainThreads = this.state.threads.map((thread) => {
       return <Thread
         key={thread._id}
@@ -118,7 +136,12 @@ class MainThread extends Component {
       <Grid container spacing={1}>
         <Grid item xs={12}>
           <Grid container spacing={1}>
+            <NewThreadButton
+              openCreateNewThread={this.openCreateNewThread}
+              closeNewThreadModal={this.closeNewThreadModal} />
             {mainThreads}
+            {threadDialog}
+            {createDialog}
           </Grid>
         </Grid>
       </Grid>

@@ -1,15 +1,18 @@
 import React from 'react'
-import { CardActionArea, Card, TextField, CardContent } from '@material-ui/core'
+import { CardActionArea, Card, TextField, CardContent, Grid } from '@material-ui/core'
 
 const NewThreadButton = (props) => {
   return (
-    <Card>
-      <CardActionArea onClick={props.openCreateNewThread}>
-        <CardContent>
-          <TextField variant='outlined' fullWidth label='Create Post' />
-        </CardContent>
-      </CardActionArea>
-    </Card>
+    <Grid item xs={12}>
+
+      <Card>
+        <CardActionArea onClick={props.openCreateNewThread}>
+          <CardContent>
+            <TextField variant='outlined' fullWidth label='Create Post' />
+          </CardContent>
+        </CardActionArea>
+      </Card>
+    </Grid>
   )
 }
 
