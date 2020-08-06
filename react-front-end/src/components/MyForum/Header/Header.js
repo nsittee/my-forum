@@ -2,14 +2,10 @@ import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import { Container, Grid, Button, Link } from '@material-ui/core'
+import { Container, Grid, Button } from '@material-ui/core'
+import { Link } from 'react-router-dom';
 
 const Header = (props) => {
-  let headerName = 'Please login';
-  if (props.currentUser != null) {
-    headerName = props.currentUser;
-  }
-
   return (
     <AppBar position="static">
       <Container maxWidth="md">
@@ -17,16 +13,18 @@ const Header = (props) => {
           <Grid container>
             <Grid item xs={6}>
               <Typography variant="h4" >
-                <Link color="inherit" href="/">my-forum</Link>
+                <Link to="/">my-forum</Link>
               </Typography>
             </Grid>
             <Grid item>
-              <Button variant="contained" color="primary">
-                <Link color="inherit" href="/profile">{headerName}</Link>
-              </Button>
-              <Button variant="contained" color="primary">
-                <Link color="inherit" href="/setting">{headerName}</Link>
-              </Button>
+              <Typography variant="h6" >
+                <Link to="profile">profile</Link>
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography variant="h6" >
+                <Link to="/setting">setting</Link>
+              </Typography>
             </Grid>
           </Grid>
         </Toolbar>
