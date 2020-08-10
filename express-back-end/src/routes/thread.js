@@ -12,10 +12,18 @@ router.get('/', (req, res, next) => {
 
 router.get('/:id', (req, res, next) => {
   const id = req.params.id;
-  res.status(200).json({
-    message: "get => thread",
-    id: id
-  });
+  Thread.findOne()
+    .populate('threadPoster', 'userName')
+    .where('_id', id)
+    .exec().then(thread => {
+      return res.status(200).json({
+        data: thread,
+        message: "done",
+      })
+    })
+    .catch(err => {
+
+    });
 });
 
 router.post('/', checkAuth, (req, res, next) => {
