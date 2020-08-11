@@ -20,9 +20,6 @@ router.get('/:id', (req, res, next) => {
         data: thread,
         message: "done",
       })
-    })
-    .catch(err => {
-
     });
 });
 
