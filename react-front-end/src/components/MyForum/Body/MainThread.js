@@ -5,27 +5,12 @@ import { Grid } from '@material-ui/core';
 import NewThreadDialog from '../../Threads/NewThreadDialog';
 import ThreadDialog from '../../Threads/ThreadDialog';
 import NewThreadButton from '../../Threads/NewThreadButton';
-import { Route, Switch } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
 class MainThread extends Component {
   state = {
     threads: [],
     dialogNewThreadOn: false,
-  }
-
-  voteThreadHandler = (e, thread, vote) => {
-    e.stopPropagation();
-    const index = thread._id;
-    let newThreads = [...this.state.threads];
-    let newThread = { ...this.state.threads[index] };
-
-    if (vote === 'up') newThread.upVote++;
-    else if (vote === 'down') newThread.downVote++;
-
-    newThreads[index] = newThread;
-    this.setState({
-      threads: newThreads
-    })
   }
 
   openCreateNewThread = () => {
@@ -38,11 +23,6 @@ class MainThread extends Component {
 
   onThreadDialogClicked = (id) => {
     this.props.history.push(`/${id}`);
-  }
-
-  closeModal = () => {
-    this.setState({ dialogThreadOn: false });
-    this.setState({ dialogThreadKey: null });
   }
 
   createNewThread = (event) => {
@@ -81,6 +61,7 @@ class MainThread extends Component {
   getContent = () => {
     axios.get(`http://localhost:5000/api/threads`)
       .then(res => {
+        console.log(res);
         this.setState({ threads: res.data });
         return;
       })
@@ -89,6 +70,7 @@ class MainThread extends Component {
 
   render() {
     let createDialog = null;
+    let mainThreads = null;
 
     if (this.state.dialogNewThreadOn) {
       createDialog = <NewThreadDialog
@@ -98,7 +80,7 @@ class MainThread extends Component {
       />
     }
 
-    let mainThreads = this.state.threads.map((thread) => {
+    mainThreads = this.state.threads.map((thread) => {
       return <Thread
         key={thread._id}
         thread={thread}
