@@ -8,14 +8,9 @@ class MyForum extends Component {
   render() {
     return (
       <div>
-        <Header currentUser={this.state.currentUser} />
+        <Header />
         <Container maxWidth="md">
-          <Body
-            threads={this.state.threads}
-            onThreadDialogClicked={this.onThreadDialogClicked}
-            openCreateNewThread={this.openCreateNewThread}
-            closeNewThreadModal={this.closeNewThreadModal}
-          />
+          <Body />
         </Container>
       </div>
     )

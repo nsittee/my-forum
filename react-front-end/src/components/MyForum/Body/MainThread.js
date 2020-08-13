@@ -1,21 +1,16 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import axios from 'axios';
 import Thread from '../../../components/Threads/Thread';
 import { Grid } from '@material-ui/core';
 import NewThreadDialog from '../../Threads/NewThreadDialog';
 import ThreadDialog from '../../Threads/ThreadDialog';
 import NewThreadButton from '../../Threads/NewThreadButton';
+import { Route, Switch } from 'react-router-dom';
 
 class MainThread extends Component {
   state = {
     threads: [],
-
-    dialogThreadOn: false,
-    dialogThreadKey: null,
     dialogNewThreadOn: false,
-  }
-
-  debug = () => {
   }
 
   voteThreadHandler = (e, thread, vote) => {
@@ -42,8 +37,7 @@ class MainThread extends Component {
   }
 
   onThreadDialogClicked = (id) => {
-    this.setState({ dialogThreadOn: true });
-    this.setState({ dialogThreadKey: id });
+    this.props.history.push(`/${id}`);
   }
 
   closeModal = () => {
@@ -88,16 +82,12 @@ class MainThread extends Component {
     axios.get(`http://localhost:5000/api/threads`)
       .then(res => {
         this.setState({ threads: res.data });
-        console.log(this.state.threads);
         return;
       })
-      .catch(err => {
-        console.log(err);
-      });
+      .catch(err => console.log(err));
   }
 
   render() {
-    let threadDialog = null;
     let createDialog = null;
 
     if (this.state.dialogNewThreadOn) {
@@ -105,23 +95,6 @@ class MainThread extends Component {
         dialogNewThreadOn={this.state.dialogNewThreadOn}
         closeModal={this.closeNewThreadModal}
         submitNewThread={this.createNewThread}
-      />
-    }
-    if (this.state.dialogThreadKey != null) {
-      var currentThread;
-      const currentId = this.state.dialogThreadKey;
-      for (const thread of this.state.threads) {
-        if (currentId === thread._id) {
-          console.log(thread._id);
-          currentThread = thread;
-          break;
-        }
-      }
-      threadDialog = <ThreadDialog
-        thread={currentThread}
-        dialogThreadOn={this.state.dialogThreadOn}
-        closeModal={this.closeModal}
-        voteThreadHandler={this.voteThreadHandler}
       />
     }
 
@@ -140,8 +113,8 @@ class MainThread extends Component {
               openCreateNewThread={this.openCreateNewThread}
               closeNewThreadModal={this.closeNewThreadModal} />
             {mainThreads}
-            {threadDialog}
             {createDialog}
+            <Route exact path='/:id' component={ThreadDialog} />
           </Grid>
         </Grid>
       </Grid>

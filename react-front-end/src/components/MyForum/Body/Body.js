@@ -2,7 +2,7 @@ import React from 'react';
 import { Grid } from '@material-ui/core';
 import Profile from './Profile';
 import UserSetting from './UserSetting';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import MainThread from './MainThread';
 
 const Body = () => {
@@ -11,9 +11,11 @@ const Body = () => {
       <br />
       <Grid container spacing={1}>
         <Grid item xs={12}>
-          <Route path="/" exact component={MainThread} />
-          <Route path="/profile" component={Profile} />
-          <Route path="/setting" component={UserSetting} />
+          <Switch>
+            <Route path="/profile" component={Profile} />
+            <Route path="/setting" component={UserSetting} />
+            <Route path="/" component={MainThread} />
+          </Switch>
         </Grid>
       </Grid >
       <br />
