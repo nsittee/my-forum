@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import { Card, Grid, Container, Typography, CardContent, Dialog } from '@material-ui/core';
+import Axios from 'axios';
 
 class ThreadDialog extends Component {
   state = {
@@ -8,7 +8,7 @@ class ThreadDialog extends Component {
   }
 
   getThread = (id) => {
-    axios.get(`http://localhost:5000/api/threads/${id}`)
+    Axios.get(`http://localhost:5000/api/threads/${id}`)
       .then(res => {
         console.log(res.data);
         this.setState({ thread: res.data });

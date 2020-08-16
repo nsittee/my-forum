@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import { TextField, Button } from '@material-ui/core';
-import AuthContext from '../../../context/auth-context'
+import AuthContext from '../../context/auth-context'
 
-const Login = (props) => {
+const Login = () => {
   const context = useContext(AuthContext)
 
   return (

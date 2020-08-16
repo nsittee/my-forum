@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, Typography, CardActionArea, Grid } from '@material-ui/core';
 import { KeyboardArrowUp, KeyboardArrowDown } from '@material-ui/icons'
+
 import ThreadContext from '../../context/thread-context'
 
 const Thread = props => {

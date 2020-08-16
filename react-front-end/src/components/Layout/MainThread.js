@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import Thread from '../../../components/Threads/Thread';
-import { Grid } from '@material-ui/core';
-import NewThreadDialog from '../../Threads/NewThreadDialog';
-import ThreadDialog from '../../Threads/ThreadDialog';
-import NewThreadButton from '../../Threads/NewThreadButton';
 import { Route } from 'react-router-dom';
+import { Grid } from '@material-ui/core';
+import Axios from 'axios';
+
+import Thread from '../Threads/Thread';
+import NewThreadDialog from '../Threads/NewThreadDialog';
+import ThreadDialog from '../Threads/ThreadDialog';
+import NewThreadButton from '../Threads/NewThreadButton';
 
 class MainThread extends Component {
   state = {
@@ -59,7 +60,7 @@ class MainThread extends Component {
   }
 
   getContent = () => {
-    axios.get(`http://localhost:5000/api/threads`)
+    Axios.get(`http://localhost:5000/api/threads`)
       .then(res => {
         console.log(res);
         this.setState({ threads: res.data });
