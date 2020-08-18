@@ -15,17 +15,14 @@ router.get('/', (req, res, next) => {
 
 router.get('/:id', (req, res, next) => {
   const id = req.params.id;
-  User.find({ _id: id }).populate('userThread').exec().then(user => {
-    res.status(200).json({
-      message: "found user",
-      data: user,
+  User.find({ _id: id })
+    .populate('userThread')
+    .exec()
+    .then(user => {
+      res.status(200).json(user);
+    }).catch(err => {
+      res.status(400).json(err);
     });
-  }).catch(err => {
-    res.status(400).json({
-      message: "user not found",
-      error: err,
-    });
-  });
 });
 
 router.post('/login', (req, res, next) => {
@@ -78,8 +75,6 @@ router.post('/signup', (req, res, next) => {
       res.status(409).send({ message: "duplicate username" });
     }
   });
-
-
 });
 
 module.exports = router;

@@ -1,9 +1,11 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom'
-import MyForum from '../components/MyForum/MyForum'
+
+import MyForum from '../components/MyForum'
 
 
 function App() {
+
   return (
     <BrowserRouter>
       <div className="App">

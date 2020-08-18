@@ -1,6 +1,7 @@
 import React from 'react';
-import { Card, Typography, CardActionArea, Grid, Button } from '@material-ui/core';
+import { Card, Typography, CardActionArea, Grid } from '@material-ui/core';
 import { KeyboardArrowUp, KeyboardArrowDown } from '@material-ui/icons'
+
 import ThreadContext from '../../context/thread-context'
 
 const Thread = props => {
@@ -9,15 +10,15 @@ const Thread = props => {
 
 	return (
 		<Grid item xs={12}>
-			<Card onClick={() => props.onThreadDialogClicked(props.thread._id)}>
-				<CardActionArea >
+			<CardActionArea>
+				<Card onClick={() => props.onThreadDialogClicked(props.thread._id)}>
 					<Grid container spacing={1}>
 						<Grid item>
-							<Button onClick={e => context.voteThreadHandler(e, props.thread, 'up')}><KeyboardArrowUp /></Button>
+							<Card onClick={e => context.voteThreadHandler(e, props.thread, 'up')}><KeyboardArrowUp /></Card>
 							<Typography align='center' variant='h6'>{displayVote}</Typography>
-							<Button onClick={e => context.voteThreadHandler(e, props.thread, 'down')}><KeyboardArrowDown /></Button>
-
+							<Card onClick={e => context.voteThreadHandler(e, props.thread, 'down')}><KeyboardArrowDown /></Card>
 						</Grid>
+
 						<Grid item>
 							<Typography color="textSecondary">
 								{props.thread.subReddit}: posted by {props.thread.author + ' '}
@@ -28,8 +29,8 @@ const Thread = props => {
 							</Typography>
 						</Grid>
 					</Grid>
-				</CardActionArea>
-			</Card>
+				</Card>
+			</CardActionArea>
 		</Grid>
 	);
 };

@@ -1,36 +1,17 @@
-import React, { Component } from 'react'
-import axios from 'axios';
-import Thread from '../../../components/Threads/Thread';
+import React, { Component } from 'react';
+import { Route } from 'react-router-dom';
 import { Grid } from '@material-ui/core';
-import NewThreadDialog from '../../Threads/NewThreadDialog';
-import ThreadDialog from '../../Threads/ThreadDialog';
-import NewThreadButton from '../../Threads/NewThreadButton';
+import Axios from 'axios';
+
+import Thread from '../Threads/Thread';
+import NewThreadDialog from '../Threads/NewThreadDialog';
+import ThreadDialog from '../Threads/ThreadDialog';
+import NewThreadButton from '../Threads/NewThreadButton';
 
 class MainThread extends Component {
   state = {
     threads: [],
-
-    dialogThreadOn: false,
-    dialogThreadKey: null,
     dialogNewThreadOn: false,
-  }
-
-  debug = () => {
-  }
-
-  voteThreadHandler = (e, thread, vote) => {
-    e.stopPropagation();
-    const index = thread._id;
-    let newThreads = [...this.state.threads];
-    let newThread = { ...this.state.threads[index] };
-
-    if (vote === 'up') newThread.upVote++;
-    else if (vote === 'down') newThread.downVote++;
-
-    newThreads[index] = newThread;
-    this.setState({
-      threads: newThreads
-    })
   }
 
   openCreateNewThread = () => {
@@ -42,13 +23,7 @@ class MainThread extends Component {
   }
 
   onThreadDialogClicked = (id) => {
-    this.setState({ dialogThreadOn: true });
-    this.setState({ dialogThreadKey: id });
-  }
-
-  closeModal = () => {
-    this.setState({ dialogThreadOn: false });
-    this.setState({ dialogThreadKey: null });
+    this.props.history.push(`/${id}`);
   }
 
   createNewThread = (event) => {
@@ -85,20 +60,18 @@ class MainThread extends Component {
   }
 
   getContent = () => {
-    axios.get(`http://localhost:5000/api/threads`)
+    Axios.get(`http://localhost:5000/api/threads`)
       .then(res => {
+        console.log(res);
         this.setState({ threads: res.data });
-        console.log(this.state.threads);
         return;
       })
-      .catch(err => {
-        console.log(err);
-      });
+      .catch(err => console.log(err));
   }
 
   render() {
-    let threadDialog = null;
     let createDialog = null;
+    let mainThreads = null;
 
     if (this.state.dialogNewThreadOn) {
       createDialog = <NewThreadDialog
@@ -107,25 +80,8 @@ class MainThread extends Component {
         submitNewThread={this.createNewThread}
       />
     }
-    if (this.state.dialogThreadKey != null) {
-      var currentThread;
-      const currentId = this.state.dialogThreadKey;
-      for (const thread of this.state.threads) {
-        if (currentId === thread._id) {
-          console.log(thread._id);
-          currentThread = thread;
-          break;
-        }
-      }
-      threadDialog = <ThreadDialog
-        thread={currentThread}
-        dialogThreadOn={this.state.dialogThreadOn}
-        closeModal={this.closeModal}
-        voteThreadHandler={this.voteThreadHandler}
-      />
-    }
 
-    let mainThreads = this.state.threads.map((thread) => {
+    mainThreads = this.state.threads.map((thread) => {
       return <Thread
         key={thread._id}
         thread={thread}
@@ -140,8 +96,8 @@ class MainThread extends Component {
               openCreateNewThread={this.openCreateNewThread}
               closeNewThreadModal={this.closeNewThreadModal} />
             {mainThreads}
-            {threadDialog}
             {createDialog}
+            <Route exact path='/:id' component={ThreadDialog} />
           </Grid>
         </Grid>
       </Grid>
