@@ -2,33 +2,29 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import { Container, Grid } from '@material-ui/core'
+import { Grid } from '@material-ui/core';
+
+import Logo from './logo.png';
 
 const Header = () => {
   return (
-    <AppBar position="static">
-      <Container maxWidth="md">
-        <Toolbar>
-          <Grid container>
-            <Grid item xs={6}>
-              <Typography variant="h4" >
-                <Link to="/">my-forum</Link>
-              </Typography>
-            </Grid>
-            <Grid item>
-              <Typography variant="h6" >
-                <Link to="profile">profile</Link>
-              </Typography>
-            </Grid>
-            <Grid item>
-              <Typography variant="h6" >
-                <Link to="/setting">setting</Link>
-              </Typography>
-            </Grid>
+    <AppBar position="sticky" elevation={0}>
+      <Toolbar variant='dense'>
+        <Grid container>
+          <Link to="/">
+            <img
+              src={Logo}
+              alt='reddit'
+              height='32' />
+          </Link>
+          <Grid item>
+            <Link to="profile">profile</Link>
           </Grid>
-        </Toolbar>
-      </Container>
+          <Grid item>
+            <Link to="/setting">setting</Link>
+          </Grid>
+        </Grid>
+      </Toolbar>
     </AppBar>
   );
 }
