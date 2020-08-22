@@ -9,13 +9,13 @@ import Logo from './logo.png';
 const Header = () => {
   return (
     <AppBar position="sticky" elevation={0}>
-      <Toolbar variant='dense'>
+      <Toolbar>
         <Grid container>
           <Link to="/">
             <img
               src={Logo}
               alt='reddit'
-              height='32' />
+              height='40' />
           </Link>
           <Grid item>
             <Link to="profile">profile</Link>
