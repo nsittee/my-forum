@@ -1,6 +1,6 @@
 module.exports = {
   user: "mf_users",
-  thread: "",
-  subReddit: "",
-  comment: "",
+  thread: "mf_threads",
+  sub: "mf_subs",
+  comment: "mf_comments",
 }

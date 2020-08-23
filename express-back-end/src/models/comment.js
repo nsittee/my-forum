@@ -1,4 +1,6 @@
 var mongoose = require("mongoose");
+var table = require("./table-constant");
+
 
 var commentSchema = mongoose.Schema({
   // _id: mongoose.Schema.Types.ObjectId,
@@ -6,8 +8,8 @@ var commentSchema = mongoose.Schema({
 
   Commenter: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "mf_user"
+    ref: table.user
   }
 });
 
-module.exports = mongoose.model("mf_comment", commentSchema);
+module.exports = mongoose.model(table.comment, commentSchema);

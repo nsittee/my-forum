@@ -1,4 +1,6 @@
 var mongoose = require("mongoose");
+var table = require("./table-constant");
+
 
 var threadSchema = mongoose.Schema({
   // _id: mongoose.Schema.Types.ObjectId,
@@ -10,16 +12,16 @@ var threadSchema = mongoose.Schema({
 
   Author: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "mf_user"
+    ref: table.user
   },
   ThreadComment: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: "mf_comment"
+    ref: table.comment
   }],
-  SubRedditParent: [{
+  SubParent: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: "mf_sub_reddit"
+    ref: table.sub
   }]
 });
 
-module.exports = mongoose.model("mf_thread", threadSchema);
+module.exports = mongoose.model(table.thread, threadSchema);

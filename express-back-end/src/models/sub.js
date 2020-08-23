@@ -1,19 +1,20 @@
 var mongoose = require("mongoose");
+var table = require("./table-constant");
 
-var subRedditSchema = mongoose.Schema({
+var subSchema = mongoose.Schema({
   // _id: mongoose.Schema.Types.ObjectId,
   SubLongName: String,
   SubShortName: String,
 
   SubUser: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: "mf_user"
+    ref: table.user
   }],
   SubThread: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: "mf_thread"
+    ref: table.thread
   }]
 
 });
 
-module.exports = mongoose.model("mf_sub_reddit", subRedditSchema);
+module.exports = mongoose.model(table.sub, subSchema);
