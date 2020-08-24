@@ -8,26 +8,38 @@ const SubModel = require('../models/sub');
 const CommentModel = require('../models/comment');
 
 app.get('/populate', (req, res) => {
+  var response = {
+    message: "populate",
+    subs: [],
+    users: [],
+    threads: []
+  }
+
   // Create Sub Reddit
   const subNumber = Math.floor(Math.random() * 1000) + 1;
-  var sub = new SubModel({
+  const sub = new SubModel({
     SubLongName: `SubReddit ${subNumber}`,
     SubShortName: `${subNumber}`
   });
   sub.save().then(newSub => {
+
     // Create User
     const userNumberRand = Math.random();
     const username = "test-user-" + userNumberRand;
-    var user = new UserModel({
+    const user = new UserModel({
       Username: username,
       Password: "Pass",
       UserSub: [newSub._id]
     });
+    response.users.push(user);
+    newSub.SubUser.push(user._id);
+    newSub.save();
+    response.subs.push(newSub);
     user.save().then(newUser => {
       // Create Thread for User
       const threadPosted = Math.floor(Math.random() * 10) + 1;
       for (var i = 0; i < threadPosted; i++) {
-        let thread = new ThreadModel({
+        const thread = new ThreadModel({
           Title: `Story of ${username}, ${i + 1}/${threadPosted}`,
           Content: "Place Holder",
           Upvote: Math.floor(Math.random() * 1000) + 1,
@@ -35,15 +47,12 @@ app.get('/populate', (req, res) => {
           CreatedDate: Date.now(),
           Author: newUser._id,
         });
+        response.threads.push(thread);
 
         if (i == threadPosted - 1) {
           console.log('last thread');
           thread.save().then(newThread => {
-            return res.status(200).json({
-              sub: newSub,
-              user: newUser,
-              thread: newThread,
-            });
+            return res.status(200).json(response);
           }).catch(err => {
             console.log(err);
             return res.status(500).json(err);
@@ -60,17 +69,12 @@ app.get('/populate', (req, res) => {
     console.log(err);
     return res.status(500).json(err);
   });
-
-
-
   // Create Comment for the above thread
-
-
-
-
-
-
 });
+
+async function addThread() {
+
+}
 
 // app.get('/init', (req, res) => {
 //   const userNumberRand = Math.random();
