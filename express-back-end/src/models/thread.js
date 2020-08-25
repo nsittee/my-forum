@@ -18,10 +18,10 @@ var threadSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: table.comment
   }],
-  SubParent: [{
+  SubParent: {
     type: mongoose.Schema.Types.ObjectId,
     ref: table.sub
-  }]
+  }
 });
 
 module.exports = mongoose.model(table.thread, threadSchema);
