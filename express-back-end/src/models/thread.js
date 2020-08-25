@@ -6,9 +6,9 @@ var threadSchema = mongoose.Schema({
   // _id: mongoose.Schema.Types.ObjectId,
   Title: String,
   Content: String,
-  Upvote: Number,
-  Downvote: Number,
-  CreatedDate: Date,
+  Upvote: { type: Number, default: 0 },
+  Downvote: { type: Number, default: 0 },
+  CreatedDate: { type: Date, default: Date.now() },
 
   Author: {
     type: mongoose.Schema.Types.ObjectId,
