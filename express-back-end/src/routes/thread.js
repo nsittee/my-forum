@@ -1,7 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const ThreadModel = require('../models/thread');
-const checkAuth = require('../middleware/check-auth')
+const checkAuth = require('../middleware/check-auth');
+const mongoose = require('mongoose');
+
+const User = require('../models/user');
+const Sub = require('../models/sub');
 
 router.get('/', (req, res, next) => {
   ThreadModel.find()
@@ -28,8 +32,21 @@ router.post('/', checkAuth, (req, res, next) => {
 
   const thread = new ThreadModel({
     Title: reqThread.Title,
+    Author: mongoose.Types.ObjectId(reqThread.Author._id),
+    SubParent: mongoose.Types.ObjectId(reqThread.SubParent._id),
     Content: reqThread.Content
   });
+
+  User.findOne({ _id: reqThread.Author._id }).exec().then(user => {
+    user.UserThread.push(thread._id);
+    user.save();
+  });
+
+  Sub.findOne({ _id: reqThread.SubParent._id }).exec().then(sub => {
+    sub.SubThread.push(thread._id);
+    sub.save();
+  });
+
   thread.save().then(newThread => {
     res.status(200).json({
       message: "create new thread completed",
@@ -39,13 +56,5 @@ router.post('/', checkAuth, (req, res, next) => {
     res.status(500).json({ message: "saving thread error" });
   });
 });
-
-// router.delete('/:id', (req, res, next) => {
-//   const id = req.params.id;
-//   res.status(200).json({
-//     message: "delete => thread",
-//     id: id
-//   });
-// });
 
 module.exports = router;
