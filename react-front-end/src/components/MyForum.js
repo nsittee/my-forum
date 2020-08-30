@@ -13,6 +13,7 @@ class MyForum extends Component {
     return (
       <div>
         <Header />
+        <br />
         <Container maxWidth="md">
           <Switch>
             <Route path="/profile" component={Profile} />

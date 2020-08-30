@@ -1,13 +1,20 @@
 var mongoose = require("mongoose");
+var table = require("./table-constant");
+
+
 var userSchema = mongoose.Schema({
   // _id: mongoose.Schema.Types.ObjectId,
-  _id: mongoose.Schema.Types.ObjectId,
-  userName: { type: String, required: true, unique: true },
-  userPassword: { type: String, required: true },
-  userThread: [{
+  Username: { type: String, required: true, unique: true },
+  Password: { type: String, required: true },
+
+  UserThread: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: "mf_threads"
+    ref: table.thread
+  }],
+  UserSub: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: table.sub
   }]
 });
 
-module.exports = mongoose.model("mf_users", userSchema);
+module.exports = mongoose.model(table.user, userSchema);

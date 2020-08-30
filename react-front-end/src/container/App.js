@@ -1,15 +1,17 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom';
+import MyForum from '../components/MyForum';
+import { MuiThemeProvider } from '@material-ui/core';
 
-import MyForum from '../components/MyForum'
-
+import Theme from './MuiTheme';
 
 function App() {
-
   return (
     <BrowserRouter>
       <div className="App">
-        <MyForum />
+        <MuiThemeProvider theme={Theme}>
+          <MyForum />
+        </MuiThemeProvider>
       </div>
     </BrowserRouter>
   );

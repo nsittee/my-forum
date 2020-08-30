@@ -16,7 +16,6 @@ router.get('/', (req, res, next) => {
 router.get('/:id', (req, res, next) => {
   const id = req.params.id;
   User.find({ _id: id })
-    .populate('userThread')
     .exec()
     .then(user => {
       res.status(200).json(user);
@@ -25,47 +24,24 @@ router.get('/:id', (req, res, next) => {
     });
 });
 
-router.post('/login', (req, res, next) => {
-  User.find({ userName: req.body.username }).exec().then(userList => {
-    if (userList.length == 1) {
-      const user = userList[0];
-      bcrypt.compare(req.body.password, user.userPassword, (err, hashResult) => {
-        if (err) return res.status(401).json({ message: "auth failed" });
-        if (hashResult) {
-          const token = jwt.sign(
-            { username: user.userName },
-            config.secretKey,
-            { expiresIn: "1h" }
-          );
-          return res.status(200).json({
-            message: "login!!",
-            token: token,
-          });
-        }
-      });
-    } else res.status(409).send({ message: "error" });
-  });
-})
-
 router.post('/signup', (req, res, next) => {
   if (req.body.username == null || req.body.password == null) {
-    res.status(400).json({ message: "invalid argument" });
+    res.status(400).json({ message: "invalid body" });
     return;
   }
-  User.find({ userName: req.body.username }).exec().then(userList => {
+  User.find({ Username: req.body.username }).exec().then(userList => {
     if (userList.length == 0) {
       bcrypt.hash(req.body.password, 10, (err, hash) => {
         if (err) {
-          res.status(500).send({ message: "error" });
+          res.status(500).send({ message: "error with bcrypt" });
         } else {
-          var newUser = new User({
-            _id: mongoose.Types.ObjectId(),
-            userName: req.body.username,
-            userPassword: hash,
+          var user = new User({
+            Username: req.body.username,
+            Password: hash,
           });
-          newUser.save().then(newUser => {
+          user.save().then(newUser => {
             res.status(200).json({
-              message: "created new user",
+              message: "signup completed",
               data: newUser,
             });
           });
@@ -76,5 +52,30 @@ router.post('/signup', (req, res, next) => {
     }
   });
 });
+
+router.post('/signin', (req, res, next) => {
+  User.find({ Username: req.body.username }).exec().then(userList => {
+    console.log(userList)
+    if (userList.length == 1) {
+      const user = userList[0];
+      bcrypt.compare(req.body.password, user.Password, (err, hashResult) => {
+        if (err) return res.status(401).json({ message: "auth failed" });
+        if (hashResult) {
+          const token = jwt.sign(
+            { username: user.Username },
+            config.secretKey,
+            { expiresIn: "1h" }
+          );
+          return res.status(200).json({
+            message: "signin completed",
+            token: token,
+          });
+        }
+      });
+    } else res.status(409).send({ message: "username or password incorrect" });
+  });
+})
+
+
 
 module.exports = router;
