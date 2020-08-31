@@ -1,16 +1,18 @@
 import React from 'react';
+import { useHistory } from 'react-router';
 import { Card, Typography, Grid } from '@material-ui/core';
 import { KeyboardArrowUp, KeyboardArrowDown } from '@material-ui/icons'
 
 import ThreadContext from '../../context/thread-context'
 
 const Thread = props => {
+	const history = useHistory();
 	const thread = props.thread;
 	const displayVote = thread.Upvote - thread.Downvote;
 	const context = React.useContext(ThreadContext);
 	return (
 		<Grid item xs={12}>
-			<Card onClick={() => props.onThreadDialogClicked(thread._id)}>
+			<Card onClick={() => history.push(`/${thread._id}`)}>
 				<Grid container spacing={1}>
 					<Grid item>
 						<Card onClick={e => context.voteThreadHandler(e, thread, 'up')}><KeyboardArrowUp /></Card>
@@ -33,7 +35,7 @@ const Thread = props => {
 					</Grid>
 				</Grid>
 			</Card>
-		</Grid>
+		</Grid >
 	);
 };
 

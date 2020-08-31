@@ -11,48 +11,6 @@ import NewThreadButton from '../Threads/NewThreadButton';
 class MainThread extends Component {
   state = {
     threads: [],
-    dialogNewThreadOn: false,
-  }
-
-  openCreateNewThread = () => {
-    this.setState({ dialogNewThreadOn: true });
-  }
-
-  closeNewThreadModal = () => {
-    this.setState({ dialogNewThreadOn: false });
-  }
-
-  onThreadDialogClicked = (id) => {
-    this.props.history.push(`/${id}`);
-  }
-
-  createNewThread = (event) => {
-    event.preventDefault();
-    const title = event.target[0].value;
-    const content = event.target[1].value;
-    const date = new Date();
-    const isoDate = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
-    const time = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
-    let oldThreadState = this.state.threads;
-    let newThreads = {
-      _id: oldThreadState.length,
-      threadTitle: title,
-      subRedditId: 0,
-      subReddit: 'TIFU',
-      content: content,
-      author: this.state.currentUser,
-      published: {
-        date: isoDate,
-        time: time
-      },
-      upVote: 0,
-      downVote: 0,
-      comments: null
-    };
-    oldThreadState.push(newThreads);
-    this.setState({ newThreads: oldThreadState });
-    event.target.reset();
-    this.setState({ dialogNewThreadOn: false })
   }
 
   componentDidMount() {
@@ -75,16 +33,14 @@ class MainThread extends Component {
     mainThreads = this.state.threads.map((thread) => {
       return <Thread
         key={thread._id}
-        thread={thread}
-        onThreadDialogClicked={this.onThreadDialogClicked} />
+        thread={thread} />
     });
 
     return (
       <Grid container spacing={1}>
         <Grid item xs={12}>
           <Grid container spacing={1}>
-            <NewThreadButton
-              openCreateNewThread={() => this.props.history.push('/create')} />
+            <NewThreadButton />
             {mainThreads}
 
             <Route exact path='/:id' component={ThreadDialog} />
