@@ -1,17 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const config = require('../configs/config');
 
 const User = require('../models/user');
-
-router.get('/', (req, res, next) => {
-  User.find().exec().then(users => {
-    res.status(200).json(users);
-  });
-});
 
 router.get('/:id', (req, res, next) => {
   const id = req.params.id;
@@ -75,7 +68,5 @@ router.post('/signin', (req, res, next) => {
     } else res.status(409).send({ message: "username or password incorrect" });
   });
 })
-
-
 
 module.exports = router;
