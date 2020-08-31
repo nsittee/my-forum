@@ -70,16 +70,7 @@ class MainThread extends Component {
   }
 
   render() {
-    let createDialog = null;
     let mainThreads = null;
-
-    if (this.state.dialogNewThreadOn) {
-      createDialog = <NewThreadDialog
-        dialogNewThreadOn={this.state.dialogNewThreadOn}
-        closeModal={this.closeNewThreadModal}
-        submitNewThread={this.createNewThread}
-      />
-    }
 
     mainThreads = this.state.threads.map((thread) => {
       return <Thread
@@ -93,11 +84,11 @@ class MainThread extends Component {
         <Grid item xs={12}>
           <Grid container spacing={1}>
             <NewThreadButton
-              openCreateNewThread={this.openCreateNewThread}
-              closeNewThreadModal={this.closeNewThreadModal} />
+              openCreateNewThread={() => this.props.history.push('/create')} />
             {mainThreads}
-            {createDialog}
+
             <Route exact path='/:id' component={ThreadDialog} />
+            <Route exact path="/create" component={NewThreadDialog} />
           </Grid>
         </Grid>
       </Grid>

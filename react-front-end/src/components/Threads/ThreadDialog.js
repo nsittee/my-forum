@@ -33,7 +33,7 @@ class ThreadDialog extends Component {
           open={true}
           onBackdropClick={this.closeDialog}
           onEscapeKeyDown={this.closeDialog}
-          transitionDuration='0'
+          transitionDuration={0}
           maxWidth='lg'
           fullWidth={true} >
           <Container>
