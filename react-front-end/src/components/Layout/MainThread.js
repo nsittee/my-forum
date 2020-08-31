@@ -60,7 +60,7 @@ class MainThread extends Component {
   }
 
   getContent = () => {
-    Axios.get(`http://localhost:5000/api/threads`)
+    Axios.get(`http://localhost:5000/api/subs/home`)
       .then(res => {
         console.log(res);
         this.setState({ threads: res.data });
