@@ -10,6 +10,7 @@ import NewThreadButton from '../Threads/NewThreadButton';
 
 class MainThread extends Component {
   state = {
+    subId: null,
     threads: [],
   }
 
@@ -18,13 +19,17 @@ class MainThread extends Component {
   }
 
   getContent = () => {
-    Axios.get(`http://localhost:5000/api/subs/home`)
-      .then(res => {
-        console.log(res);
-        this.setState({ threads: res.data });
-        return;
-      })
-      .catch(err => console.log(err));
+    const subLongName = this.props.match.params.sub;
+    var url = "http://localhost:5000/api/subs";
+    if (subLongName) url += "/" + subLongName;
+
+    console.log(url);
+
+    Axios.get(url).then(res => {
+      console.log(res.data.data);
+      this.setState({ threads: res.data.data.SubThread });
+      return;
+    });
   }
 
   render() {
@@ -43,8 +48,8 @@ class MainThread extends Component {
             <NewThreadButton />
             {mainThreads}
 
-            <Route exact path='/:id' component={ThreadDialog} />
-            <Route exact path="/create" component={NewThreadDialog} />
+            <Route exact path='/r/:sub/:id' component={ThreadDialog} />
+            <Route exact path='/create' component={NewThreadDialog} />
           </Grid>
         </Grid>
       </Grid>
