@@ -33,7 +33,7 @@ class ThreadDialog extends Component {
           open={true}
           onBackdropClick={this.closeDialog}
           onEscapeKeyDown={this.closeDialog}
-          transitionDuration='0'
+          transitionDuration={0}
           maxWidth='lg'
           fullWidth={true} >
           <Container>
@@ -42,10 +42,10 @@ class ThreadDialog extends Component {
                 {/* < br /> <br />< br /> <br /> */}
                 <Card variant="outlined">
                   <CardContent>
-                    <Typography color="textSecondary" gutterBottom> {thread.author} </Typography>
-                    <Typography variant="h5" component="h2"> {thread.threadTitle} </Typography>
-                    <Typography color="textSecondary"> {thread.published.date + ' ' + thread.published.time} </Typography>
-                    <Typography variant="body2" component="p">{thread.content} </Typography>
+                    <Typography color="textSecondary" gutterBottom> {thread.Author.Username} </Typography>
+                    <Typography variant="h5" component="h2"> {thread.Title} </Typography>
+                    <Typography color="textSecondary"> {thread.CreatedDate} </Typography>
+                    <Typography variant="body2" component="p">{thread.Content} </Typography>
                   </CardContent>
                 </Card>
                 {/* < br /> <br /> */}

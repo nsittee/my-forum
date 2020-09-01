@@ -1,37 +1,45 @@
 import React from 'react';
-import { Card, Typography, Grid } from '@material-ui/core';
+import { useHistory } from 'react-router';
+import { Card, Typography, Grid, Link } from '@material-ui/core';
 import { KeyboardArrowUp, KeyboardArrowDown } from '@material-ui/icons'
 
 import ThreadContext from '../../context/thread-context'
 
 const Thread = props => {
-	const displayVote = props.thread.upVote - props.thread.downVote;
+	const history = useHistory();
+	const thread = props.thread;
+	const displayVote = thread.Upvote - thread.Downvote;
 	const context = React.useContext(ThreadContext);
-
 	return (
 		<Grid item xs={12}>
-			<Card onClick={() => props.onThreadDialogClicked(props.thread._id)}>
+			<Card onClick={() => history.push(`/r/${thread.SubParent.SubLongName}/${thread._id}`)}>
 				<Grid container spacing={1}>
 					<Grid item>
-						<Card onClick={e => context.voteThreadHandler(e, props.thread, 'up')}><KeyboardArrowUp /></Card>
+						<Card onClick={e => context.voteThreadHandler(e, thread, 'up')}><KeyboardArrowUp /></Card>
 						<Typography align='center' variant='h6'>{displayVote}</Typography>
-						<Card onClick={e => context.voteThreadHandler(e, props.thread, 'down')}><KeyboardArrowDown /></Card>
+						<Card onClick={e => context.voteThreadHandler(e, thread, 'down')}><KeyboardArrowDown /></Card>
 					</Grid>
 
 					<Grid item>
 						<Typography color="textSecondary">
-							{props.thread.subReddit}: posted by {props.thread.author + ' '}
-                                on {props.thread.published.date} {props.thread.published.time}
+							<Link color="secondary" onClick={e => subParentClick(e, thread, history)}>
+								{thread.SubParent.SubLongName}</Link>
+							: posted by {thread.Author.Username + ' '}
+							on {thread.CreatedDate}
 						</Typography>
-						<Typography variant="h6" component="h2">
-							{props.thread.threadTitle}
-						</Typography>
+						<Typography variant="h6"> {thread.Title} </Typography>
 					</Grid>
 				</Grid>
 			</Card>
-		</Grid>
+		</Grid >
 	);
 };
+
+const subParentClick = (e, thread, history) => {
+	e.stopPropagation();
+	console.log(`/r/${thread.SubParent.SubLongName}`);
+	history.push(`/r/${thread.SubParent.SubLongName}`);
+}
 
 Thread.propTypes = {
 

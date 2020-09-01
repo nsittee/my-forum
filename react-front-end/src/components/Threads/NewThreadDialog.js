@@ -1,17 +1,21 @@
 import React from 'react'
+import { useHistory } from "react-router";
 import { Card, TextField, Button, CardContent, Dialog } from '@material-ui/core'
 
-const NewThreadDialog = (props) => {
+const NewThreadDialog = () => {
+  const history = useHistory();
 
   return (
     <Dialog
-      open={props.dialogNewThreadOn}
+      open={true}
       maxWidth='lg'
       fullWidth={true}
-      onBackdropClick={props.closeModal}>
+      onBackdropClick={() => history.push("/")}
+      onEscapeKeyDown={() => history.push("/")}
+      transitionDuration={0}>
       <Card>
         <CardContent>
-          <form autoComplete="off" onSubmit={props.submitNewThread}>
+          <form autoComplete="off">
             <TextField
               label='Title'
               fullWidth />

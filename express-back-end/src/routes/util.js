@@ -14,7 +14,7 @@ app.get('/populate', (req, res) => {
   // Create Sub Reddit
   const subNumber = Math.floor(Math.random() * 1000) + 1;
   const sub = new SubModel({
-    SubLongName: `SubReddit ${subNumber}`,
+    SubLongName: `sub-reddit-${subNumber}`,
     SubShortName: `${subNumber}`,
     SubUser: [],
     SubThread: [],
