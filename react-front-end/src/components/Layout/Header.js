@@ -11,7 +11,7 @@ const Header = () => {
     <AppBar position="sticky" elevation={0}>
       <Toolbar>
         <Grid container>
-          <Link to="/">
+          <Link to="/" onClick={() => window.location.reload()}>
             <img
               src={Logo}
               alt='reddit'
