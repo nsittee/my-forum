@@ -37,8 +37,10 @@ const Thread = props => {
 
 const subParentClick = (e, thread, history) => {
 	e.stopPropagation();
-	console.log(`/r/${thread.SubParent.SubLongName}`);
-	history.push(`/r/${thread.SubParent.SubLongName}`);
+	const newUrl = `/r/${thread.SubParent.SubLongName}`;
+	console.log(newUrl);
+	history.push(newUrl);
+	window.location.reload();
 }
 
 Thread.propTypes = {

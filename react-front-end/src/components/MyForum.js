@@ -18,9 +18,10 @@ class MyForum extends Component {
           <Switch>
             <Route path="/profile" component={Profile} />
             <Route path="/setting" component={UserSetting} />
+            {/* <Route path="/submit" component={} /> */}
 
-            <Route exact path="/r/:sub" component={MainThread} />
-            <Route exact path="/" component={MainThread} />
+            <Route path="/r/:sub" component={MainThread} />
+            <Route path="/" component={MainThread} />
           </Switch>
         </Container>
       </div>
