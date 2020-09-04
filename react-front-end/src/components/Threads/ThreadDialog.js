@@ -10,13 +10,9 @@ class ThreadDialog extends Component {
   getThread = (id) => {
     Axios.get(`http://localhost:5000/api/threads/${id}`)
       .then(res => {
-        console.log(res.data);
         this.setState({ thread: res.data });
       })
       .catch(err => console.log(err));
-  }
-  closeDialog = () => {
-    this.props.history.push("/");
   }
 
   componentDidMount = () => {
@@ -31,15 +27,15 @@ class ThreadDialog extends Component {
       threadDialog =
         <Dialog
           open={true}
-          onBackdropClick={this.closeDialog}
-          onEscapeKeyDown={this.closeDialog}
+          onBackdropClick={() => this.props.history.goBack()}
+          onEscapeKeyDown={() => this.props.history.goBack()}
           transitionDuration={0}
           maxWidth='lg'
           fullWidth={true} >
           <Container>
             <Grid container alignContent='center'>
               <Grid item xs={12}>
-                {/* < br /> <br />< br /> <br /> */}
+                < br /> <br />
                 <Card variant="outlined">
                   <CardContent>
                     <Typography color="textSecondary" gutterBottom> {thread.Author.Username} </Typography>
@@ -48,17 +44,17 @@ class ThreadDialog extends Component {
                     <Typography variant="body2" component="p">{thread.Content} </Typography>
                   </CardContent>
                 </Card>
-                {/* < br /> <br /> */}
+                < br /> <br />< br /> <br />< br /> <br />< br /> <br />
               </Grid>
             </Grid>
           </Container>
-        </Dialog>;
+        </Dialog >;
     }
 
     return (
       <div>
         {threadDialog}
-      </div>
+      </div >
     );
   }
 }

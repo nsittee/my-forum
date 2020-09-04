@@ -6,7 +6,7 @@ const NewThreadButton = (props) => {
   const history = useHistory();
   return (
     <Grid item xs={12}>
-      <Card onClick={() => history.push('/create')}>
+      <Card onClick={() => history.push('/submit')}>
         <CardContent>
           <TextField variant='outlined' fullWidth label='Create Post' />
         </CardContent>

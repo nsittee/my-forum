@@ -49,7 +49,7 @@ class MainThread extends Component {
             {mainThreads}
 
             <Route exact path='/r/:sub/:id' component={ThreadDialog} />
-            <Route exact path='/create' component={NewThreadDialog} />
+            <Route exact path='/submit' component={NewThreadDialog} />
           </Grid>
         </Grid>
       </Grid>

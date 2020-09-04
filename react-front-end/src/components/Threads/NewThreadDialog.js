@@ -10,8 +10,8 @@ const NewThreadDialog = () => {
       open={true}
       maxWidth='lg'
       fullWidth={true}
-      onBackdropClick={() => history.push("/")}
-      onEscapeKeyDown={() => history.push("/")}
+      onBackdropClick={() => history.goBack()}
+      onEscapeKeyDown={() => history.goBack()}
       transitionDuration={0}>
       <Card>
         <CardContent>
