@@ -11,18 +11,14 @@ const Header = () => {
     <AppBar position="sticky" elevation={0}>
       <Toolbar>
         <Grid container>
-          <Link to="/" onClick={() => window.location.reload()}>
+          <a href="/">
             <img
               src={Logo}
               alt='reddit'
               height='40' />
-          </Link>
-          <Grid item>
-            <Link to="profile">profile</Link>
-          </Grid>
-          <Grid item>
-            <Link to="/setting">setting</Link>
-          </Grid>
+          </a>
+          <a href="/profile">Profile</a>
+          <a href="/setting">Setting</a>
         </Grid>
       </Toolbar>
     </AppBar>

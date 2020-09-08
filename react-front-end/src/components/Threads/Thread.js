@@ -22,8 +22,8 @@ const Thread = props => {
 
 					<Grid item>
 						<Typography color="textSecondary">
-							<Link color="secondary" onClick={e => subParentClick(e, thread, history)}>
-								{thread.SubParent.SubLongName}</Link>
+							<a href={`/r/${thread.SubParent.SubLongName}`} onClick={e => e.stopPropagation()}>
+								{thread.SubParent.SubLongName} </a>
 							: posted by {thread.Author.Username + ' '}
 							on {thread.CreatedDate}
 						</Typography>
