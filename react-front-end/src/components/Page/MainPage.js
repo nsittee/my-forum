@@ -4,11 +4,10 @@ import { Grid } from '@material-ui/core';
 import Axios from 'axios';
 
 import Thread from '../Threads/Thread';
-import NewThreadDialog from '../Threads/NewThreadDialog';
 import ThreadDialog from '../Threads/ThreadDialog';
 import NewThreadButton from '../Threads/NewThreadButton';
 
-class MainThread extends Component {
+class MainPage extends Component {
   state = {
     subId: null,
     threads: [],
@@ -49,7 +48,7 @@ class MainThread extends Component {
             {mainThreads}
 
             <Route exact path='/r/:sub/:id' component={ThreadDialog} />
-            <Route exact path='/submit' component={NewThreadDialog} />
+            {/* <Route exact path='/submit' component={NewThreadDialog} /> */}
           </Grid>
         </Grid>
       </Grid>
@@ -57,4 +56,4 @@ class MainThread extends Component {
   }
 }
 
-export default MainThread
+export default MainPage
