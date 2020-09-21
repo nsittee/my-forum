@@ -3,27 +3,45 @@ import { Route, Switch } from 'react-router-dom';
 import { Container } from '@material-ui/core'
 
 import Header from './Layout/Header'
-import MainThread from './Layout/MainThread';
-import Profile from './Layout/Profile';
-import UserSetting from './Layout/UserSetting';
+import MainPage from './Page/MainPage';
+import ProfilePage from './Page/ProfilePage';
+import UserSettingPage from './Page/UserSettingPage';
+import SubmitPage from './Page/SubmitPage';
+import AuthContext from '../context/auth-context';
 
 const MyForum = () => {
   return (
     <div>
-      <Header />
-      <br />
-      <Container maxWidth="md">
-        <Switch>
-          <Route path="/profile" component={Profile} />
-          <Route path="/setting" component={UserSetting} />
-          {/* <Route path="/submit" component={} /> */}
+      <AuthContext.Provider value={{
+        authenticated: false,
+        username: "bonbon",
+        signIn: signInHandler,
+        signOut: signOutHandler
+      }}>
 
-          <Route path="/r/:sub" component={MainThread} />
-          <Route path="/" component={MainThread} />
-        </Switch>
-      </Container>
+        <Header />
+        <br />
+        <Container maxWidth="md">
+          <Switch>
+            {/* Main routing each page */}
+            <Route path="/profile" component={ProfilePage} />
+            <Route path="/setting" component={UserSettingPage} />
+            <Route path="/submit" component={SubmitPage} />
+
+            <Route path="/r/:sub" component={MainPage} />
+            <Route path="/" component={MainPage} />
+          </Switch>
+        </Container>
+      </AuthContext.Provider>
     </div>
   );
+}
+
+const signInHandler = (username, password) => {
+  console.log(username + " " + password)
+}
+const signOutHandler = () => {
+
 }
 
 
