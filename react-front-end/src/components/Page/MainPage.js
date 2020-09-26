@@ -10,6 +10,9 @@ import NewThreadButton from '../Threads/NewThreadButton';
 
 const MainPage = (props) => {
   const [threads, setThreads] = useState([])
+  const [subName] = useState(props.match.params.sub)
+
+
   var mainThreads = null;
   mainThreads = threads.map((thread) => {
     return <Thread
@@ -17,19 +20,13 @@ const MainPage = (props) => {
       thread={thread} />
   });
 
-  useEffect(() => {
-    const fetchDate = async () => {
-      const subLongName = props.match.params.sub;
-      var url = "http://localhost:5000/api/subs";
-      if (subLongName) url += "/" + subLongName;
+  const fetchThreadData = () => {
+    var url = "http://localhost:5000/api/subs/" + (subName ? subName : ``)
+    console.log(url)
+    Axios.get(url).then(res => setThreads(res.data.data.SubThread))
+  }
 
-      await Axios.get(url).then(res => {
-        console.log(res.data.data);
-        setThreads(res.data.data.SubThread)
-      });
-    }
-    fetchDate()
-  }, [])
+  useEffect(fetchThreadData, [])
 
   return (
     <Grid container spacing={1}>
