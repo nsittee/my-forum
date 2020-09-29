@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Route, Switch } from 'react-router-dom';
 import { Container } from '@material-ui/core'
 
@@ -8,8 +8,14 @@ import ProfilePage from './Page/ProfilePage';
 import UserSettingPage from './Page/UserSettingPage';
 import SubmitPage from './Page/SubmitPage';
 import AuthContext from '../context/auth-context';
+import UiContext from '../context/ui-context'
+import Login from '../components/Layout/Login'
 
 const MyForum = () => {
+  const uiContext = useContext(UiContext)
+  let mainModal = null
+  if (uiContext.showSignInDialog || true) mainModal = <Login />
+
   return (
     <div>
       <AuthContext.Provider value={{
@@ -21,6 +27,7 @@ const MyForum = () => {
 
         <Header />
         <br />
+        {mainModal}
         <Container maxWidth="md">
           <Switch>
             {/* Main routing each page */}

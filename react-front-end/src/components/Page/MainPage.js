@@ -23,7 +23,9 @@ const MainPage = (props) => {
   const fetchThreadData = () => {
     var url = "http://localhost:5000/api/subs/" + (subName ? subName : ``)
     console.log(url)
-    Axios.get(url).then(res => setThreads(res.data.data.SubThread))
+    Axios.get(url)
+      .then(res => setThreads(res.data.data.SubThread))
+      .catch(err => console.log(err))
   }
 
   useEffect(fetchThreadData, [])

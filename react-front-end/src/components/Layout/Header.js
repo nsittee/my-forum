@@ -5,9 +5,11 @@ import { Grid, Button } from '@material-ui/core';
 
 import Logo from './logo.png';
 import AuthContext from '../../context/auth-context';
+import UiContext from '../../context/ui-context'
 
 const Header = () => {
   const authContext = useContext(AuthContext)
+  const uiContext = useContext(UiContext)
   console.log(authContext)
 
   let headerStatus = null
