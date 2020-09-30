@@ -5,11 +5,10 @@ import { Grid, Button } from '@material-ui/core';
 
 import Logo from './logo.png';
 import AuthContext from '../../context/auth-context';
-import UiContext from '../../context/ui-context'
+import Login from './Login'
 
 const Header = () => {
   const authContext = useContext(AuthContext)
-  const uiContext = useContext(UiContext)
   console.log(authContext)
 
   let headerStatus = null
@@ -35,7 +34,7 @@ const Header = () => {
           <a href="/profile">Profile</a>
           <a href="/setting">Setting</a>
           {headerStatus}
-
+          <Login />
         </Grid>
       </Toolbar>
     </AppBar>

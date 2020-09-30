@@ -1,6 +1,6 @@
 import React from 'react'
 
 export default React.createContext({
-  showSignInDialog: true,
-  showSignUpDialog: false
+  showSignInDialog: null,
+  showSignUpDialog: null
 })
