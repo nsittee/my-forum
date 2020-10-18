@@ -6,17 +6,20 @@ import { Grid, Button } from '@material-ui/core';
 import Logo from './logo.png';
 import AuthContext from '../../context/auth-context';
 import Login from './Login'
+import UiContext from '../../context/ui-context';
 
 const Header = () => {
   const authContext = useContext(AuthContext)
+  const { signIn, setSignIn } = useContext(UiContext)
+
   let headerStatus = null
   if (!authContext.authenticated)
     headerStatus = <div>
-      <Button onClick={signInDialog}>
+      <Button onClick={() => setSignIn(true)}>
         Sign In </Button>
-      <Button onClick={signUpDialog}>
+      <Button onClick={() => { }}>
         Sign Up </Button>
-    </div>
+    </div >
   else headerStatus = <Button>{authContext.username}</Button>
 
   return (
@@ -39,11 +42,5 @@ const Header = () => {
   );
 }
 
-function signInDialog() {
-  console.log("Signin Dialog");
-}
-function signUpDialog() {
-  console.log("Signup Dialog");
-}
 
 export default Header;
