@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useState } from 'react'
 import { Route, Switch } from 'react-router-dom';
 import { Container } from '@material-ui/core'
 
@@ -12,12 +12,14 @@ import UiContext from '../context/ui-context'
 // import Login from '../components/Layout/Login'
 
 const MyForum = () => {
+  const [signIn, setSignIn] = useState(true)
+  const [signUp, setSignUp] = useState(false)
 
   return (
     <div>
       <UiContext.Provider value={{
-        showSignInDialog: true,
-        showSignUpDialog: false
+        signIn: signIn, setSignIn: setSignIn,
+        signUp: signUp, setSignUp: setSignUp
       }}>
         <AuthContext.Provider value={{
           authenticated: false,

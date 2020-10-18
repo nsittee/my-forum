@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { TextField, Button, Dialog } from '@material-ui/core';
 
 import AuthContext from '../../context/auth-context'
@@ -6,26 +6,13 @@ import UiContext from '../../context/ui-context'
 
 const Login = (props) => {
   const context = useContext(AuthContext)
-  const uiContext = useContext(UiContext)
-  // console.log(uiContext)
-
-  const [dialogStatus, setDialogStatus] = useState(false)
-
-  const disableDialog = () => {
-    setDialogStatus(false)
-    // setUiContext({ showSignInDialog: false })
-    console.log("disable")
-  }
-
-  useEffect(() => {
-    setDialogStatus(uiContext.showSignInDialog)
-  })
+  const { signIn, setSignIn } = useContext(UiContext)
 
   return (
     <Dialog
-      open={dialogStatus}
-      onBackdropClick={disableDialog}
-      onEscapeKeyDown={disableDialog}
+      open={signIn}
+      onBackdropClick={() => setSignIn(false)}
+      onEscapeKeyDown={() => setSignIn(false)}
       transitionDuration={0}
       maxWidth='lg'
       fullWidth={true} >
@@ -40,7 +27,6 @@ const Login = (props) => {
             color="primary">Sign in </Button>
         </form>
       </div >
-
     </Dialog>
   )
 }

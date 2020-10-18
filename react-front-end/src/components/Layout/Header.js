@@ -9,8 +9,6 @@ import Login from './Login'
 
 const Header = () => {
   const authContext = useContext(AuthContext)
-  console.log(authContext)
-
   let headerStatus = null
   if (!authContext.authenticated)
     headerStatus = <div>
@@ -42,10 +40,10 @@ const Header = () => {
 }
 
 function signInDialog() {
-  console.log("Display dialog");
+  console.log("Signin Dialog");
 }
 function signUpDialog() {
-  console.log("Display dialog");
+  console.log("Signup Dialog");
 }
 
 export default Header;
