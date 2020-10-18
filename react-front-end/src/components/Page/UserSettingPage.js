@@ -1,6 +1,6 @@
 import React from 'react'
 
-const UserSetting = () => {
+const UserSettingPage = () => {
   return (
     <div>
       <h1>User Setting</h1>
@@ -8,4 +8,4 @@ const UserSetting = () => {
   )
 }
 
-export default UserSetting;
+export default UserSettingPage;

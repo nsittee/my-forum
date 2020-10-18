@@ -1,18 +1,22 @@
 import React from 'react';
 import { useHistory } from 'react-router';
-import { Card, Typography, Grid, Link } from '@material-ui/core';
+import { Card, Typography, Grid } from '@material-ui/core';
 import { KeyboardArrowUp, KeyboardArrowDown } from '@material-ui/icons'
 
 import ThreadContext from '../../context/thread-context'
 
 const Thread = props => {
 	const history = useHistory();
+	const context = React.useContext(ThreadContext);
+
 	const thread = props.thread;
 	const displayVote = thread.Upvote - thread.Downvote;
-	const context = React.useContext(ThreadContext);
+	const subAuthor = thread.Author ? thread.Author.Username : 'null';
+	const subParent = thread.SubParent ? thread.SubParent.SubLongName : 'null';
+
 	return (
 		<Grid item xs={12}>
-			<Card onClick={() => history.push(`/r/${thread.SubParent.SubLongName}/${thread._id}`)}>
+			<Card onClick={() => history.push(`/r/${subParent}/${thread._id}`)}>
 				<Grid container spacing={1}>
 					<Grid item>
 						<Card onClick={e => context.voteThreadHandler(e, thread, 'up')}><KeyboardArrowUp /></Card>
@@ -22,9 +26,9 @@ const Thread = props => {
 
 					<Grid item>
 						<Typography color="textSecondary">
-							<Link color="secondary" onClick={e => subParentClick(e, thread, history)}>
-								{thread.SubParent.SubLongName}</Link>
-							: posted by {thread.Author.Username + ' '}
+							<a href={`/r/${subParent}`} onClick={e => e.stopPropagation()}>
+								{subParent} </a>
+							: posted by {subAuthor + ' '}
 							on {thread.CreatedDate}
 						</Typography>
 						<Typography variant="h6"> {thread.Title} </Typography>
@@ -33,18 +37,6 @@ const Thread = props => {
 			</Card>
 		</Grid >
 	);
-};
-
-const subParentClick = (e, thread, history) => {
-	e.stopPropagation();
-	const newUrl = `/r/${thread.SubParent.SubLongName}`;
-	console.log(newUrl);
-	history.push(newUrl);
-	window.location.reload();
-}
-
-Thread.propTypes = {
-
 };
 
 export default Thread;
