@@ -6,8 +6,8 @@ import AuthContext from '../../context/auth-context'
 import UiContext from '../../context/ui-context'
 
 const Login = (props) => {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const [username, setUsername] = useState('bonbonpostman')
+  const [password, setPassword] = useState('passwordXD')
 
   const context = useContext(AuthContext)
   const { signIn, setSignIn } = useContext(UiContext)
@@ -49,9 +49,17 @@ const Login = (props) => {
   )
 }
 
-const submitLogin = (event, un, pwd) => {
-  console.log(`Submit info is ${un} with ${pwd}`)
+const submitLogin = (event, username, password) => {
+  console.log(`Submit info is ${username} with ${password}`)
+  const data = {
+    username: username,
+    password: password
+  }
   const url = 'http://localhost:5000/api/users/signin'
-  Axios.post(url)
+  Axios.post(url, data).then(res => {
+    console.log(res)
+  }).catch(err => {
+    console.log(err)
+  })
 }
 export default Login;
