@@ -4,6 +4,7 @@ import Axios from 'axios';
 
 import AuthContext from '../../context/auth-context'
 import UiContext from '../../context/ui-context'
+import { useCookies } from 'react-cookie';
 
 const Login = (props) => {
   const [username, setUsername] = useState('bonbonpostman')
@@ -11,6 +12,8 @@ const Login = (props) => {
 
   const context = useContext(AuthContext)
   const { signIn, setSignIn } = useContext(UiContext)
+
+  const [cookies, setCookie] = useCookies(['my-cookie'])
 
   return (
     <Dialog
@@ -39,7 +42,7 @@ const Login = (props) => {
           < br /> <br />
           <Button
             variant="contained"
-            onClick={event => submitLogin(event, username, password)}
+            onClick={event => submitLogin(event, username, password, setCookie)}
             color="primary">
             Sign in
               </Button>
@@ -49,7 +52,7 @@ const Login = (props) => {
   )
 }
 
-const submitLogin = (event, username, password) => {
+const submitLogin = (event, username, password, setCookie) => {
   console.log(`Submit info is ${username} with ${password}`)
   const data = {
     username: username,
@@ -57,7 +60,13 @@ const submitLogin = (event, username, password) => {
   }
   const url = 'http://localhost:5000/api/users/signin'
   Axios.post(url, data).then(res => {
-    console.log(res)
+    const token = res.data.token
+    setCookie('tokenbon', token, {
+      path: '/',
+      // httpOnly: true,
+      sameSite: true
+    })
+    console.log(token)
   }).catch(err => {
     console.log(err)
   })
