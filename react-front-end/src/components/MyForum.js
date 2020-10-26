@@ -14,10 +14,14 @@ import UiContext from '../context/ui-context'
 // import Login from '../components/Layout/Login'
 
 const MyForum = () => {
-  const [signIn, setSignIn] = useState(true)
+  const [signIn, setSignIn] = useState(false)
   const [signUp, setSignUp] = useState(false)
   const [cookies, setCookie, removeCookie] = useCookies(['my-cookie'])
 
+  if (cookies.tokenbon) {
+    var isAuth = true
+    var username = jwt(cookies.tokenbon).username
+  }
   return (
     <div>
       <CookiesProvider>
@@ -26,8 +30,8 @@ const MyForum = () => {
           signUp: signUp, setSignUp: setSignUp
         }}>
           <AuthContext.Provider value={{
-            authenticated: jwt(cookies.tokenbon) ? true : false,
-            username: jwt(cookies.tokenbon).username
+            authenticated: isAuth,
+            username: username
           }}>
             <Header />
             <br />

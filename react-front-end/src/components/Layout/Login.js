@@ -5,6 +5,7 @@ import Axios from 'axios';
 import AuthContext from '../../context/auth-context'
 import UiContext from '../../context/ui-context'
 import { useCookies } from 'react-cookie';
+import { useHistory } from 'react-router-dom';
 
 const Login = (props) => {
   const [username, setUsername] = useState('bonbonpostman')
@@ -14,6 +15,7 @@ const Login = (props) => {
   const { signIn, setSignIn } = useContext(UiContext)
 
   const [cookies, setCookie] = useCookies(['my-cookie'])
+  const history = useHistory()
 
   return (
     <Dialog
@@ -42,7 +44,7 @@ const Login = (props) => {
           < br /> <br />
           <Button
             variant="contained"
-            onClick={event => submitLogin(event, username, password, setCookie)}
+            onClick={event => submitLogin(event, username, password, setCookie, history)}
             color="primary">
             Sign in
               </Button>
@@ -52,7 +54,7 @@ const Login = (props) => {
   )
 }
 
-const submitLogin = (event, username, password, setCookie) => {
+const submitLogin = (event, username, password, setCookie, history) => {
   console.log(`Submit info is ${username} with ${password}`)
   const data = {
     username: username,
@@ -67,6 +69,7 @@ const submitLogin = (event, username, password, setCookie) => {
       sameSite: true
     })
     console.log(token)
+    history.go(0)
   }).catch(err => {
     console.log(err)
   })
