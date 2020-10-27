@@ -2,16 +2,14 @@ import React, { useContext, useState } from 'react';
 import { TextField, Button, Dialog } from '@material-ui/core';
 import Axios from 'axios';
 
-import AuthContext from '../../context/auth-context'
 import UiContext from '../../context/ui-context'
 import { useCookies } from 'react-cookie';
 import { useHistory } from 'react-router-dom';
 
-const Login = (props) => {
+const SignInDialog = (props) => {
   const [username, setUsername] = useState('bonbonpostman')
   const [password, setPassword] = useState('passwordXD')
 
-  const context = useContext(AuthContext)
   const { signIn, setSignIn } = useContext(UiContext)
 
   const [cookies, setCookie] = useCookies(['my-cookie'])
@@ -26,7 +24,7 @@ const Login = (props) => {
       maxWidth='lg'
       fullWidth={true} >
       <div>
-        <form autoComplete="off" onSubmit={context.loginHandler}>
+        <form autoComplete="off">
           <br />
           <TextField
             label="Username"
@@ -44,7 +42,7 @@ const Login = (props) => {
           < br /> <br />
           <Button
             variant="contained"
-            onClick={event => submitLogin(event, username, password, setCookie, history)}
+            onClick={event => submitSignIn(event, username, password, setCookie, history)}
             color="primary">
             Sign in
               </Button>
@@ -54,7 +52,7 @@ const Login = (props) => {
   )
 }
 
-const submitLogin = (event, username, password, setCookie, history) => {
+const submitSignIn = (event, username, password, setCookie, history) => {
   console.log(`Submit info is ${username} with ${password}`)
   const data = {
     username: username,
@@ -74,4 +72,4 @@ const submitLogin = (event, username, password, setCookie, history) => {
     console.log(err)
   })
 }
-export default Login;
+export default SignInDialog;

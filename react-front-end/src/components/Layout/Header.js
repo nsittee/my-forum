@@ -2,26 +2,29 @@ import React, { useContext } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import { Grid, Button } from '@material-ui/core';
+import { useCookies } from 'react-cookie';
 
 import Logo from './logo.png';
 import AuthContext from '../../context/auth-context';
-import Login from './Login'
+import SignInDialog from './SignInDialog'
 import UiContext from '../../context/ui-context';
+import { useHistory } from 'react-router-dom';
 
 const Header = () => {
   const authContext = useContext(AuthContext)
   const { signIn, setSignIn } = useContext(UiContext)
+  const [cookies, setCookie, removeCookie] = useCookies(['my-cookie'])
+  const history = useHistory()
 
-  let headerStatus = null
   if (!authContext.authenticated)
-    headerStatus = <div>
+    var headerStatus = <div>
       <Button onClick={() => setSignIn(true)}>Sign In </Button>
       <Button onClick={() => { }}>Sign Up </Button>
     </div >
   else
-    headerStatus = <div>
+    var headerStatus = <div>
       <Button>{authContext.username}</Button>
-      <Button onClick={() => console.log('sign-out')}>Sign Out</Button>
+      <Button onClick={() => SignOutHandler(removeCookie, history)}>Sign Out</Button>
     </div>
 
   return (
@@ -37,11 +40,16 @@ const Header = () => {
           <a href="/profile">Profile</a>
           <a href="/setting">Setting</a>
           {headerStatus}
-          <Login />
+          <SignInDialog />
         </Grid>
       </Toolbar>
     </AppBar>
   );
+}
+
+const SignOutHandler = (removeCookie, history) => {
+  removeCookie('tokenbon', {})
+  history.go(0)
 }
 
 
