@@ -11,6 +11,7 @@ import UserSettingPage from './Page/UserSettingPage';
 import SubmitPage from './Page/SubmitPage';
 import AuthContext from '../context/auth-context';
 import UiContext from '../context/ui-context'
+import uiContext from '../context/ui-context';
 // import Login from '../components/Layout/Login'
 
 const MyForum = () => {
@@ -18,24 +19,26 @@ const MyForum = () => {
   const [signUp, setSignUp] = useState(false)
   const [cookies, setCookie, removeCookie] = useCookies(['my-cookie'])
 
-  if (cookies.tokenbon) {
-    var isAuth = true
-    var username = jwt(cookies.tokenbon).username
+  var authContextValue = {
+    authenticated: false,
+    username: ''
   }
+  if (cookies.tokenbon) {
+    authContextValue.authenticated = true
+    authContextValue.username = jwt(cookies.tokenbon).username
+  }
+  var uiContextValue = {
+    signIn: signIn, setSignIn: setSignIn,
+    signUp: signUp, setSignUp: setSignUp
+  }
+
   return (
     <div>
       <CookiesProvider>
-        <UiContext.Provider value={{
-          signIn: signIn, setSignIn: setSignIn,
-          signUp: signUp, setSignUp: setSignUp
-        }}>
-          <AuthContext.Provider value={{
-            authenticated: isAuth,
-            username: username
-          }}>
+        <UiContext.Provider value={uiContextValue}>
+          <AuthContext.Provider value={authContextValue}>
             <Header />
             <br />
-            {/* {mainModal} */}
             <Container maxWidth="md">
               <Switch>
                 {/* Main routing each page */}
