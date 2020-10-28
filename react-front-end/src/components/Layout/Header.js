@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import { Grid, Button } from '@material-ui/core';
+import { Grid, Button, Typography, TextField } from '@material-ui/core';
 import { useCookies } from 'react-cookie';
 
 import Logo from './logo.png';
@@ -17,15 +17,17 @@ const Header = () => {
   const history = useHistory()
 
   if (!authContext.authenticated)
-    var headerStatus = <div>
-      <Button onClick={() => setSignIn(true)}>Sign In </Button>
-      <Button onClick={() => { }}>Sign Up </Button>
-    </div >
+    var headerStatus = [
+      <Button onClick={() => setSignIn(true)}>Sign In </Button>,
+      <Button onClick={() => { }}>Sign Up </Button>,
+    ]
   else
-    var headerStatus = <div>
-      <Button>{authContext.username}</Button>
-      <Button onClick={() => SignOutHandler(removeCookie, history)}>Sign Out</Button>
-    </div>
+    var headerStatus = [
+      <Button>{authContext.username}</Button>,
+      <Button onClick={() => SignOutHandler(removeCookie, history)}>Sign Out</Button>,
+    ]
+  headerStatus.push(<Button href="/profile">Profile</Button>)
+  headerStatus.push(<Button href="/setting">Setting</Button>)
 
   return (
     <AppBar position="sticky" elevation={0}>
@@ -37,8 +39,9 @@ const Header = () => {
               alt='reddit'
               height='40' />
           </a>
-          <a href="/profile">Profile</a>
-          <a href="/setting">Setting</a>
+          <TextField variant="outlined" size="small"></TextField>
+          <Button color="secondary" variant="contained">Search</Button>
+
           {headerStatus}
           <SignInDialog />
         </Grid>
