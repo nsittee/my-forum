@@ -16,6 +16,11 @@ const Header = () => {
   const [cookies, setCookie, removeCookie] = useCookies(['my-cookie'])
   const history = useHistory()
 
+  const SignOutHandler = () => {
+    removeCookie('tokenbon', {})
+    history.go(0)
+  }
+
   if (!authContext.authenticated)
     var headerStatus = [
       <Button onClick={() => setSignIn(true)}>Sign In </Button>,
@@ -24,7 +29,7 @@ const Header = () => {
   else
     var headerStatus = [
       <Button>{authContext.username}</Button>,
-      <Button onClick={() => SignOutHandler(removeCookie, history)}>Sign Out</Button>,
+      <Button onClick={SignOutHandler}>Sign Out</Button>,
     ]
   headerStatus.push(<Button href="/profile">Profile</Button>)
   headerStatus.push(<Button href="/setting">Setting</Button>)
@@ -49,11 +54,5 @@ const Header = () => {
     </AppBar>
   );
 }
-
-const SignOutHandler = (removeCookie, history) => {
-  removeCookie('tokenbon', {})
-  history.go(0)
-}
-
 
 export default Header;

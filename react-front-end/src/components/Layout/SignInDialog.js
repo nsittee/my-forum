@@ -15,6 +15,27 @@ const SignInDialog = (props) => {
   const [cookies, setCookie] = useCookies(['my-cookie'])
   const history = useHistory()
 
+  const submitSignInFix = (event) => {
+    console.log(`Submit info is ${username} with ${password}`)
+    const data = {
+      username: username,
+      password: password
+    }
+    const url = 'http://localhost:5000/api/users/signin'
+    Axios.post(url, data).then(res => {
+      const token = res.data.token
+      setCookie('tokenbon', token, {
+        path: '/',
+        // httpOnly: true,
+        sameSite: true
+      })
+      console.log(token)
+      history.go(0)
+    }).catch(err => {
+      console.log(err)
+    })
+  }
+
   return (
     <Dialog
       open={signIn}
@@ -42,7 +63,7 @@ const SignInDialog = (props) => {
           < br /> <br />
           <Button
             variant="contained"
-            onClick={event => submitSignIn(event, username, password, setCookie, history)}
+            onClick={event => submitSignInFix(event)}
             color="primary">
             Sign in
               </Button>
@@ -52,24 +73,4 @@ const SignInDialog = (props) => {
   )
 }
 
-const submitSignIn = (event, username, password, setCookie, history) => {
-  console.log(`Submit info is ${username} with ${password}`)
-  const data = {
-    username: username,
-    password: password
-  }
-  const url = 'http://localhost:5000/api/users/signin'
-  Axios.post(url, data).then(res => {
-    const token = res.data.token
-    setCookie('tokenbon', token, {
-      path: '/',
-      // httpOnly: true,
-      sameSite: true
-    })
-    console.log(token)
-    history.go(0)
-  }).catch(err => {
-    console.log(err)
-  })
-}
 export default SignInDialog;
