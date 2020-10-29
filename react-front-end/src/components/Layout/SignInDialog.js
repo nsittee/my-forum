@@ -7,7 +7,7 @@ import { useCookies } from 'react-cookie';
 import { useHistory } from 'react-router-dom';
 
 const SignInDialog = (props) => {
-  const [username, setUsername] = useState('bonbonpostman')
+  const [username, setUsername] = useState('test-user-0.07546525770485024')
   const [password, setPassword] = useState('passwordXD')
 
   const { signIn, setSignIn } = useContext(UiContext)

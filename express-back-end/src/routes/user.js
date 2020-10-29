@@ -5,6 +5,12 @@ const jwt = require('jsonwebtoken');
 const config = require('../configs/config');
 
 const User = require('../models/user');
+const checkAuth = require('../middleware/check-auth')
+
+router.get('/my-sub', checkAuth, (req, res, next) => {
+  console.log('all good')
+  res.status(200).send(`all good ${req.headers.authorization}`)
+})
 
 router.get('/:id', (req, res, next) => {
   const id = req.params.id;
@@ -54,11 +60,14 @@ router.post('/signin', (req, res, next) => {
       bcrypt.compare(req.body.password, user.Password, (err, hashResult) => {
         if (err) return res.status(401).json({ message: "auth failed" });
         if (hashResult) {
-          const token = jwt.sign(
-            { username: user.Username },
-            config.secretKey,
-            { expiresIn: "1h" }
-          );
+          const token = jwt.sign({
+            id: user._id,
+            username: user.Username,
+            userSub: user.UserSub
+          },
+            config.secretKey, {
+            expiresIn: "1h"
+          });
           return res.status(200).json({
             message: "signin completed",
             token: token,
