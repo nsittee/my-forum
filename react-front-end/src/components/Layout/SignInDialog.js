@@ -15,7 +15,7 @@ const SignInDialog = (props) => {
   const [cookies, setCookie] = useCookies(['my-cookie'])
   const history = useHistory()
 
-  const submitSignInFix = (event) => {
+  const submitSignIn = (event) => {
     console.log(`Submit info is ${username} with ${password}`)
     const data = {
       username: username,
@@ -63,7 +63,7 @@ const SignInDialog = (props) => {
           < br /> <br />
           <Button
             variant="contained"
-            onClick={event => submitSignInFix(event)}
+            onClick={event => submitSignIn(event)}
             color="primary">
             Sign in
               </Button>

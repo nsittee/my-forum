@@ -23,16 +23,16 @@ const Header = () => {
 
   if (!authContext.authenticated)
     var headerStatus = [
-      <Button onClick={() => setSignIn(true)}>Sign In </Button>,
-      <Button onClick={() => { }}>Sign Up </Button>,
+      <Button key="sign-in" onClick={() => setSignIn(true)}>Sign In </Button>,
+      <Button key="sign-up" onClick={() => { }}>Sign Up </Button>,
     ]
   else
-    var headerStatus = [
-      <Button>{authContext.username}</Button>,
-      <Button onClick={SignOutHandler}>Sign Out</Button>,
+    headerStatus = [
+      <Button key="user">{authContext.username}</Button>,
+      <Button key="sign-out" onClick={SignOutHandler}>Sign Out</Button>,
     ]
-  headerStatus.push(<Button href="/profile">Profile</Button>)
-  headerStatus.push(<Button href="/setting">Setting</Button>)
+  headerStatus.push(<Button key="profile" href="/profile">Profile</Button>)
+  headerStatus.push(<Button key="setting" href="/setting">Setting</Button>)
 
   return (
     <AppBar position="sticky" elevation={0}>

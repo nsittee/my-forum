@@ -1,6 +1,6 @@
 import { Card, Grid } from '@material-ui/core';
 import React from 'react'
-import CreateThreadForm from '../Layout/CreateThreadForm';
+import SubmitThreadForm from '../Layout/SubmitThreadForm';
 
 const SubmitPage = () => {
   return (
@@ -11,7 +11,7 @@ const SubmitPage = () => {
         </Card>
       </Grid>
       <Grid item>
-        <CreateThreadForm />
+        <SubmitThreadForm />
       </Grid>
     </Grid>
   )
