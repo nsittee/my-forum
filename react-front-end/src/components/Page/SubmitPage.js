@@ -1,13 +1,8 @@
-import { Button, Card, Grid, InputLabel, MenuItem, Select } from '@material-ui/core';
-import React, { useState } from 'react'
+import { Card, Grid } from '@material-ui/core';
+import React from 'react'
+import CreateThreadForm from '../Layout/CreateThreadForm';
 
 const SubmitPage = () => {
-  const [community, setCommunity] = useState()
-  const handleChange = (event) => {
-    console.log('hlp')
-    setCommunity(event.target.value)
-  }
-
   return (
     <Grid container spacing={1} direction="column">
       <Grid item>
@@ -16,26 +11,7 @@ const SubmitPage = () => {
         </Card>
       </Grid>
       <Grid item>
-        <Card>
-          <InputLabel>Select Community</InputLabel>
-          <Select
-            value={community}
-            onChange={event => { handleChange(event) }}
-            fullWidth={true}>
-            <MenuItem value={'Sub 45'}>Sub 45</MenuItem>
-            <MenuItem value={'Sub 100'}>Sub 100</MenuItem>
-            <MenuItem value={'Sub 620'}>Sub 620</MenuItem>
-          </Select>
-        </Card>
-      </Grid>
-      <Grid item>
-        <Card>
-          <h5>Input control</h5>
-
-          <Button variant="contained" color="secondary">
-            Submit
-          </Button>
-        </Card>
+        <CreateThreadForm />
       </Grid>
     </Grid>
   )

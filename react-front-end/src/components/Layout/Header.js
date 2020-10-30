@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import { Grid, Button, Typography, TextField } from '@material-ui/core';
+import { Grid, Button, TextField } from '@material-ui/core';
 import { useCookies } from 'react-cookie';
 
 import Logo from './logo.png';
@@ -12,7 +12,7 @@ import { useHistory } from 'react-router-dom';
 
 const Header = () => {
   const authContext = useContext(AuthContext)
-  const { signIn, setSignIn } = useContext(UiContext)
+  const { setSignIn } = useContext(UiContext)
   const [cookies, setCookie, removeCookie] = useCookies(['my-cookie'])
   const history = useHistory()
 

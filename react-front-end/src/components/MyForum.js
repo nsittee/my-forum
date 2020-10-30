@@ -11,21 +11,24 @@ import UserSettingPage from './Page/UserSettingPage';
 import SubmitPage from './Page/SubmitPage';
 import AuthContext from '../context/auth-context';
 import UiContext from '../context/ui-context'
-import uiContext from '../context/ui-context';
-// import Login from '../components/Layout/Login'
 
 const MyForum = () => {
   const [signIn, setSignIn] = useState(false)
   const [signUp, setSignUp] = useState(false)
-  const [cookies, setCookie, removeCookie] = useCookies(['my-cookie'])
+  const [cookies] = useCookies('my-cookie')
+  // const [cookies, setCookie, removeCookie] = useCookies()
 
   var authContextValue = {
     authenticated: false,
-    username: ''
+    username: '',
+    userSub: []
   }
   if (cookies.tokenbon) {
+    const userData = jwt(cookies.tokenbon)
     authContextValue.authenticated = true
-    authContextValue.username = jwt(cookies.tokenbon).username
+    authContextValue.username = userData.username
+    // FIXME: don't store userSub data in context, call the API instead
+    authContextValue.userSub = userData.userSub
   }
   var uiContextValue = {
     signIn: signIn, setSignIn: setSignIn,
