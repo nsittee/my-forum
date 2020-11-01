@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express.Router();
+const bcrypt = require('bcryptjs');
 
 const ThreadModel = require('../models/thread');
 const UserModel = require('../models/user');
@@ -24,7 +25,7 @@ app.get('/populate', (req, res) => {
   const userNumberRand = Math.random();
   const user = new UserModel({
     Username: `test-user-${userNumberRand}`,
-    Password: "password",
+    Password: bcrypt.hashSync('passwordXD', 10),
     UserThread: [],
     UserSub: [],
   });

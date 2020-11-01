@@ -1,28 +1,55 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import { Grid } from '@material-ui/core';
+import { Grid, Button, TextField } from '@material-ui/core';
+import { useCookies } from 'react-cookie';
 
 import Logo from './logo.png';
+import AuthContext from '../../context/auth-context';
+import SignInDialog from './SignInDialog'
+import UiContext from '../../context/ui-context';
+import { useHistory } from 'react-router-dom';
 
 const Header = () => {
+  const authContext = useContext(AuthContext)
+  const { setSignIn } = useContext(UiContext)
+  const removeCookie = useCookies(['my-cookie'])[2]
+  const history = useHistory()
+
+  const SignOutHandler = () => {
+    removeCookie('tokenbon', {})
+    history.go(0)
+  }
+
+  if (!authContext.authenticated)
+    var headerStatus = [
+      <Button key="sign-in" onClick={() => setSignIn(true)}>Sign In </Button>,
+      <Button key="sign-up" onClick={() => { }}>Sign Up </Button>,
+    ]
+  else
+    headerStatus = [
+      <Button key="user">{authContext.username}</Button>,
+      <Button key="sign-out" onClick={SignOutHandler}>Sign Out</Button>,
+    ]
+  headerStatus.push(<Button key="profile" href="/profile">Profile</Button>)
+  headerStatus.push(<Button key="setting" href="/setting">Setting</Button>)
+  headerStatus.push(<Button key="changelog" href="/changelog">Changelog</Button>)
+
   return (
     <AppBar position="sticky" elevation={0}>
       <Toolbar>
         <Grid container>
-          <Link to="/" onClick={() => window.location.reload()}>
+          <a href="/">
             <img
               src={Logo}
               alt='reddit'
               height='40' />
-          </Link>
-          <Grid item>
-            <Link to="profile">profile</Link>
-          </Grid>
-          <Grid item>
-            <Link to="/setting">setting</Link>
-          </Grid>
+          </a>
+          <TextField variant="outlined" size="small"></TextField>
+          <Button color="secondary" variant="contained">Search</Button>
+
+          {headerStatus}
+          <SignInDialog />
         </Grid>
       </Toolbar>
     </AppBar>

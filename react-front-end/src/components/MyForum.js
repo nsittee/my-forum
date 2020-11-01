@@ -1,33 +1,71 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import { Route, Switch } from 'react-router-dom';
 import { Container } from '@material-ui/core'
+import { CookiesProvider, useCookies } from "react-cookie";
+import jwt from 'jwt-decode';
 
 import Header from './Layout/Header'
-import MainThread from './Layout/MainThread';
-import Profile from './Layout/Profile';
-import UserSetting from './Layout/UserSetting';
+import MainPage from './Page/MainPage';
+import ProfilePage from './Page/ProfilePage';
+import UserSettingPage from './Page/UserSettingPage';
+import SubmitPage from './Page/SubmitPage';
+import ChangelogPage from './Page/ChangelogPage'
+import AuthContext from '../context/auth-context';
+import UiContext from '../context/ui-context'
 
-class MyForum extends Component {
+const MyForum = () => {
+  const [signIn, setSignIn] = useState(false)
+  const [signUp, setSignUp] = useState(false)
+  const [cookies] = useCookies('my-cookie')
+  // const [cookies, setCookie, removeCookie] = useCookies()
 
-  render() {
-    return (
-      <div>
-        <Header />
-        <br />
-        <Container maxWidth="md">
-          <Switch>
-            <Route path="/profile" component={Profile} />
-            <Route path="/setting" component={UserSetting} />
-            {/* <Route path="/submit" component={} /> */}
-
-            <Route path="/r/:sub" component={MainThread} />
-            <Route path="/" component={MainThread} />
-          </Switch>
-        </Container>
-      </div>
-    )
+  var authContextValue = {
+    authenticated: false,
+    id: '',
+    username: '',
+    userSub: []
   }
+  if (cookies.tokenbon) {
+    const userData = jwt(cookies.tokenbon)
+    // console.log(userData)
+    authContextValue.token = cookies.tokenbon
+    authContextValue.authenticated = true
+    authContextValue.id = userData.id
+    authContextValue.username = userData.username
+    // FIXME: don't store userSub data in context, call the API instead
+    authContextValue.userSub = userData.userSub
+  }
+  var uiContextValue = {
+    signIn: signIn, setSignIn: setSignIn,
+    signUp: signUp, setSignUp: setSignUp
+  }
+
+  return (
+    <div>
+      <CookiesProvider>
+        <UiContext.Provider value={uiContextValue}>
+          <AuthContext.Provider value={authContextValue}>
+            <Header />
+            <br />
+            <Container maxWidth="md">
+              <Switch>
+                {/* Main routing each page */}
+                <Route path="/profile" component={ProfilePage} />
+                <Route path="/setting" component={UserSettingPage} />
+                <Route path="/submit" component={SubmitPage} />
+                <Route path="/changelog" component={ChangelogPage} />
+
+                <Route path="/r/:sub" component={MainPage} />
+                <Route path="/" component={MainPage} />
+              </Switch>
+            </Container>
+          </AuthContext.Provider>
+        </UiContext.Provider>
+      </CookiesProvider>
+    </div>
+  );
 }
+
 
 
 export default MyForum
