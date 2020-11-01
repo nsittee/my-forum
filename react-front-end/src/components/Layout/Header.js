@@ -13,7 +13,7 @@ import { useHistory } from 'react-router-dom';
 const Header = () => {
   const authContext = useContext(AuthContext)
   const { setSignIn } = useContext(UiContext)
-  const [cookies, setCookie, removeCookie] = useCookies(['my-cookie'])
+  const removeCookie = useCookies(['my-cookie'])[2]
   const history = useHistory()
 
   const SignOutHandler = () => {
@@ -33,6 +33,7 @@ const Header = () => {
     ]
   headerStatus.push(<Button key="profile" href="/profile">Profile</Button>)
   headerStatus.push(<Button key="setting" href="/setting">Setting</Button>)
+  headerStatus.push(<Button key="changelog" href="/changelog">Changelog</Button>)
 
   return (
     <AppBar position="sticky" elevation={0}>

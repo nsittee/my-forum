@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Button, Card } from "@material-ui/core";
 import { Form, Field } from 'react-final-form'
 
@@ -46,7 +46,6 @@ const CreateThreadForm = () => {
 
   return (
     <div>
-
       <Card>
         <Form
           onSubmit={onSubmit}

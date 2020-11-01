@@ -12,7 +12,7 @@ const SignInDialog = (props) => {
 
   const { signIn, setSignIn } = useContext(UiContext)
 
-  const [cookies, setCookie] = useCookies(['my-cookie'])
+  const setCookie = useCookies(['my-cookie'])[1]
   const history = useHistory()
 
   const submitSignIn = (event) => {

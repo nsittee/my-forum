@@ -9,6 +9,7 @@ import MainPage from './Page/MainPage';
 import ProfilePage from './Page/ProfilePage';
 import UserSettingPage from './Page/UserSettingPage';
 import SubmitPage from './Page/SubmitPage';
+import ChangelogPage from './Page/ChangelogPage'
 import AuthContext from '../context/auth-context';
 import UiContext from '../context/ui-context'
 
@@ -52,6 +53,7 @@ const MyForum = () => {
                 <Route path="/profile" component={ProfilePage} />
                 <Route path="/setting" component={UserSettingPage} />
                 <Route path="/submit" component={SubmitPage} />
+                <Route path="/changelog" component={ChangelogPage} />
 
                 <Route path="/r/:sub" component={MainPage} />
                 <Route path="/" component={MainPage} />
