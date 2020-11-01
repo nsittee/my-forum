@@ -33,6 +33,7 @@ const Header = () => {
     ]
   headerStatus.push(<Button key="profile" href="/profile">Profile</Button>)
   headerStatus.push(<Button key="setting" href="/setting">Setting</Button>)
+  headerStatus.push(<Button key="changelog" href="/changelog">Changelog</Button>)
 
   return (
     <AppBar position="sticky" elevation={0}>
