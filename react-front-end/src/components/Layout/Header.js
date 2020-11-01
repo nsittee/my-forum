@@ -13,7 +13,7 @@ import { useHistory } from 'react-router-dom';
 const Header = () => {
   const authContext = useContext(AuthContext)
   const { setSignIn } = useContext(UiContext)
-  const [cookies, setCookie, removeCookie] = useCookies(['my-cookie'])
+  const removeCookie = useCookies(['my-cookie'])[2]
   const history = useHistory()
 
   const SignOutHandler = () => {
