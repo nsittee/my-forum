@@ -24,13 +24,12 @@ const Thread = props => {
 						<Card onClick={e => context.voteThreadHandler(e, thread, 'down')}><KeyboardArrowDown /></Card>
 					</Grid>
 
-					<Grid item>
-						<Typography color="textSecondary">
+					<Grid item xs={10}>
+						<Typography color="textSecondary" noWrap={true}>
 							<a href={`/r/${subParent}`} onClick={e => e.stopPropagation()}>
 								{subParent} </a>
 							: posted by {subAuthor + ' '}
-							on {thread.CreatedDate}
-						</Typography>
+							on {thread.CreatedDate} </Typography>
 						<Typography variant="h6"> {thread.Title} </Typography>
 					</Grid>
 				</Grid>

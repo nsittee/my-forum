@@ -2,20 +2,39 @@ import React, { useContext, useState } from 'react';
 import { TextField, Button, Dialog } from '@material-ui/core';
 import Axios from 'axios';
 
-import AuthContext from '../../context/auth-context'
 import UiContext from '../../context/ui-context'
 import { useCookies } from 'react-cookie';
 import { useHistory } from 'react-router-dom';
 
-const Login = (props) => {
-  const [username, setUsername] = useState('bonbonpostman')
+const SignInDialog = (props) => {
+  const [username, setUsername] = useState('test-user-0.07546525770485024')
   const [password, setPassword] = useState('passwordXD')
 
-  const context = useContext(AuthContext)
   const { signIn, setSignIn } = useContext(UiContext)
 
   const [cookies, setCookie] = useCookies(['my-cookie'])
   const history = useHistory()
+
+  const submitSignIn = (event) => {
+    console.log(`Submit info is ${username} with ${password}`)
+    const data = {
+      username: username,
+      password: password
+    }
+    const url = 'http://localhost:5000/api/users/signin'
+    Axios.post(url, data).then(res => {
+      const token = res.data.token
+      setCookie('tokenbon', token, {
+        path: '/',
+        // httpOnly: true,
+        sameSite: true
+      })
+      console.log(token)
+      history.go(0)
+    }).catch(err => {
+      console.log(err)
+    })
+  }
 
   return (
     <Dialog
@@ -26,7 +45,7 @@ const Login = (props) => {
       maxWidth='lg'
       fullWidth={true} >
       <div>
-        <form autoComplete="off" onSubmit={context.loginHandler}>
+        <form autoComplete="off">
           <br />
           <TextField
             label="Username"
@@ -44,7 +63,7 @@ const Login = (props) => {
           < br /> <br />
           <Button
             variant="contained"
-            onClick={event => submitLogin(event, username, password, setCookie, history)}
+            onClick={event => submitSignIn(event)}
             color="primary">
             Sign in
               </Button>
@@ -54,24 +73,4 @@ const Login = (props) => {
   )
 }
 
-const submitLogin = (event, username, password, setCookie, history) => {
-  console.log(`Submit info is ${username} with ${password}`)
-  const data = {
-    username: username,
-    password: password
-  }
-  const url = 'http://localhost:5000/api/users/signin'
-  Axios.post(url, data).then(res => {
-    const token = res.data.token
-    setCookie('tokenbon', token, {
-      path: '/',
-      // httpOnly: true,
-      sameSite: true
-    })
-    console.log(token)
-    history.go(0)
-  }).catch(err => {
-    console.log(err)
-  })
-}
-export default Login;
+export default SignInDialog;

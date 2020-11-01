@@ -5,6 +5,12 @@ const jwt = require('jsonwebtoken');
 const config = require('../configs/config');
 
 const User = require('../models/user');
+const checkAuth = require('../middleware/check-auth')
+
+router.get('/my-sub', checkAuth, (req, res, next) => {
+  console.log('all good')
+  res.status(200).send(`all good ${req.headers.authorization}`)
+})
 
 router.get('/:id', (req, res, next) => {
   const id = req.params.id;
@@ -47,26 +53,31 @@ router.post('/signup', (req, res, next) => {
 });
 
 router.post('/signin', (req, res, next) => {
-  User.find({ Username: req.body.username }).exec().then(userList => {
-    console.log(userList)
-    if (userList.length == 1) {
-      const user = userList[0];
-      bcrypt.compare(req.body.password, user.Password, (err, hashResult) => {
-        if (err) return res.status(401).json({ message: "auth failed" });
-        if (hashResult) {
-          const token = jwt.sign(
-            { username: user.Username },
-            config.secretKey,
-            { expiresIn: "1h" }
-          );
-          return res.status(200).json({
-            message: "signin completed",
-            token: token,
-          });
-        }
-      });
-    } else res.status(409).send({ message: "username or password incorrect" });
-  });
+  User.find({ Username: req.body.username })
+    .populate('UserSub', 'SubLongName')
+    .exec().then(userList => {
+      console.log(userList)
+      if (userList.length == 1) {
+        const user = userList[0];
+        bcrypt.compare(req.body.password, user.Password, (err, hashResult) => {
+          if (err) return res.status(401).json({ message: "auth failed" });
+          if (hashResult) {
+            const token = jwt.sign({
+              id: user._id,
+              username: user.Username,
+              userSub: user.UserSub
+            },
+              config.secretKey, {
+              expiresIn: "1h"
+            });
+            return res.status(200).json({
+              message: "signin completed",
+              token: token,
+            });
+          }
+        });
+      } else res.status(409).send({ message: "username or password incorrect" });
+    });
 })
 
 module.exports = router;

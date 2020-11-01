@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const ThreadModel = require('../models/thread');
 const checkAuth = require('../middleware/check-auth');
 const mongoose = require('mongoose');
 
+const Thread = require('../models/thread');
 const User = require('../models/user');
 const Sub = require('../models/sub');
 
@@ -17,7 +17,7 @@ const Sub = require('../models/sub');
 
 router.get('/:id', (req, res, next) => {
   const id = req.params.id;
-  ThreadModel.findOne()
+  Thread.findOne()
     .populate('Author', 'Username')
     .populate('SubParent', ['SubLongName', 'SubShortName'])
     .where('_id', id)
@@ -30,7 +30,7 @@ router.post('/', checkAuth, (req, res, next) => {
   if (!reqThread)
     return res.status(400).json({ message: "invalid json" });
 
-  const thread = new ThreadModel({
+  const thread = new Thread({
     Title: reqThread.Title,
     Author: mongoose.Types.ObjectId(reqThread.Author._id),
     SubParent: mongoose.Types.ObjectId(reqThread.SubParent._id),
