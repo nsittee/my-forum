@@ -20,12 +20,16 @@ const MyForum = () => {
 
   var authContextValue = {
     authenticated: false,
+    id: '',
     username: '',
     userSub: []
   }
   if (cookies.tokenbon) {
     const userData = jwt(cookies.tokenbon)
+    // console.log(userData)
+    authContextValue.token = cookies.tokenbon
     authContextValue.authenticated = true
+    authContextValue.id = userData.id
     authContextValue.username = userData.username
     // FIXME: don't store userSub data in context, call the API instead
     authContextValue.userSub = userData.userSub

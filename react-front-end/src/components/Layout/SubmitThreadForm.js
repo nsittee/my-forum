@@ -1,9 +1,10 @@
 import React, { useContext, useState } from "react";
-import { Button, Card, InputLabel, MenuItem, Select } from "@material-ui/core";
+import { Button, Card } from "@material-ui/core";
 import { Form, Field } from 'react-final-form'
 
 import AuthContext from '../../context/auth-context'
 import { useHistory } from "react-router-dom";
+import Axios from "axios";
 
 const CreateThreadForm = () => {
   const authContext = useContext(AuthContext)
@@ -12,15 +13,32 @@ const CreateThreadForm = () => {
   const getMyCommunity = () => {
     console.log(authContext.userSub)
     return authContext.userSub.map(sub => {
-      return <MenuItem key={sub._id} value={sub._id}> {sub.SubLongName} </MenuItem>
+      return <option key={sub._id} value={sub._id}> {sub.SubLongName} </option>
     })
   }
   const community = getMyCommunity()
 
   const onSubmit = (formData) => {
-    // TODO: Get author data
+    const data = {
+      Thread: {
+        Title: formData.title,
+        Author: { _id: formData.userId },
+        SubParent: { _id: formData.subId },
+        Content: formData.content
+      }
+    }
     console.log(formData)
-    // history.push('/')
+    Axios.post('http://localhost:5000/api/threads/', data, {
+      headers: {
+        authorization: authContext.token
+      }
+    })
+      .then(res => {
+        console.log("Added New Thread" + res)
+      }).catch(err => {
+        console.log("ERROR " + err)
+      })
+    history.push('/')
   }
   const validate = () => {
 
@@ -34,16 +52,17 @@ const CreateThreadForm = () => {
           onSubmit={onSubmit}
           validate={validate}
           render={props => (
+            // TODO: Use material UI form component
             <form onSubmit={(event) => props.handleSubmit(event)}>
               <h2>Simple Default Input</h2>
-              <Select
-                name="sub"
-                fullWidth={true}>
-                {community}
-              </Select>
+              <Field name="userId" defaultValue={authContext.id} type="hidden" component="input" />
 
-              {/* <Field name="sub" component="select">
-              </Field> */}
+              <div>
+                <label>Community</label><br />
+                <Field name="subId" component="select" >
+                  {community}
+                </Field>
+              </div>
 
               <div>
                 <label>Title</label><br />
