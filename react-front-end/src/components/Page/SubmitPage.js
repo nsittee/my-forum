@@ -5,6 +5,7 @@ import SubmitThreadForm from '../Layout/SubmitThreadForm';
 const SubmitPage = () => {
   return (
     <Container maxWidth="md">
+      <br />
       <Grid container spacing={1} direction="column">
         <Grid item>
           <Card>
