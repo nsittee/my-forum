@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Button, Card } from "@material-ui/core";
+import { Button, Card, CardContent } from "@material-ui/core";
 import { Form, Field } from 'react-final-form'
 
 import AuthContext from '../../context/auth-context'
@@ -47,37 +47,39 @@ const CreateThreadForm = () => {
   return (
     <div>
       <Card>
-        <Form
-          onSubmit={onSubmit}
-          validate={validate}
-          render={props => (
-            // TODO: Use material UI form component
-            <form onSubmit={(event) => props.handleSubmit(event)}>
-              <h2>Simple Default Input</h2>
-              <Field name="userId" defaultValue={authContext.id} type="hidden" component="input" />
+        <CardContent>
+          <Form
+            onSubmit={onSubmit}
+            validate={validate}
+            render={props => (
+              // TODO: Use material UI form component
+              <form onSubmit={(event) => props.handleSubmit(event)}>
+                <h2>Simple Default Input</h2>
+                <Field name="userId" defaultValue={authContext.id} type="hidden" component="input" />
 
-              <div>
-                <label>Community</label><br />
-                <Field name="subId" component="select" >
-                  {community}
-                </Field>
-              </div>
+                <div>
+                  <label>Community</label><br />
+                  <Field name="subId" component="select" >
+                    {community}
+                  </Field>
+                </div>
 
-              <div>
-                <label>Title</label><br />
-                <Field name="title" component="input" placeholder="First Name" />
-              </div>
+                <div>
+                  <label>Title</label><br />
+                  <Field name="title" component="input" placeholder="First Name" />
+                </div>
 
-              <div>
-                <label>Content</label><br />
-                <Field name="content" component="textarea" placeholder="First Name" />
-              </div>
+                <div>
+                  <label>Content</label><br />
+                  <Field name="content" component="textarea" placeholder="First Name" />
+                </div>
 
-              <Button type="submit" variant="contained" color="secondary">
-                Submit </Button>
-            </form>
-          )}
-        />
+                <Button type="submit" variant="contained" color="secondary">
+                  Submit </Button>
+              </form>
+            )}
+          />
+        </CardContent>
       </Card>
 
     </div>

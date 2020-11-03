@@ -1,10 +1,11 @@
+import { Container } from '@material-ui/core';
 import React from 'react'
 
 const UserSettingPage = () => {
   return (
-    <div>
+    <Container maxWidth="md">
       <h1>User Setting</h1>
-    </div>
+    </Container>
   )
 }
 

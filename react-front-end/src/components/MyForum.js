@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Route, Switch } from 'react-router-dom';
-import { Container } from '@material-ui/core'
 import { CookiesProvider, useCookies } from "react-cookie";
 import jwt from 'jwt-decode';
 
@@ -46,19 +45,16 @@ const MyForum = () => {
         <UiContext.Provider value={uiContextValue}>
           <AuthContext.Provider value={authContextValue}>
             <Header />
-            <br />
-            <Container maxWidth="md">
-              <Switch>
-                {/* Main routing each page */}
-                <Route path="/profile" component={ProfilePage} />
-                <Route path="/setting" component={UserSettingPage} />
-                <Route path="/submit" component={SubmitPage} />
-                <Route path="/changelog" component={ChangelogPage} />
+            <Switch>
+              {/* Main routing each page */}
+              <Route path="/profile" component={ProfilePage} />
+              <Route path="/setting" component={UserSettingPage} />
+              <Route path="/submit" component={SubmitPage} />
+              <Route path="/changelog" component={ChangelogPage} />
 
-                <Route path="/r/:sub" component={MainPage} />
-                <Route path="/" component={MainPage} />
-              </Switch>
-            </Container>
+              <Route path="/r/:sub" component={MainPage} />
+              <Route path="/" component={MainPage} />
+            </Switch>
           </AuthContext.Provider>
         </UiContext.Provider>
       </CookiesProvider>

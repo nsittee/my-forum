@@ -3,7 +3,7 @@ import { useHistory } from 'react-router';
 import { Card, Typography, Grid } from '@material-ui/core';
 import { KeyboardArrowUp, KeyboardArrowDown } from '@material-ui/icons'
 
-import ThreadContext from '../../context/thread-context'
+import ThreadContext from '../../../context/thread-context'
 
 const Thread = props => {
 	const history = useHistory();
