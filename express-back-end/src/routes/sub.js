@@ -1,21 +1,42 @@
-const express = require('express');
-const router = express.Router();
+const express = require('express')
+const router = express.Router()
+const jwt = require('jsonwebtoken');
+const config = require('../configs/config');
 
-const SubModel = require('../models/sub');
-const ThreadModel = require('../models/thread');
+const SubModel = require('../models/sub')
+const ThreadModel = require('../models/thread')
+const UserModel = require('../models/user')
 
-router.get('/', (req, res, next) => {
-  ThreadModel.find()
-    .populate('Author', 'Username')
-    .populate('SubParent', ['SubLongName', 'SubShortName'])
-    .exec()
-    .then(threads => res.status(200).json({
-      message: "get all thread",
-      data: {
-        SubThread: threads
-      }
-    }));
-});
+const checkAuth = require('../middleware/check-auth')
+
+router.post('/join', checkAuth, (req, res, next) => {
+  // FIXME: User can join the same sub again, so the Sub ID will duplicate
+  const joinedSubId = req.query.subId
+  console.log(`joining sub ${joinedSubId}`)
+  const decode = jwt.verify(req.headers.authorization, config.secretKey)
+  const joiningUserId = decode.id
+  UserModel.findById(joiningUserId).exec().then(joiningUser => {
+    joiningUser.UserSub.push(joinedSubId)
+    SubModel.findById(joinedSubId).exec().then(joinedSub => {
+      joinedSub.SubUser.push(joiningUser._id)
+      joinedSub.save()
+      joiningUser.save()
+      res.status(200).json({
+        message: "XDXD",
+        data: {
+          user: joiningUser,
+          sub: joinedSub
+        }
+      })
+    })
+  }).catch(err => {
+    res.status(500).json({
+      message: "joining failed",
+    })
+    console.log(err)
+    return
+  })
+})
 
 router.get('/:name', (req, res) => {
   const subName = req.params.name;
@@ -38,6 +59,19 @@ router.get('/:name', (req, res) => {
         data: sub
       });
     });
+});
+
+router.get('/', (req, res, next) => {
+  ThreadModel.find()
+    .populate('Author', 'Username')
+    .populate('SubParent', ['SubLongName', 'SubShortName'])
+    .exec()
+    .then(threads => res.status(200).json({
+      message: "get all thread",
+      data: {
+        SubThread: threads
+      }
+    }));
 });
 
 module.exports = router
