@@ -9,9 +9,14 @@ const UserModel = require('../models/user')
 
 const checkAuth = require('../middleware/check-auth')
 
-router.post('/join', checkAuth, (req, res, next) => {
+router.post('/join', checkAuth, (req, res) => {
   // FIXME: User can join the same sub again, so the Sub ID will duplicate
   const joinedSubId = req.query.subId
+  if (!joinedSubId) {
+    res.status(400).json({ message: 'bad request' })
+    return
+  }
+
   console.log(`joining sub ${joinedSubId}`)
   const decode = jwt.verify(req.headers.authorization, config.secretKey)
   const joiningUserId = decode.id
@@ -22,7 +27,7 @@ router.post('/join', checkAuth, (req, res, next) => {
       joinedSub.save()
       joiningUser.save()
       res.status(200).json({
-        message: "XDXD",
+        message: "joining sub completed",
         data: {
           user: joiningUser,
           sub: joinedSub
@@ -35,6 +40,12 @@ router.post('/join', checkAuth, (req, res, next) => {
     })
     console.log(err)
     return
+  })
+})
+
+router.post('/leave', checkAuth, (req, res) => {
+  res.status(400).json({
+    message: "leaving sub completed",
   })
 })
 
