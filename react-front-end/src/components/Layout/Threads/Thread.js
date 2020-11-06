@@ -19,9 +19,9 @@ const Thread = props => {
 			<Card onClick={() => history.push(`/r/${subParent}/${thread._id}`)}>
 				<Grid container spacing={1}>
 					<Grid item xs={1}>
-						<KeyboardArrowUp onClick={e => context.voteThreadHandler(e, thread, 'up')} />
+						<KeyboardArrowUp />
 						<Typography align='center' variant='h6'>{displayVote}</Typography>
-						<KeyboardArrowDown onClick={e => context.voteThreadHandler(e, thread, 'down')} />
+						<KeyboardArrowDown />
 					</Grid>
 
 					<Grid item xs={10}>

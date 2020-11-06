@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Route } from 'react-router-dom';
 import { Container, Grid } from '@material-ui/core';
 import Axios from 'axios';
@@ -8,12 +8,18 @@ import ThreadDialog from '../Layout/Threads/ThreadDialog';
 import CreatePost from '../Layout/CreatePost';
 import ContentFilter from '../Layout/ContentFilter';
 import SubBanner from '../Layout/SubBanner';
+import AuthContext from '../../context/auth-context'
 
 
 const MainPage = (props) => {
   const [threads, setThreads] = useState([])
   const [banner, setBanner] = useState()
+  const [subId, setSubId] = useState()
+  const [createPost, setCreatePost] = useState()
+  const [contentFilter, setContentFilter] = useState()
   const [subName] = useState(props.match.params.sub)
+
+  const authContext = useContext(AuthContext)
 
   var mainThreads = null;
 
@@ -27,15 +33,18 @@ const MainPage = (props) => {
     var url = 'http://localhost:5000/api/subs/'
     if (subName) {
       url += subName
-
-      // Banner only display for the '/r/sub-name' path
-      setBanner(<SubBanner subName={subName} />)
+      setBanner(<SubBanner subName={subName} subId={subId} userSub={authContext.userSub} />)
     }
     console.log(url)
     Axios.get(url)
-      .then(res =>
+      .then(res => {
+        console.log(res.data.data._id)
+        setSubId(res.data.data._id)
         setThreads(res.data.data.SubThread)
-      )
+        setCreatePost(<CreatePost />)
+        setContentFilter(<ContentFilter />)
+        setBanner(<SubBanner subName={subName} subId={res.data.data._id} userSub={authContext.userSub} />)
+      })
       .catch(err => console.log(err))
   }
 
@@ -53,16 +62,15 @@ const MainPage = (props) => {
               <Grid item xs={12}>
                 {/* FIXME: Spacing for the main header */}
                 <br />
-                <CreatePost />
+                {createPost}
               </Grid>
 
               <Grid item xs={12}>
-                <ContentFilter />
+                {contentFilter}
               </Grid>
 
               {mainThreads}
               <Route exact path='/r/:sub/:id' component={ThreadDialog} />
-              {/* <Route exact path='/submit' component={NewThreadDialog} /> */}
             </Grid>
           </Grid>
         </Grid>
