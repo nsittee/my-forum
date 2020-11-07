@@ -5,12 +5,6 @@ const jwt = require('jsonwebtoken');
 const config = require('../configs/config');
 
 const User = require('../models/user');
-const checkAuth = require('../middleware/check-auth')
-
-router.get('/my-sub', checkAuth, (req, res, next) => {
-  console.log('all good')
-  res.status(200).send(`all good ${req.headers.authorization}`)
-})
 
 router.get('/:id', (req, res, next) => {
   const id = req.params.id;
@@ -54,7 +48,7 @@ router.post('/signup', (req, res, next) => {
 
 router.post('/signin', (req, res, next) => {
   User.find({ Username: req.body.username })
-    .populate('UserSub', 'SubLongName')
+    // .populate('UserSub', 'SubLongName')
     .exec().then(userList => {
       console.log(userList)
       if (userList.length == 1) {

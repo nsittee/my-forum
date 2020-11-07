@@ -3,7 +3,7 @@ import { useHistory } from 'react-router';
 import { Card, Typography, Grid } from '@material-ui/core';
 import { KeyboardArrowUp, KeyboardArrowDown } from '@material-ui/icons'
 
-import ThreadContext from '../../context/thread-context'
+import ThreadContext from '../../../context/thread-context'
 
 const Thread = props => {
 	const history = useHistory();
@@ -18,10 +18,10 @@ const Thread = props => {
 		<Grid item xs={12}>
 			<Card onClick={() => history.push(`/r/${subParent}/${thread._id}`)}>
 				<Grid container spacing={1}>
-					<Grid item>
-						<Card onClick={e => context.voteThreadHandler(e, thread, 'up')}><KeyboardArrowUp /></Card>
+					<Grid item xs={1}>
+						<KeyboardArrowUp />
 						<Typography align='center' variant='h6'>{displayVote}</Typography>
-						<Card onClick={e => context.voteThreadHandler(e, thread, 'down')}><KeyboardArrowDown /></Card>
+						<KeyboardArrowDown />
 					</Grid>
 
 					<Grid item xs={10}>

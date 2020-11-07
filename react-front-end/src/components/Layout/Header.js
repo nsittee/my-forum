@@ -17,7 +17,10 @@ const Header = () => {
   const history = useHistory()
 
   const SignOutHandler = () => {
-    removeCookie('tokenbon', {})
+    removeCookie('tokenbon', {
+      // If path is not set, the cookie wont't be able to remove outside of the root path
+      path: '/'
+    })
     history.go(0)
   }
 
