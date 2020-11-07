@@ -33,17 +33,28 @@ const MainPage = (props) => {
     var url = 'http://localhost:5000/api/subs/'
     if (subName) {
       url += subName
-      setBanner(<SubBanner subName={subName} subId={subId} userSub={authContext.userSub} />)
+      setBanner(
+        <SubBanner subName={subName}
+          subId={subId}
+          userSub={authContext.userSub} />
+      )
     }
     console.log(url)
     Axios.get(url)
       .then(res => {
-        console.log(res.data.data._id)
         setSubId(res.data.data._id)
         setThreads(res.data.data.SubThread)
         setCreatePost(<CreatePost />)
         setContentFilter(<ContentFilter />)
-        setBanner(<SubBanner subName={subName} subId={res.data.data._id} userSub={authContext.userSub} />)
+        if (subName) {
+          console.log(res.data.data._id)
+          setBanner(
+            <SubBanner subName={subName}
+              subId={res.data.data._id}
+              userSub={authContext.userSub} />
+          )
+        }
+
       })
       .catch(err => console.log(err))
   }

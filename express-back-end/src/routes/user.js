@@ -48,7 +48,7 @@ router.post('/signup', (req, res, next) => {
 
 router.post('/signin', (req, res, next) => {
   User.find({ Username: req.body.username })
-    .populate('UserSub', 'SubLongName')
+    // .populate('UserSub', 'SubLongName')
     .exec().then(userList => {
       console.log(userList)
       if (userList.length == 1) {

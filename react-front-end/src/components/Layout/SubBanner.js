@@ -8,16 +8,19 @@ const SubBanner = props => {
   const authContext = useContext(AuthContext)
   const [joined, setJoined] = useState(false)
 
-  // if (props.subId) {
-  //   if (props.userSub.includes(props.subId)) {
-  //     setJoined(true)
-  //   }
-  // }
+  if (!joined && props.subId && props.userSub.includes(props.subId)) {
+    setJoined(true)
+  }
 
   const joinButtonHandler = () => {
+    if (!props.subId || !authContext.authenticated) {
+      console.log('sign in && go to sub page first')
+      return
+    } else if (joined) {
+      console.log('sign out not implemented')
+      return
+    }
     console.log(props.subName)
-
-    if (!props.subId) return
 
     var action = joined ? 'leave' : 'join'
     var url = `http://localhost:5000/api/subs/${action}?subId=${props.subId}`
@@ -33,11 +36,11 @@ const SubBanner = props => {
         console.log('join success')
         setJoined(true)
       }
-      console.log('okok')
     }).catch(err => {
       console.log(err)
     })
   }
+
   return (
     <div style={{
       background: 'MediumSlateBlue',
@@ -63,7 +66,7 @@ const SubBanner = props => {
               color='secondary'
               variant='contained'
               style={{ marginLeft: 100 }}>
-              {joined ? 'Joined' : `Join now ${props.subId}`} </Button>
+              {joined ? 'Joined' : `Join now`} </Button>
           </Grid>
         </CardContent>
       </Container>
