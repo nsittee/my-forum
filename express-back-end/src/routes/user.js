@@ -74,4 +74,6 @@ router.post('/signin', (req, res, next) => {
     });
 })
 
+router.post('/xsigninx', require('../middleware/passport'))
+
 module.exports = router;
