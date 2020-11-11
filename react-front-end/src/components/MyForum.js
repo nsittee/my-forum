@@ -19,20 +19,18 @@ const MyForum = () => {
   // const [cookies, setCookie, removeCookie] = useCookies()
 
   var authContextValue = {
-    authenticated: false,
     id: '',
     username: '',
-    userSub: []
+    authenticated: false
   }
   if (cookies.tokenbon) {
     const userData = jwt(cookies.tokenbon)
     // console.log(userData)
-    authContextValue.token = cookies.tokenbon
-    authContextValue.authenticated = true
     authContextValue.id = userData.id
     authContextValue.username = userData.username
-    // FIXME: don't store userSub data in context, call the API instead
-    authContextValue.userSub = userData.userSub
+    authContextValue.authenticated = true
+    authContextValue.token = cookies.tokenbon
+    authContextValue.header = { headers: { authorization: cookies.tokenbon } }
   }
   var uiContextValue = {
     signIn: signIn, setSignIn: setSignIn,

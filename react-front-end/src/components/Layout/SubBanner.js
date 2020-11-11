@@ -1,16 +1,31 @@
 import { Button, CardContent, Container, Grid } from '@material-ui/core'
 import Axios from 'axios'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import AuthContext from '../../context/auth-context'
 
 const SubBanner = props => {
-  console.log(props)
   const authContext = useContext(AuthContext)
   const [joined, setJoined] = useState(false)
 
-  if (!joined && props.subId && props.userSub.includes(props.subId)) {
-    setJoined(true)
-  }
+  useEffect(() => {
+    if (authContext.isAuthenticated) {
+      const fetchData = async () => {
+        try {
+          const res = await Axios.get(
+            'http://localhost:5000/api/users/',
+            authContext.header
+          )
+          const userSub = res.data.data.UserSub
+            .map((sub) => sub._id)
+          if (userSub.includes(props.subId)) setJoined(true)
+        } catch (err) {
+          console.log(err)
+        }
+      }
+      fetchData()
+    }
+
+  }, [authContext, props.subId])
 
   const joinButtonHandler = () => {
     if (!props.subId || !authContext.authenticated) {

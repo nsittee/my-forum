@@ -26,7 +26,7 @@ const SignInDialog = (props) => {
       const token = res.data.token
       setCookie('tokenbon', token, {
         path: '/',
-        maxAge: '60', // in second
+        maxAge: '6000', // in second
         // httpOnly: true,
         sameSite: true
       })
