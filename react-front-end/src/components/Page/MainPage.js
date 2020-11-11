@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route } from 'react-router-dom';
 import { Container, Grid } from '@material-ui/core';
 import Axios from 'axios';
@@ -8,18 +8,13 @@ import ThreadDialog from '../Layout/Threads/ThreadDialog';
 import CreatePost from '../Layout/CreatePost';
 import ContentFilter from '../Layout/ContentFilter';
 import SubBanner from '../Layout/SubBanner';
-import AuthContext from '../../context/auth-context'
-
 
 const MainPage = (props) => {
   const [threads, setThreads] = useState([])
   const [banner, setBanner] = useState()
-  const [subId, setSubId] = useState()
   const [createPost, setCreatePost] = useState()
   const [contentFilter, setContentFilter] = useState()
   const [subName] = useState(props.match.params.sub)
-
-  const authContext = useContext(AuthContext)
 
   var mainThreads = null;
 
@@ -30,28 +25,18 @@ const MainPage = (props) => {
   });
 
   const fetchThreadData = () => {
-    var url = 'http://localhost:5000/api/subs/'
-    if (subName) {
-      url += subName
-      setBanner(
-        <SubBanner subName={subName}
-          subId={subId}
-          userSub={authContext.userSub} />
-      )
-    }
-    console.log(url)
-    Axios.get(url)
+    Axios.get(`http://localhost:5000/api/subs/${subName ? subName : ''}`)
       .then(res => {
-        setSubId(res.data.data._id)
+        console.log(res.data.data)
         setThreads(res.data.data.SubThread)
         setCreatePost(<CreatePost />)
         setContentFilter(<ContentFilter />)
         if (subName) {
           console.log(res.data.data._id)
           setBanner(
-            <SubBanner subName={subName}
-              subId={res.data.data._id}
-              userSub={authContext.userSub} />
+            <SubBanner
+              subName={subName}
+              subId={res.data.data._id} />
           )
         }
 
