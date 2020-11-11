@@ -1,50 +1,35 @@
-const passport = require('passport')
-const cookieParser = require('cookie-parser')
-// const bodyParser = require('body-parser')
-const expressSession = require('express-session')
-const bcrypt = require('bcryptjs');
+const LocalStrategy = require('passport-local').Strategy
+const bcrypt = require('bcryptjs')
 
-var LocalStrategy = require('passport-local').Strategy;
-
-
-const User = require('../models/user');
-
-module.exports = (app) => {
-  // Passport
-  app.use(cookieParser());
-  // app.use(bodyParser());
-  app.use(expressSession({
-    secret: 'bonsecret',
-    resave: false,
-    saveUninitialized: false
-  }));
-
-  app.use(passport.initialize());
-  app.use(passport.session());	// Required for persistent login sessions (optional, but recommended)
-
+function initialize(passport, getUserByUsername, getUserById) {
   passport.use(new LocalStrategy({
-    usernameField: 'username',
-    passwordField: 'password'
+    usernameField: 'Username',
+    passwordField: 'Password',
+    session: true,
   }, (username, password, done) => {
-    console.log('bon strategy')
-    console.log(`${username} => ${password}`)
-    User.findOne({ Username: username }).exec().then(user => {
-      if (!user) return done(null, false, { message: 'user not exists' })
-      if (!bcrypt.compareSync(password, user.Password)) {
-        return done(null, false, { message: 'password incorrect' })
+    getUserByUsername(username).then(user => {
+      console.log(user)
+      if (user == null) {
+        console.log('User not exists')
+        return done(null, false, { message: 'No user with that username' })
       }
-      done()
+      try {
+        if (bcrypt.compareSync(password, user.Password)) {
+          return done(null, user)
+        } else {
+          console.log(`incorrect password`)
+          return done(null, false, { message: 'Password incorrect' })
+        }
+      } catch (e) {
+        console.log(e)
+        console.log('error')
+        return done(e)
+      }
     })
+
   }))
-  passport.serializeUser((user, done) => {
-    done(null, user._id);
-  })
-  passport.deserializeUser((id, done) => {
-    User.findById(id).exec().then(user => {
-      done(null, user)
-    }).catch(err => {
-      console.log(err)
-      done(err, null)
-    })
-  })
+  passport.serializeUser((user, done) => done(null, user._id))
+  passport.deserializeUser((id, done) => done(null, getUserById(id)))
 }
+
+module.exports = initialize
