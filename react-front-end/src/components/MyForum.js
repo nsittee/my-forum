@@ -30,6 +30,7 @@ const MyForum = () => {
     authContextValue.username = userData.username
     authContextValue.authenticated = true
     authContextValue.token = cookies.tokenbon
+    authContextValue.header = { headers: { authorization: cookies.tokenbon } }
   }
   var uiContextValue = {
     signIn: signIn, setSignIn: setSignIn,
