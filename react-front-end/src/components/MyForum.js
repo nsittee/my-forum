@@ -24,10 +24,10 @@ const MyForum = () => {
     username: '',
     userSub: []
   }
-  if (cookies.tokenbon) {
-    const userData = jwt(cookies.tokenbon)
+  if (cookies.connect) {
+    const userData = jwt(cookies.connect)
     // console.log(userData)
-    authContextValue.token = cookies.tokenbon
+    authContextValue.token = cookies.connect
     authContextValue.authenticated = true
     authContextValue.id = userData.id
     authContextValue.username = userData.username

@@ -40,7 +40,7 @@ const MainPage = (props) => {
       )
     }
     console.log(url)
-    Axios.get(url)
+    Axios.get(url, { withCredentials: true })
       .then(res => {
         setSubId(res.data.data._id)
         setThreads(res.data.data.SubThread)

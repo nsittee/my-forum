@@ -7,14 +7,6 @@ const Thread = require('../models/thread');
 const User = require('../models/user');
 const Sub = require('../models/sub');
 
-// router.get('/', (req, res, next) => {
-//   ThreadModel.find()
-//     .populate('Author', 'Username')
-//     .populate('SubParent', ['SubLongName', 'SubShortName'])
-//     .exec()
-//     .then(threads => res.status(200).json(threads));
-// });
-
 router.get('/:id', (req, res, next) => {
   const id = req.params.id;
   Thread.findOne()

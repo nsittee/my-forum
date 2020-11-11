@@ -23,7 +23,12 @@ module.exports = (app) => {
   require('../configs/database');
 
   // CORS
-  app.use(cors());
+  app.use(cors({
+    // origin: "http://localhost:3000", // allow to server to accept request from different origin
+    // methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    origin: 'http//:localhost*',
+    credentials: true // allow session cookie from browser to pass through
+  }));
 
   // Parser Body
   app.use(express.json());
@@ -40,14 +45,19 @@ module.exports = (app) => {
   app.use(session({
     secret: require('../configs/config').secretKey,
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 3000000,
+      // httpOnly: false
+    } // Remember to set this
   }))
   app.use(passport.initialize())
   app.use(passport.session())
-  app.post('/x/login', passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/'
-  }))
+  app.post('/x/login', passport.authenticate('local'),
+    (req, res, next) => {
+      res.status(200).send('authen ok')
+    }
+  )
 
   // Static file
   // app.use('/static', express.static(path.join(__dirname, '../public')))

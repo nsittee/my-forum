@@ -7,6 +7,7 @@ const SubModel = require('../models/sub')
 const ThreadModel = require('../models/thread')
 const UserModel = require('../models/user')
 
+const checkAuthPassport = require('../middleware/check-auth-passport')
 const checkAuth = require('../middleware/check-auth')
 
 router.post('/join', checkAuth, (req, res) => {
@@ -72,7 +73,7 @@ router.get('/:name', (req, res) => {
     });
 });
 
-router.get('/', (req, res, next) => {
+router.get('/', checkAuthPassport.isAuth, (req, res, next) => {
   ThreadModel.find()
     .populate('Author', 'Username')
     .populate('SubParent', ['SubLongName', 'SubShortName'])

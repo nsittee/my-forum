@@ -18,19 +18,20 @@ const SignInDialog = (props) => {
   const submitSignIn = (event) => {
     console.log(`Submit info is ${username} with ${password}`)
     const data = {
-      username: username,
-      password: password
+      Username: username,
+      Password: password
     }
     const url = 'http://localhost:5000/api/users/signin'
-    Axios.post(url, data).then(res => {
+    Axios.post(url, data, {}).then(res => {
       const token = res.data.token
-      setCookie('tokenbon', token, {
-        path: '/',
-        maxAge: '60', // in second
-        // httpOnly: true,
-        sameSite: true
-      })
-      console.log(token)
+      console.log(res.User)
+      // setCookie('tokenbon', token, {
+      //   path: '/',
+      //   maxAge: '60', // in second
+      //   // httpOnly: true,
+      //   sameSite: true
+      // })
+      // console.log(token)
       history.go(0)
     }).catch(err => {
       console.log(err)
