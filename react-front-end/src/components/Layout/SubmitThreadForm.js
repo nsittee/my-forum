@@ -12,6 +12,7 @@ const CreateThreadForm = () => {
 
   const getMyCommunity = () => {
     console.log(authContext.userSub)
+    // TODO: Add api that get userSub from back-end
     return authContext.userSub.map(sub => {
       return <option key={sub._id} value={sub._id}> {sub.SubLongName} </option>
     })

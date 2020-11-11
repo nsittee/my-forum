@@ -59,7 +59,6 @@ router.post('/signin', (req, res, next) => {
             const token = jwt.sign({
               id: user._id,
               username: user.Username,
-              userSub: user.UserSub
             },
               config.secretKey, {
               expiresIn: "1h"
