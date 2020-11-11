@@ -5,13 +5,17 @@ const jwt = require('jsonwebtoken');
 const config = require('../configs/config');
 
 const User = require('../models/user');
+const checkAuth = require('../middleware/check-auth')
 
-router.get('/:id', (req, res, next) => {
-  const id = req.params.id;
-  User.find({ _id: id })
-    .exec()
-    .then(user => {
-      res.status(200).json(user);
+router.get('/', checkAuth, (req, res, next) => {
+  const tokenData = jwt.decode(req.headers.authorization)
+  User.findById(tokenData.id)
+    .populate('UserSub', 'SubLongName')
+    .exec().then(user => {
+      res.status(200).json({
+        message: 'get user success',
+        data: user
+      });
     }).catch(err => {
       res.status(400).json(err);
     });
@@ -71,6 +75,14 @@ router.post('/signin', (req, res, next) => {
         });
       } else res.status(409).send({ message: "username or password incorrect" });
     });
+})
+
+router.post('/sub-list', (req, res, next) => {
+  const userId = jwt.decode(req.headers.authorization)
+  User.findById(userId.id).exec().then(user => {
+    console.log(user)
+    res.status(200).json(user)
+  })
 })
 
 module.exports = router;

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, Card, CardContent } from "@material-ui/core";
 import { Form, Field } from 'react-final-form'
 
@@ -7,17 +7,29 @@ import { useHistory } from "react-router-dom";
 import Axios from "axios";
 
 const CreateThreadForm = () => {
+  const [userSub, setUserSub] = useState([])
   const authContext = useContext(AuthContext)
   const history = useHistory()
 
   const getMyCommunity = () => {
-    console.log(authContext.userSub)
-    // TODO: Add api that get userSub from back-end
-    return authContext.userSub.map(sub => {
-      return <option key={sub._id} value={sub._id}> {sub.SubLongName} </option>
+    // FIXME : Add api that get userSub from back-end
+    console.log(authContext)
+    Axios.get('http://localhost:5000/api/users/', {
+      headers: {
+        authorization: authContext.token
+      }
+    }).then(res => {
+      console.log(res.data)
+      const subList = res.data.data.UserSub
+
+      setUserSub(subList.map(sub => {
+        return <option key={sub._id} value={sub._id}> {sub.SubLongName} </option>
+      }))
+    }).catch(err => {
+      console.log(err)
     })
   }
-  const community = getMyCommunity()
+  useEffect(getMyCommunity, [])
 
   const onSubmit = (formData) => {
     const data = {
@@ -61,7 +73,7 @@ const CreateThreadForm = () => {
                 <div>
                   <label>Community</label><br />
                   <Field name="subId" component="select" >
-                    {community}
+                    {userSub}
                   </Field>
                 </div>
 
