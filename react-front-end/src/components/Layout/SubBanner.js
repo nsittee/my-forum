@@ -8,21 +8,24 @@ const SubBanner = props => {
   const [joined, setJoined] = useState(false)
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await Axios.get(
-          'http://localhost:5000/api/users/',
-          authContext.header
-        )
-        const userSub = res.data.data.UserSub
-          .map((sub) => sub._id)
-        if (userSub.includes(props.subId)) setJoined(true)
-      } catch (err) {
-        console.log(err)
+    if (authContext.isAuthenticated) {
+      const fetchData = async () => {
+        try {
+          const res = await Axios.get(
+            'http://localhost:5000/api/users/',
+            authContext.header
+          )
+          const userSub = res.data.data.UserSub
+            .map((sub) => sub._id)
+          if (userSub.includes(props.subId)) setJoined(true)
+        } catch (err) {
+          console.log(err)
+        }
       }
+      fetchData()
     }
-    fetchData()
-  }, [authContext.header, props.subId])
+
+  }, [authContext, props.subId])
 
   const joinButtonHandler = () => {
     if (!props.subId || !authContext.authenticated) {
