@@ -16,7 +16,6 @@
     "@types/react-router-dom": "^5.1.6",
     "axios": "^0.19.2",
     "final-form": "^4.20.1",
-    "jwt-decode": "^3.0.0",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-cookie": "^4.0.3",

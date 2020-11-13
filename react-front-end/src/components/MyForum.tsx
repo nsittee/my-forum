@@ -26,7 +26,7 @@ const MyForum = () => {
     header: {}
   }
   if (cookies.tokenbon) {
-    const userData = jwt(cookies.tokenbon)
+    const userData: any = jwt(cookies.tokenbon)
     // console.log(userData)
     authContextValue.id = userData.id
     authContextValue.username = userData.username
