@@ -1,10 +1,10 @@
 import React from 'react'
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router'
 import { Card, TextField } from '@material-ui/core'
-import { useCookies } from 'react-cookie';
+import { useCookies } from 'react-cookie'
 
 const CreatePost = () => {
-  const history = useHistory();
+  const history = useHistory()
   const [cookies] = useCookies(['my-cookie'])
 
   var newThread = null
@@ -17,4 +17,4 @@ const CreatePost = () => {
   return newThread
 }
 
-export default CreatePost;
+export default CreatePost
