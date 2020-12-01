@@ -1,30 +1,32 @@
 import React, { useState } from 'react'
-import { Route, Switch } from 'react-router-dom';
-import { CookiesProvider, useCookies } from "react-cookie";
-import jwt from 'jwt-decode';
+import { Route, Switch } from 'react-router-dom'
+import { CookiesProvider, useCookies } from "react-cookie"
+import jwt from 'jwt-decode'
 
 import Header from './Layout/Header'
-import MainPage from './Page/MainPage';
-import ProfilePage from './Page/ProfilePage';
-import UserSettingPage from './Page/UserSettingPage';
-import SubmitPage from './Page/SubmitPage';
+import MainPage from './Page/MainPage'
+import ProfilePage from './Page/ProfilePage'
+import UserSettingPage from './Page/UserSettingPage'
+import SubmitPage from './Page/SubmitPage'
 import ChangelogPage from './Page/ChangelogPage'
-import AuthContext from '../context/auth-context';
+import AuthContext from '../context/auth-context'
 import UiContext from '../context/ui-context'
 
 const MyForum = () => {
   const [signIn, setSignIn] = useState(false)
   const [signUp, setSignUp] = useState(false)
-  const [cookies] = useCookies('my-cookie')
+  const [cookies] = useCookies(['my-cookie'])
   // const [cookies, setCookie, removeCookie] = useCookies()
 
   var authContextValue = {
     id: '',
     username: '',
-    authenticated: false
+    authenticated: false,
+    token: '',
+    header: {}
   }
   if (cookies.tokenbon) {
-    const userData = jwt(cookies.tokenbon)
+    const userData: any = jwt(cookies.tokenbon)
     // console.log(userData)
     authContextValue.id = userData.id
     authContextValue.username = userData.username
@@ -33,8 +35,8 @@ const MyForum = () => {
     authContextValue.header = { headers: { authorization: cookies.tokenbon } }
   }
   var uiContextValue = {
-    signIn: signIn, setSignIn: setSignIn,
-    signUp: signUp, setSignUp: setSignUp
+    signIn: signIn, setSignIn: (value: boolean) => setSignIn(value),
+    signUp: signUp, setSignUp: (value: boolean) => setSignUp(value)
   }
 
   return (
@@ -57,7 +59,7 @@ const MyForum = () => {
         </UiContext.Provider>
       </CookiesProvider>
     </div>
-  );
+  )
 }
 
 

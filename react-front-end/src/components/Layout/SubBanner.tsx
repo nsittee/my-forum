@@ -2,21 +2,22 @@ import { Button, CardContent, Container, Grid } from '@material-ui/core'
 import Axios from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
 import AuthContext from '../../context/auth-context'
+import PropTypes from 'prop-types'
 
-const SubBanner = props => {
+const SubBanner = (props: any) => {
   const authContext = useContext(AuthContext)
   const [joined, setJoined] = useState(false)
 
   useEffect(() => {
-    if (authContext.isAuthenticated) {
+    if (authContext.authenticated) {
       const fetchData = async () => {
         try {
           const res = await Axios.get(
             'http://localhost:5000/api/users/',
             authContext.header
           )
-          const userSub = res.data.data.UserSub
-            .map((sub) => sub._id)
+          const userSub: Array<any> = res.data.data.UserSub
+            .map((sub: any) => sub._id)
           if (userSub.includes(props.subId)) setJoined(true)
         } catch (err) {
           console.log(err)
@@ -32,7 +33,7 @@ const SubBanner = props => {
       console.log('sign in && go to sub page first')
       return
     } else if (joined) {
-      console.log('sign out not implemented')
+      console.log('leaving sub is not implemented')
       return
     }
     console.log(props.subName)
@@ -89,4 +90,9 @@ const SubBanner = props => {
   )
 }
 
-export default SubBanner;
+SubBanner.propTypes = {
+  subId: PropTypes.string,
+  subName: PropTypes.string,
+}
+
+export default SubBanner

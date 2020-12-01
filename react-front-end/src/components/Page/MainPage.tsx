@@ -9,42 +9,42 @@ import CreatePost from '../Layout/CreatePost';
 import ContentFilter from '../Layout/ContentFilter';
 import SubBanner from '../Layout/SubBanner';
 
-const MainPage = (props) => {
+const MainPage = (props: any) => {
   const [threads, setThreads] = useState([])
-  const [banner, setBanner] = useState()
-  const [createPost, setCreatePost] = useState()
-  const [contentFilter, setContentFilter] = useState()
+  const [banner, setBanner] = useState(<div />)
+  const [createPost, setCreatePost] = useState(<div />)
+  const [contentFilter, setContentFilter] = useState(<div />)
   const [subName] = useState(props.match.params.sub)
 
-  var mainThreads = null;
-
-  mainThreads = threads.map((thread) => {
+  var mainThreads: Array<any> = [];
+  mainThreads = threads.map((thread: any) => {
     return <Thread
       key={thread._id}
       thread={thread} />
   });
 
-  const fetchThreadData = () => {
-    Axios.get(`http://localhost:5000/api/subs/${subName ? subName : ''}`)
-      .then(res => {
-        console.log(res.data.data)
-        setThreads(res.data.data.SubThread)
-        setCreatePost(<CreatePost />)
-        setContentFilter(<ContentFilter />)
-        if (subName) {
-          console.log(res.data.data._id)
-          setBanner(
-            <SubBanner
-              subName={subName}
-              subId={res.data.data._id} />
-          )
-        }
+  useEffect(() => {
+    const fetchData = () => {
+      Axios.get(`http://localhost:5000/api/subs/${subName ? subName : ''}`)
+        .then(res => {
+          console.log(res.data.data)
+          setThreads(res.data.data.SubThread)
+          setCreatePost(<CreatePost />)
+          setContentFilter(<ContentFilter />)
+          if (subName) {
+            console.log(res.data.data._id)
+            setBanner(
+              <SubBanner
+                subName={subName}
+                subId={res.data.data._id} />
+            )
+          }
 
-      })
-      .catch(err => console.log(err))
-  }
-
-  useEffect(fetchThreadData, [])
+        })
+        .catch(err => console.log(err))
+    }
+    fetchData()
+  }, [subName])
 
   return (
     <div>

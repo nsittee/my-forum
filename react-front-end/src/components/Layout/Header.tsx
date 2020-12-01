@@ -1,14 +1,14 @@
-import React, { useContext } from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import { Grid, Button, TextField } from '@material-ui/core';
-import { useCookies } from 'react-cookie';
+import React, { useContext } from 'react'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import { Grid, Button, TextField } from '@material-ui/core'
+import { useCookies } from 'react-cookie'
 
-import Logo from './logo.png';
-import AuthContext from '../../context/auth-context';
+import Logo from './logo.png'
+import AuthContext from '../../context/auth-context'
 import SignInDialog from './SignInDialog'
-import UiContext from '../../context/ui-context';
-import { useHistory } from 'react-router-dom';
+import UiContext from '../../context/ui-context'
+import { useHistory } from 'react-router-dom'
 
 const Header = () => {
   const authContext = useContext(AuthContext)
@@ -56,7 +56,7 @@ const Header = () => {
         </Grid>
       </Toolbar>
     </AppBar>
-  );
+  )
 }
 
-export default Header;
+export default Header

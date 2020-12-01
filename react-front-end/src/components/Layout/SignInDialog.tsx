@@ -1,12 +1,12 @@
-import React, { useContext, useState } from 'react';
-import { TextField, Button, Dialog } from '@material-ui/core';
-import Axios from 'axios';
+import React, { useContext, useState } from 'react'
+import { TextField, Button, Dialog } from '@material-ui/core'
+import Axios from 'axios'
 
 import UiContext from '../../context/ui-context'
-import { useCookies } from 'react-cookie';
-import { useHistory } from 'react-router-dom';
+import { useCookies } from 'react-cookie'
+import { useHistory } from 'react-router-dom'
 
-const SignInDialog = (props) => {
+const SignInDialog = (props: any) => {
   const [username, setUsername] = useState('test-user-0.07546525770485024')
   const [password, setPassword] = useState('passwordXD')
 
@@ -15,7 +15,7 @@ const SignInDialog = (props) => {
   const setCookie = useCookies(['my-cookie'])[1]
   const history = useHistory()
 
-  const submitSignIn = (event) => {
+  const submitSignIn = (event: any) => {
     console.log(`Submit info is ${username} with ${password}`)
     const data = {
       username: username,
@@ -26,7 +26,7 @@ const SignInDialog = (props) => {
       const token = res.data.token
       setCookie('tokenbon', token, {
         path: '/',
-        maxAge: '6000', // in second
+        maxAge: 6000, // in second
         // httpOnly: true,
         sameSite: true
       })
@@ -74,4 +74,4 @@ const SignInDialog = (props) => {
   )
 }
 
-export default SignInDialog;
+export default SignInDialog

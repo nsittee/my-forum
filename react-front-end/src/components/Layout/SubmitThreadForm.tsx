@@ -1,37 +1,40 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Button, Card, CardContent } from "@material-ui/core";
+import React, { useContext, useEffect, useState } from "react"
+import { Button, Card, CardContent } from "@material-ui/core"
 import { Form, Field } from 'react-final-form'
 
 import AuthContext from '../../context/auth-context'
-import { useHistory } from "react-router-dom";
-import Axios from "axios";
+import { useHistory } from "react-router-dom"
+import Axios from "axios"
 
 const CreateThreadForm = () => {
   const [userSub, setUserSub] = useState([])
   const authContext = useContext(AuthContext)
   const history = useHistory()
 
-  const getMyCommunity = () => {
-    // FIXME : Add api that get userSub from back-end
-    console.log(authContext)
-    Axios.get('http://localhost:5000/api/users/', {
-      headers: {
-        authorization: authContext.token
-      }
-    }).then(res => {
-      console.log(res.data)
-      const subList = res.data.data.UserSub
 
-      setUserSub(subList.map(sub => {
-        return <option key={sub._id} value={sub._id}> {sub.SubLongName} </option>
-      }))
-    }).catch(err => {
-      console.log(err)
-    })
-  }
-  useEffect(getMyCommunity, [])
+  useEffect(() => {
+    const fetchData = () => {
+      // FIXME : Add api that get userSub from back-end
+      console.log(authContext)
+      Axios.get('http://localhost:5000/api/users/', {
+        headers: {
+          authorization: authContext.token
+        }
+      }).then(res => {
+        console.log(res.data)
+        const subList = res.data.data.UserSub
 
-  const onSubmit = (formData) => {
+        setUserSub(subList.map((sub: any) => {
+          return <option key={sub._id} value={sub._id}> {sub.SubLongName} </option>
+        }))
+      }).catch(err => {
+        console.log(err)
+      })
+    }
+    fetchData()
+  }, [authContext])
+
+  const onSubmit = (formData: any) => {
     const data = {
       Thread: {
         Title: formData.title,
@@ -53,9 +56,10 @@ const CreateThreadForm = () => {
       })
     history.push('/')
   }
-  const validate = () => {
 
-  }
+  // const validate = (formInput: any) => {
+
+  // }
 
   return (
     <div>
@@ -63,7 +67,7 @@ const CreateThreadForm = () => {
         <CardContent>
           <Form
             onSubmit={onSubmit}
-            validate={validate}
+            // validate={validate}
             render={props => (
               // TODO: Use material UI form component
               <form onSubmit={(event) => props.handleSubmit(event)}>
@@ -96,7 +100,7 @@ const CreateThreadForm = () => {
       </Card>
 
     </div>
-  );
+  )
 }
 
-export default CreateThreadForm;
+export default CreateThreadForm

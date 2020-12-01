@@ -1,15 +1,15 @@
-import React from 'react';
-import { useHistory } from 'react-router';
-import { Card, Typography, Grid } from '@material-ui/core';
+import React from 'react'
+import { useHistory } from 'react-router'
+import { Card, Typography, Grid } from '@material-ui/core'
 import { KeyboardArrowUp, KeyboardArrowDown } from '@material-ui/icons'
 
-const Thread = props => {
-	const history = useHistory();
+const Thread = (props: any) => {
+	const history = useHistory()
 
-	const thread = props.thread;
-	const displayVote = thread.Upvote - thread.Downvote;
-	const subAuthor = thread.Author ? thread.Author.Username : 'null';
-	const subParent = thread.SubParent ? thread.SubParent.SubLongName : 'null';
+	const thread = props.thread
+	const displayVote = thread.Upvote - thread.Downvote
+	const subAuthor = thread.Author ? thread.Author.Username : 'null'
+	const subParent = thread.SubParent ? thread.SubParent.SubLongName : 'null'
 
 	return (
 		<Grid item xs={12}>
@@ -32,7 +32,7 @@ const Thread = props => {
 				</Grid>
 			</Card>
 		</Grid >
-	);
-};
+	)
+}
 
-export default Thread;
+export default Thread

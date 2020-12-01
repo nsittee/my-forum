@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Card } from '@material-ui/core';
+import { Button, Card } from '@material-ui/core'
 
 const ContentFilter = () => {
   return (
@@ -13,4 +13,4 @@ const ContentFilter = () => {
   )
 }
 
-export default ContentFilter;
+export default ContentFilter
