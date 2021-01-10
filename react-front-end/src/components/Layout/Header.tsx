@@ -6,19 +6,20 @@ import { useCookies } from 'react-cookie'
 
 import Logo from './logo.png'
 import AuthContext from '../../context/auth-context'
-import SignInDialog from './SignInDialog'
+import SignInDialog from './Dialog/SignInDialog'
+import SignUpDialog from './Dialog/SignUpDialog'
 import UiContext from '../../context/ui-context'
 import { useHistory } from 'react-router-dom'
 
 const Header = () => {
   const authContext = useContext(AuthContext)
-  const { setSignIn } = useContext(UiContext)
+  const { setSignIn, setSignUp } = useContext(UiContext)
   const removeCookie = useCookies(['my-cookie'])[2]
   const history = useHistory()
 
   const SignOutHandler = () => {
     removeCookie('tokenbon', {
-      // If path is not set, the cookie wont't be able to remove outside of the root path
+      // If path is not set, the cookie cannot be removed outside of the root path
       path: '/'
     })
     history.go(0)
@@ -27,7 +28,7 @@ const Header = () => {
   if (!authContext.authenticated)
     var headerStatus = [
       <Button key="sign-in" onClick={() => setSignIn(true)}>Sign In </Button>,
-      <Button key="sign-up" onClick={() => { }}>Sign Up </Button>,
+      <Button key="sign-up" onClick={() => setSignUp(true)}>Sign Up </Button>,
     ]
   else
     headerStatus = [
@@ -53,6 +54,7 @@ const Header = () => {
 
           {headerStatus}
           <SignInDialog />
+          <SignUpDialog />
         </Grid>
       </Toolbar>
     </AppBar>
