@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import { TextField, Button, Dialog } from '@material-ui/core'
 import Axios from 'axios'
 
-import UiContext from '../../context/ui-context'
+import UiContext from '../../../context/ui-context'
 import { useCookies } from 'react-cookie'
 import { useHistory } from 'react-router-dom'
 
