@@ -18,7 +18,7 @@ module.exports = (app) => {
   app.use(morgan('dev'));
 
   // Passport
-  // require('../configs/passport');
+  require('../configs/passport');
 
   // Static file
   // app.use('/static', express.static(path.join(__dirname, '../public')))
