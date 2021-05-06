@@ -1,9 +1,9 @@
-import { Card, Grid } from '@material-ui/core';
+import { Card, Container, Grid } from '@material-ui/core';
 import React from 'react'
 
 const ChangelogPage = () => {
   return (
-    <div>
+    <Container maxWidth="md">
       <h1>About</h1>
       <Card>
         <Grid container spacing={2}>
@@ -43,7 +43,7 @@ const ChangelogPage = () => {
           </Grid>
         </Grid>
       </Card>
-    </div>
+    </Container>
   )
 }
 

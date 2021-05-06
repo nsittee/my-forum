@@ -1,14 +1,11 @@
 import React from 'react';
 
 const authContext = React.createContext({
-  token: '',
+  id: '',
+  username: '',
   authenticated: false,
-  id: null,
-  username: null,
-  userSub: [],
+  token: '',
+  header: {}
 });
-
-
-
 
 export default authContext;

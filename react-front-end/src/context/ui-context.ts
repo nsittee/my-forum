@@ -2,8 +2,8 @@ import React from 'react'
 
 export default React.createContext({
   signIn: false,
-  setSignIn: () => { },
+  setSignIn: (value: boolean) => { },
 
   signUp: false,
-  setSIgnUp: () => { }
+  setSignUp: (value: boolean) => { }
 })

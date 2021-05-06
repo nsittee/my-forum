@@ -7,17 +7,15 @@ const config = require('../configs/config');
 const User = require('../models/user');
 const checkAuth = require('../middleware/check-auth')
 
-router.get('/my-sub', checkAuth, (req, res, next) => {
-  console.log('all good')
-  res.status(200).send(`all good ${req.headers.authorization}`)
-})
-
-router.get('/:id', (req, res, next) => {
-  const id = req.params.id;
-  User.find({ _id: id })
-    .exec()
-    .then(user => {
-      res.status(200).json(user);
+router.get('/', checkAuth, (req, res, next) => {
+  const tokenData = jwt.decode(req.headers.authorization)
+  User.findById(tokenData.id)
+    .populate('UserSub', 'SubLongName')
+    .exec().then(user => {
+      res.status(200).json({
+        message: 'get user success',
+        data: user
+      });
     }).catch(err => {
       res.status(400).json(err);
     });
@@ -54,7 +52,7 @@ router.post('/signup', (req, res, next) => {
 
 router.post('/signin', (req, res, next) => {
   User.find({ Username: req.body.username })
-    .populate('UserSub', 'SubLongName')
+    // .populate('UserSub', 'SubLongName')
     .exec().then(userList => {
       console.log(userList)
       if (userList.length == 1) {
@@ -65,7 +63,6 @@ router.post('/signin', (req, res, next) => {
             const token = jwt.sign({
               id: user._id,
               username: user.Username,
-              userSub: user.UserSub
             },
               config.secretKey, {
               expiresIn: "1h"
@@ -78,6 +75,14 @@ router.post('/signin', (req, res, next) => {
         });
       } else res.status(409).send({ message: "username or password incorrect" });
     });
+})
+
+router.post('/sub-list', (req, res, next) => {
+  const userId = jwt.decode(req.headers.authorization)
+  User.findById(userId.id).exec().then(user => {
+    console.log(user)
+    res.status(200).json(user)
+  })
 })
 
 module.exports = router;
