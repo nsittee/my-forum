@@ -4,8 +4,11 @@ phases:
   install:
     commands:
       - echo 'Run npm install'
-      - npm install react-front-end/
-      - npm install express-back-end/
+      - cd ./react-front-end
+      - npm install
+      - cd ../express-back-end
+      - npm install
+      - cd ..
   pre_build:
     commands:
       - echo Nothing to do in the pre_build phase...
