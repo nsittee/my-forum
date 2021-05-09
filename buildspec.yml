@@ -3,10 +3,23 @@ version: 0.2
 phases:
   install:
     commands:
-      - echo 'echo install'
+      - echo 'Run npm install'
+      - npm install react-front-end/
+      - npm install express-back-end/
+  pre_build:
+    commands:
+      - echo Nothing to do in the pre_build phase...
   build:
     commands:
-      - echo 'echo build'
+      - echo Build started on `date`
+      - cd ./react-front-end
+      - npm run build
+      - cd ..
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - mv ./react-front-end/build ./express-back-end/
+      - mv ./express-back-end/build/ ./express-back-end/public
 artifacts:
   files:
-    - '**/*'
+    - './express-back-end/**'
