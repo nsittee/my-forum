@@ -9,4 +9,4 @@ mv ./react-front-end/build ./express-back-end/
 mv ./express-back-end/build/ ./express-back-end/public
 
 echo "################### Docker Build"
-docker build .
+docker build . -t my-forum
