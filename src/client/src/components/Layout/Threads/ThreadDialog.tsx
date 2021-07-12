@@ -10,7 +10,7 @@ const ThreadDialog = () => {
 
   useEffect(() => {
     const getThread = (id: string) => {
-      Axios.get(`http://localhost:5000/api/threads/${id}`)
+      Axios.get(`http://localhost:8080/api/threads/${id}`)
         .then(res => { setThread(res.data) })
         .catch(err => console.log(err));
     }

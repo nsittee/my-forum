@@ -13,7 +13,7 @@ const SubBanner = (props: any) => {
       const fetchData = async () => {
         try {
           const res = await Axios.get(
-            'http://localhost:5000/api/users/',
+            'http://localhost:8080/api/users/',
             authContext.header
           )
           const userSub: Array<any> = res.data.data.UserSub
@@ -39,7 +39,7 @@ const SubBanner = (props: any) => {
     console.log(props.subName)
 
     var action = joined ? 'leave' : 'join'
-    var url = `http://localhost:5000/api/subs/${action}?subId=${props.subId}`
+    var url = `http://localhost:8080/api/subs/${action}?subId=${props.subId}`
     Axios.post(url, null, {
       headers: {
         authorization: authContext.token

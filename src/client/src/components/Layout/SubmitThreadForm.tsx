@@ -16,7 +16,7 @@ const CreateThreadForm = () => {
     const fetchData = () => {
       // FIXME : Add api that get userSub from back-end
       console.log(authContext)
-      Axios.get('http://localhost:5000/api/users/', {
+      Axios.get('http://localhost:8080/api/users/', {
         headers: {
           authorization: authContext.token
         }
@@ -44,7 +44,7 @@ const CreateThreadForm = () => {
       }
     }
     console.log(formData)
-    Axios.post('http://localhost:5000/api/threads/', data, {
+    Axios.post('http://localhost:8080/api/threads/', data, {
       headers: {
         authorization: authContext.token
       }

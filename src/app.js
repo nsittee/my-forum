@@ -11,11 +11,7 @@ require('./middleware/error-handler');
 
 app.use(express.static(path.join(__dirname, 'client', 'build')));
 app.get("/*", (req, res) => {
-  if (process.NODE_ENV == "production") {
-    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
-  } else {
-    res.send('Api is running');
-  }
+  res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
 });
 
 module.exports = app;
