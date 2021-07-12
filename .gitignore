@@ -21,8 +21,3 @@ node_modules
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-env.sh
-express-back-end/public/
-react-front-end/build/
-deployment/

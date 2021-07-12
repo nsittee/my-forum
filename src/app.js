@@ -2,12 +2,12 @@ const express = require('express');
 const app = express();
 const path = require("path");
 
-require('./src/middleware')(app);
-require('./src/configs/database');
+require('./middleware')(app);
+require('./configs/database');
 
-app.use('/api', require('./src/routes'));
+app.use('/api', require('./routes'));
 
-require('./src/middleware/error-handler')
+require('./middleware/error-handler')
 
 app.use(express.static('public'))
 app.get("/*", (req, res) => {
