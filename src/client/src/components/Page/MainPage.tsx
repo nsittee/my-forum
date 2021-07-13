@@ -8,6 +8,7 @@ import ThreadDialog from '../Layout/Threads/ThreadDialog';
 import CreatePost from '../Layout/CreatePost';
 import ContentFilter from '../Layout/ContentFilter';
 import SubBanner from '../Layout/SubBanner';
+import appConstant from '../../constant/constant';
 
 const MainPage = (props: any) => {
   const [threads, setThreads] = useState([])
@@ -25,7 +26,7 @@ const MainPage = (props: any) => {
 
   useEffect(() => {
     const fetchData = () => {
-      Axios.get(`http://localhost:8080/api/subs/${subName ? subName : ''}`)
+      Axios.get(`${appConstant.URL}/api/subs/${subName ? subName : ''}`)
         .then(res => {
           console.log(res.data.data)
           setThreads(res.data.data.SubThread)

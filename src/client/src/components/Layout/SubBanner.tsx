@@ -3,6 +3,7 @@ import Axios from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
 import AuthContext from '../../context/auth-context'
 import PropTypes from 'prop-types'
+import appConstant from '../../constant/constant';
 
 const SubBanner = (props: any) => {
   const authContext = useContext(AuthContext)
@@ -13,7 +14,7 @@ const SubBanner = (props: any) => {
       const fetchData = async () => {
         try {
           const res = await Axios.get(
-            'http://localhost:8080/api/users/',
+            `${appConstant.URL}/api/users/`,
             authContext.header
           )
           const userSub: Array<any> = res.data.data.UserSub
@@ -39,7 +40,7 @@ const SubBanner = (props: any) => {
     console.log(props.subName)
 
     var action = joined ? 'leave' : 'join'
-    var url = `http://localhost:8080/api/subs/${action}?subId=${props.subId}`
+    var url = `${appConstant.URL}/api/subs/${action}?subId=${props.subId}`
     Axios.post(url, null, {
       headers: {
         authorization: authContext.token

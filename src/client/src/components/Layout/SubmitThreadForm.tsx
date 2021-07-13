@@ -5,6 +5,7 @@ import { Form, Field } from 'react-final-form'
 import AuthContext from '../../context/auth-context'
 import { useHistory } from "react-router-dom"
 import Axios from "axios"
+import appConstant from '../../constant/constant';
 
 const CreateThreadForm = () => {
   const [userSub, setUserSub] = useState([])
@@ -16,7 +17,7 @@ const CreateThreadForm = () => {
     const fetchData = () => {
       // FIXME : Add api that get userSub from back-end
       console.log(authContext)
-      Axios.get('http://localhost:8080/api/users/', {
+      Axios.get(`${appConstant.URL}/api/users/`, {
         headers: {
           authorization: authContext.token
         }
@@ -44,7 +45,7 @@ const CreateThreadForm = () => {
       }
     }
     console.log(formData)
-    Axios.post('http://localhost:8080/api/threads/', data, {
+    Axios.post(`${appConstant.URL}/api/threads/`, data, {
       headers: {
         authorization: authContext.token
       }

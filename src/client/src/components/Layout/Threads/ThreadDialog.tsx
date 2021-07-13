@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Card, Grid, Container, Typography, CardContent, Dialog } from '@material-ui/core'
 import Axios from 'axios'
 import { useHistory, useParams } from 'react-router-dom'
+import appConstant from '../../../constant/constant';
 
 const ThreadDialog = () => {
   const [thread, setThread] = useState(null)
@@ -10,7 +11,7 @@ const ThreadDialog = () => {
 
   useEffect(() => {
     const getThread = (id: string) => {
-      Axios.get(`http://localhost:8080/api/threads/${id}`)
+      Axios.get(`${appConstant.URL}/api/threads/${id}`)
         .then(res => { setThread(res.data) })
         .catch(err => console.log(err));
     }
