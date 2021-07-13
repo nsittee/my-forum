@@ -1,5 +1,5 @@
 const path = require('path');
-const env = process.NODE_ENV;
+const env = process.env.NODE_ENV;
 var envFile = "";
 if (env === "local") envFile = 'env/.env.local';
 else if (env === "development") envFile = 'env/.env.development.local';
