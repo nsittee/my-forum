@@ -1,17 +1,10 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import { TextField, Button, Dialog } from '@material-ui/core'
-import Axios from 'axios'
-
 import UiContext from '../../../context/ui-context'
-import { useCookies } from 'react-cookie'
-import { useHistory } from 'react-router-dom'
 
 const SignUpDialog = (props: any) => {
   const { signUp, setSignUp } = useContext(UiContext)
-  const history = useHistory()
-
   const submitSignUp = (event: any) => {
-
   }
 
   return (

@@ -17,7 +17,6 @@ const MyForum = () => {
   const [signUp, setSignUp] = useState(false)
   const [cookies] = useCookies(['my-cookie'])
   // const [cookies, setCookie, removeCookie] = useCookies()
-  console.log(process.env.REACT_APP_URL);
 
   var authContextValue = {
     id: '',
