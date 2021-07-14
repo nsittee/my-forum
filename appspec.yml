@@ -11,13 +11,13 @@ permissions:
 hooks:
   Install:
     - location: scripts/aws/install.sh
-      timeout: 300
+      timeout: 600
       runas: ec2-user
   ApplicationStart:
     - location: scripts/aws/application_start.sh
-      timeout: 300
+      timeout: 60
       runas: ec2-user
   ApplicationStop:
     - location: scripts/aws/stop_server.sh
-      timeout: 300
+      timeout: 60
       runas: ec2-user
