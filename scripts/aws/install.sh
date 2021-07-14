@@ -6,5 +6,3 @@ echo "install"
 cd /application
 
 npm run server:install
-npm run client:install
-npm run client:build
