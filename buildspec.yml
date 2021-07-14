@@ -7,6 +7,9 @@ phases:
   build:
     commands:
       - npm run client:build
+  post_build:
+    commands:
+      - rm -rf src/client/node_modules
 artifacts:
   files:
     - "**/*"
