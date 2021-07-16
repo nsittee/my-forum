@@ -4,14 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "client:install": "cd src/client/ && npm install",
+    "client:install": "cd src/client/ && npm ci",
     "client:build": "cd src/client/ && npm run build",
     "client:dev": "cd src/client/ && npm start",
-    "server:install": "npm install",
+    "server:install": "npm ci",
     "start": "NODE_ENV=production node src/server.js",
     "server:dev": "nodemon src/server.js",
     "all:install": "npm run server:install && npm run client:install",
-    "dev": "concurrently \"npm run client:dev\" \"npm run server:dev\""
+    "dev": "concurrently \"npm run client:dev\" \"npm run server:dev\"",
+    "clean": "rm -rf node_modules && rm -rf src/client/node_modules"
   },
   "author": "",
   "license": "ISC",
