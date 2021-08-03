@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Card } from '@material-ui/core'
 
-const ContentFilter = () => {
+const ThreadFilter = () => {
   return (
     <Card>
       <Button>Best</Button>
@@ -13,4 +13,4 @@ const ContentFilter = () => {
   )
 }
 
-export default ContentFilter
+export default ThreadFilter

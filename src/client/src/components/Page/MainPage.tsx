@@ -5,9 +5,9 @@ import Axios from 'axios';
 
 import Thread from '../Layout/Threads/Thread';
 import ThreadDialog from '../Layout/Threads/ThreadDialog';
-import CreatePost from '../Layout/CreatePost';
-import ContentFilter from '../Layout/ContentFilter';
-import SubBanner from '../Layout/SubBanner';
+import CreateThread from '../Layout/Threads/CreateThread';
+import ThreadFilter from '../Layout/Threads/ThreadFilter';
+import SubBanner from '../Layout/Sub/SubBanner';
 import appConstant from '../../constant/constant';
 
 const MainPage = (props: any) => {
@@ -30,17 +30,12 @@ const MainPage = (props: any) => {
         .then(res => {
           console.log(res.data.data)
           setThreads(res.data.data.SubThread)
-          setCreatePost(<CreatePost />)
-          setContentFilter(<ContentFilter />)
+          setCreatePost(<CreateThread />)
+          setContentFilter(<ThreadFilter />)
           if (subName) {
             console.log(res.data.data._id)
-            setBanner(
-              <SubBanner
-                subName={subName}
-                subId={res.data.data._id} />
-            )
+            setBanner(<SubBanner subName={subName} subId={res.data.data._id} />)
           }
-
         })
         .catch(err => console.log(err))
     }
