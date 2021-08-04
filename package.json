@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "client:install": "cd src/client/ && npm ci",
-    "client:build": "cd src/client/ && npm run build",
-    "client:postBuild": "mkdir dist && mv src/client/build dist/",
+    "client:build": "cd src/client/ && npm run build && mv build ../../dist/",
     "client:dev": "cd src/client/ && npm start",
     "server:install": "npm ci",
     "server:build": "tsc",
