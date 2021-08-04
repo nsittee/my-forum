@@ -3,9 +3,9 @@ import { Route } from 'react-router-dom';
 import { Container, Grid } from '@material-ui/core';
 import Axios from 'axios';
 
-import Thread from '../Layout/Threads/Thread';
+import ThreadCard from '../Layout/Threads/ThreadCard';
 import ThreadDialog from '../Layout/Threads/ThreadDialog';
-import CreateThread from '../Layout/Threads/CreateThread';
+import CreateThreadCard from '../Layout/Threads/CreateThreadCard';
 import ThreadFilter from '../Layout/Threads/ThreadFilter';
 import SubBanner from '../Layout/Sub/SubBanner';
 import appConstant from '../../constant/constant';
@@ -19,7 +19,7 @@ const MainPage = (props: any) => {
 
   var mainThreads: Array<any> = [];
   mainThreads = threads.map((thread: any) => {
-    return <Thread
+    return <ThreadCard
       key={thread._id}
       thread={thread} />
   });
@@ -30,7 +30,7 @@ const MainPage = (props: any) => {
         .then(res => {
           console.log(res.data.data)
           setThreads(res.data.data.SubThread)
-          setCreatePost(<CreateThread />)
+          setCreatePost(<CreateThreadCard />)
           setContentFilter(<ThreadFilter />)
           if (subName) {
             console.log(res.data.data._id)

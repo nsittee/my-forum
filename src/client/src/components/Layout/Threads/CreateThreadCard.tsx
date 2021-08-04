@@ -3,7 +3,7 @@ import { useHistory } from 'react-router'
 import { Card, TextField } from '@material-ui/core'
 import { useCookies } from 'react-cookie'
 
-const CreateThread = () => {
+const CreateThreadCard = () => {
   const history = useHistory()
   const [cookies] = useCookies(['my-cookie'])
 
@@ -17,4 +17,4 @@ const CreateThread = () => {
   return newThread
 }
 
-export default CreateThread
+export default CreateThreadCard
