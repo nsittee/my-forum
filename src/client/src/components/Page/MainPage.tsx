@@ -12,10 +12,8 @@ import appConstant from '../../constant/constant';
 
 const MainPage = (props: any) => {
   const [threads, setThreads] = useState([])
-  const [banner, setBanner] = useState(<div />)
-  const [createPost, setCreatePost] = useState(<div />)
-  const [contentFilter, setContentFilter] = useState(<div />)
-  const [subName] = useState(props.match.params.sub)
+  const [subName] = useState(props.match.params.sub ? props.match.params.sub : '')
+  const [subId, setSubId] = useState()
 
   var mainThreads: Array<any> = [];
   mainThreads = threads.map((thread: any) => {
@@ -26,16 +24,12 @@ const MainPage = (props: any) => {
 
   useEffect(() => {
     const fetchData = () => {
-      Axios.get(`${appConstant.URL}/api/subs/${subName ? subName : ''}`)
+      Axios.get(`${appConstant.URL}/api/subs/${subName}`)
         .then(res => {
           console.log(res.data.data)
           setThreads(res.data.data.SubThread)
-          setCreatePost(<CreateThreadCard />)
-          setContentFilter(<ThreadFilter />)
-          if (subName) {
-            console.log(res.data.data._id)
-            setBanner(<SubBanner subName={subName} subId={res.data.data._id} />)
-          }
+
+          if (subName) setSubId(res.data.data._id)
         })
         .catch(err => console.log(err))
     }
@@ -45,7 +39,7 @@ const MainPage = (props: any) => {
   return (
     <div>
       {/* only for /r/subName path */}
-      {banner}
+      {subName && <SubBanner subName={subName} subId={subId} />}
       <Container maxWidth='md'>
         <Grid container spacing={1}>
           <Grid item xs={12}>
@@ -54,11 +48,11 @@ const MainPage = (props: any) => {
               <Grid item xs={12}>
                 {/* FIXME: Spacing for the main header */}
                 <br />
-                {createPost}
+                {threads.length > 0 && <CreateThreadCard />}
               </Grid>
 
               <Grid item xs={12}>
-                {contentFilter}
+                {threads.length > 0 && <ThreadFilter />}
               </Grid>
 
               {mainThreads}
