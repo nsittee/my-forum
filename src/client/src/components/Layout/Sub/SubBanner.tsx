@@ -1,9 +1,9 @@
 import { Button, CardContent, Container, Grid } from '@material-ui/core'
 import Axios from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
-import AuthContext from '../../context/auth-context'
+import AuthContext from '../../../context/auth-context'
 import PropTypes from 'prop-types'
-import appConstant from '../../constant/constant';
+import appConstant from '../../../constant/constant';
 
 const SubBanner = (props: any) => {
   const authContext = useContext(AuthContext)

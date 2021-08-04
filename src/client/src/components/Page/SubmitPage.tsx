@@ -1,6 +1,6 @@
 import { Card, Container, Grid } from '@material-ui/core';
 import React from 'react'
-import SubmitThreadForm from '../Layout/SubmitThreadForm';
+import SubmitThreadForm from '../Layout/Threads/CreateThreadForm';
 
 const SubmitPage = () => {
   return (

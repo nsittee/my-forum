@@ -3,44 +3,33 @@ import { Route } from 'react-router-dom';
 import { Container, Grid } from '@material-ui/core';
 import Axios from 'axios';
 
-import Thread from '../Layout/Threads/Thread';
+import ThreadCard from '../Layout/Threads/ThreadCard';
 import ThreadDialog from '../Layout/Threads/ThreadDialog';
-import CreatePost from '../Layout/CreatePost';
-import ContentFilter from '../Layout/ContentFilter';
-import SubBanner from '../Layout/SubBanner';
+import CreateThreadCard from '../Layout/Threads/CreateThreadCard';
+import ThreadFilter from '../Layout/Threads/ThreadFilter';
+import SubBanner from '../Layout/Sub/SubBanner';
 import appConstant from '../../constant/constant';
 
 const MainPage = (props: any) => {
   const [threads, setThreads] = useState([])
-  const [banner, setBanner] = useState(<div />)
-  const [createPost, setCreatePost] = useState(<div />)
-  const [contentFilter, setContentFilter] = useState(<div />)
-  const [subName] = useState(props.match.params.sub)
+  const [subName] = useState(props.match.params.sub ? props.match.params.sub : '')
+  const [subId, setSubId] = useState()
 
   var mainThreads: Array<any> = [];
   mainThreads = threads.map((thread: any) => {
-    return <Thread
+    return <ThreadCard
       key={thread._id}
       thread={thread} />
   });
 
   useEffect(() => {
     const fetchData = () => {
-      Axios.get(`${appConstant.URL}/api/subs/${subName ? subName : ''}`)
+      Axios.get(`${appConstant.URL}/api/subs/${subName}`)
         .then(res => {
           console.log(res.data.data)
           setThreads(res.data.data.SubThread)
-          setCreatePost(<CreatePost />)
-          setContentFilter(<ContentFilter />)
-          if (subName) {
-            console.log(res.data.data._id)
-            setBanner(
-              <SubBanner
-                subName={subName}
-                subId={res.data.data._id} />
-            )
-          }
 
+          if (subName) setSubId(res.data.data._id)
         })
         .catch(err => console.log(err))
     }
@@ -50,7 +39,7 @@ const MainPage = (props: any) => {
   return (
     <div>
       {/* only for /r/subName path */}
-      {banner}
+      {subName && <SubBanner subName={subName} subId={subId} />}
       <Container maxWidth='md'>
         <Grid container spacing={1}>
           <Grid item xs={12}>
@@ -59,11 +48,11 @@ const MainPage = (props: any) => {
               <Grid item xs={12}>
                 {/* FIXME: Spacing for the main header */}
                 <br />
-                {createPost}
+                {threads.length > 0 && <CreateThreadCard />}
               </Grid>
 
               <Grid item xs={12}>
-                {contentFilter}
+                {threads.length > 0 && <ThreadFilter />}
               </Grid>
 
               {mainThreads}

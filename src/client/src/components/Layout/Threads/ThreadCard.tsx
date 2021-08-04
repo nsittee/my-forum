@@ -3,7 +3,7 @@ import { useHistory } from 'react-router'
 import { Card, Typography, Grid } from '@material-ui/core'
 import { KeyboardArrowUp, KeyboardArrowDown } from '@material-ui/icons'
 
-const Thread = (props: any) => {
+const ThreadCard = (props: any) => {
 	const history = useHistory()
 
 	const thread = props.thread
@@ -35,4 +35,4 @@ const Thread = (props: any) => {
 	)
 }
 
-export default Thread
+export default ThreadCard

@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom'
 import { CookiesProvider, useCookies } from "react-cookie"
 import jwt from 'jwt-decode'
 
-import Header from './Layout/Header'
+import Header from './Layout/General/Header'
 import MainPage from './Page/MainPage'
 import ProfilePage from './Page/ProfilePage'
 import UserSettingPage from './Page/UserSettingPage'

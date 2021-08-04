@@ -5,10 +5,10 @@ import { Grid, Button, TextField } from '@material-ui/core'
 import { useCookies } from 'react-cookie'
 
 import Logo from './logo.png'
-import AuthContext from '../../context/auth-context'
-import SignInDialog from './Dialog/SignInDialog'
-import SignUpDialog from './Dialog/SignUpDialog'
-import UiContext from '../../context/ui-context'
+import AuthContext from '../../../context/auth-context'
+import SignInDialog from '../Dialog/SignInDialog'
+import SignUpDialog from '../Dialog/SignUpDialog'
+import UiContext from '../../../context/ui-context'
 import { useHistory } from 'react-router-dom'
 
 const Header = () => {
