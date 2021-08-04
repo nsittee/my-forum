@@ -9,7 +9,6 @@ node_modules
 /coverage
 
 # production
-/dist
 /build
 **/build
 
@@ -25,3 +24,4 @@ yarn-debug.log*
 yarn-error.log*
 
 cra-app.pem
+dist
