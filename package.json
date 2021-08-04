@@ -5,11 +5,12 @@
   "main": "index.js",
   "scripts": {
     "client:install": "cd src/client/ && npm ci",
-    "client:build": "cd src/client/ && npm run build",
+    "client:build": "cd src/client/ && npm run build && mv build ../../dist/",
     "client:dev": "cd src/client/ && npm start",
     "server:install": "npm ci",
-    "start": "NODE_ENV=production node src/server.js",
-    "server:dev": "nodemon src/server.js",
+    "server:build": "tsc",
+    "start": "NODE_ENV=production node dist/server.js",
+    "server:dev": "nodemon dist/server.js",
     "all:install": "npm run server:install && npm run client:install",
     "dev": "concurrently \"npm run client:dev\" \"npm run server:dev\"",
     "clean": "rm -rf node_modules && rm -rf src/client/node_modules"
@@ -25,5 +26,9 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.22",
     "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "@types/node": "^16.4.11",
+    "typescript": "^4.3.5"
   }
 }
