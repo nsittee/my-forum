@@ -1,6 +1,8 @@
-const env = require('process').env;
+import process from 'process'
 
-module.exports = {
+const env = process.env
+
+export const config = {
   username: env.DB_USERNAME,
   password: env.DB_PASSWORD,
   cluster: env.DB_CLUSTER,

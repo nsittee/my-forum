@@ -1,14 +1,14 @@
-const express = require('express');
-const app = express.Router();
-const bcrypt = require('bcryptjs');
+import express from 'express';
+import bcrypt from 'bcryptjs';
 
-const ThreadModel = require('../models/thread');
-const UserModel = require('../models/user');
-const SubModel = require('../models/sub');
-const CommentModel = require('../models/comment');
+import ThreadModel from '../models/thread';
+import UserModel from '../models/user';
+import SubModel from '../models/sub';
+import CommentModel from '../models/comment';
 
-app.get('/populate', (req, res) => {
-  var response = {
+const router = express.Router();
+router.get('/populate', (req, res) => {
+  var response: any = {
     message: "populate",
   }
 
@@ -66,4 +66,5 @@ app.get('/populate', (req, res) => {
   return res.status(200).json(response);
 });
 
-module.exports = app;
+module.exports = router;
+export default router

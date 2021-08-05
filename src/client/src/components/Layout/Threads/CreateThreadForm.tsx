@@ -2,10 +2,10 @@ import React, { useContext, useEffect, useState } from "react"
 import { Button, Card, CardContent } from "@material-ui/core"
 import { Form, Field } from 'react-final-form'
 
-import AuthContext from '../../context/auth-context'
+import AuthContext from '../../../context/auth-context'
 import { useHistory } from "react-router-dom"
 import Axios from "axios"
-import appConstant from '../../constant/constant';
+import appConstant from '../../../constant/constant';
 
 const CreateThreadForm = () => {
   const [userSub, setUserSub] = useState([])

@@ -1,19 +1,13 @@
-const express = require('express');
+import express from 'express'
+import mongoose from 'mongoose'
+
+import Thread from '../models/thread'
+import User from '../models/user'
+import Sub from '../models/sub'
+
+import { authenticate } from '../middleware/authenticate'
+
 const router = express.Router();
-const checkAuth = require('../middleware/check-auth');
-const mongoose = require('mongoose');
-
-const Thread = require('../models/thread');
-const User = require('../models/user');
-const Sub = require('../models/sub');
-
-// router.get('/', (req, res, next) => {
-//   ThreadModel.find()
-//     .populate('Author', 'Username')
-//     .populate('SubParent', ['SubLongName', 'SubShortName'])
-//     .exec()
-//     .then(threads => res.status(200).json(threads));
-// });
 
 router.get('/:id', (req, res, next) => {
   const id = req.params.id;
@@ -25,7 +19,7 @@ router.get('/:id', (req, res, next) => {
     .then(thread => res.status(200).json(thread));
 });
 
-router.post('/', checkAuth, (req, res, next) => {
+router.post('/', authenticate, (req, res, next) => {
   const reqThread = req.body.Thread;
   if (!reqThread)
     return res.status(400).json({ message: "invalid json" });
@@ -57,4 +51,4 @@ router.post('/', checkAuth, (req, res, next) => {
   });
 });
 
-module.exports = router;
+export default router

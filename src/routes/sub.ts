@@ -1,15 +1,16 @@
-const express = require('express')
+import express from 'express';
+import jwt from 'jsonwebtoken';
+import { config } from '../configs/config';
+
+import SubModel from '../models/sub';
+import ThreadModel from '../models/thread';
+import UserModel from '../models/user';
+
+import { authenticate } from '../middleware/authenticate';
+
 const router = express.Router()
-const jwt = require('jsonwebtoken');
-const config = require('../configs/config');
 
-const SubModel = require('../models/sub')
-const ThreadModel = require('../models/thread')
-const UserModel = require('../models/user')
-
-const checkAuth = require('../middleware/check-auth')
-
-router.post('/join', checkAuth, (req, res) => {
+router.post('/join', authenticate, (req, res) => {
   // FIXME: User can join the same sub again, so the Sub ID will duplicate
   const joinedSubId = req.query.subId
   if (!joinedSubId) {
@@ -18,7 +19,7 @@ router.post('/join', checkAuth, (req, res) => {
   }
 
   console.log(`joining sub ${joinedSubId}`)
-  const decode = jwt.verify(req.headers.authorization, config.secretKey)
+  const decode: any = jwt.verify(req.headers.authorization, config.secretKey)
   const joiningUserId = decode.id
   UserModel.findById(joiningUserId).exec().then(joiningUser => {
     joiningUser.UserSub.push(joinedSubId)
@@ -43,7 +44,7 @@ router.post('/join', checkAuth, (req, res) => {
   })
 })
 
-router.post('/leave', checkAuth, (req, res) => {
+router.post('/leave', authenticate, (req, res) => {
   res.status(400).json({
     message: "leaving sub completed",
   })
@@ -85,4 +86,4 @@ router.get('/', (req, res, next) => {
     }));
 });
 
-module.exports = router
+export default router
