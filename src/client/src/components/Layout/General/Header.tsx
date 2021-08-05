@@ -4,7 +4,6 @@ import Toolbar from '@material-ui/core/Toolbar'
 import { Grid, Button, TextField } from '@material-ui/core'
 import { useCookies } from 'react-cookie'
 
-import Logo from './logo.png'
 import AuthContext from '../../../context/auth-context'
 import SignInDialog from './SignInDialog'
 import SignUpDialog from './SignUpDialog'
@@ -45,7 +44,7 @@ const Header = () => {
         <Grid container>
           <a href="/">
             <img
-              src={Logo}
+              src="logo.png"
               alt='reddit'
               height='40' />
           </a>
