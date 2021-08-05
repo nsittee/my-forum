@@ -27,7 +27,7 @@ const ThreadDialog = () => {
         onBackdropClick={() => history.goBack()}
         onEscapeKeyDown={() => history.goBack()}
         transitionDuration={0}
-        maxWidth='lg'
+        maxWidth='md'
         fullWidth={true} >
         <Container>
           <Grid container alignContent='center'>
