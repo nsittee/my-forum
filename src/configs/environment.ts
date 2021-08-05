@@ -1,4 +1,5 @@
-const path = require('path');
+import path from 'path'
+
 const env = process.env.NODE_ENV;
 var envFile = "";
 if (env === "local") envFile = 'env/.env.local';

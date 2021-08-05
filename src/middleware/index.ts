@@ -1,11 +1,11 @@
-const express = require('express');
-const morgan = require('morgan');
-const cors = require('cors');
+import express from 'express'
+import morgan from 'morgan'
+import cors from 'cors'
+import { initDatabase } from '../configs/database'
 
-module.exports = (app) => {
-
+export const initMiddleware = (app: express.Express) => {
   // Connect MongoDB
-  require('../configs/database');
+  initDatabase()
 
   // CORS
   app.use(cors());

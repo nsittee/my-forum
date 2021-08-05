@@ -1,6 +1,8 @@
-const jwt = require('jsonwebtoken');
-const config = require('../configs/config');
-module.exports = (req, res, next) => {
+import jwt from 'jsonwebtoken';
+import { RequestHandler } from 'express'
+import { config } from '../configs/config';
+
+export const authenticate: RequestHandler = (req, res, next) => {
   try {
     const decoded = jwt.verify(req.headers.authorization, config.secretKey)
     // console.log(decoded)

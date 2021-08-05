@@ -1,14 +1,15 @@
-const express = require('express');
+import express from 'express';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import { config } from '../configs/config';
+
+import User from '../models/user';
+import { authenticate } from '../middleware/authenticate';
+
 const router = express.Router();
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const config = require('../configs/config');
 
-const User = require('../models/user');
-const checkAuth = require('../middleware/check-auth')
-
-router.get('/', checkAuth, (req, res, next) => {
-  const tokenData = jwt.decode(req.headers.authorization)
+router.get('/', authenticate, (req, res, next) => {
+  const tokenData: any = jwt.decode(req.headers.authorization)
   User.findById(tokenData.id)
     .populate('UserSub', 'SubLongName')
     .exec().then(user => {
@@ -60,6 +61,7 @@ router.post('/signin', (req, res, next) => {
         bcrypt.compare(req.body.password, user.Password, (err, hashResult) => {
           if (err) return res.status(401).json({ message: "auth failed" });
           if (hashResult) {
+            jwt.sign
             const token = jwt.sign({
               id: user._id,
               username: user.Username,
@@ -78,11 +80,11 @@ router.post('/signin', (req, res, next) => {
 })
 
 router.post('/sub-list', (req, res, next) => {
-  const userId = jwt.decode(req.headers.authorization)
+  const userId: any = jwt.decode(req.headers.authorization)
   User.findById(userId.id).exec().then(user => {
     console.log(user)
     res.status(200).json(user)
   })
 })
 
-module.exports = router;
+export default router
