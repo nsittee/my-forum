@@ -3,12 +3,12 @@ import { Route } from 'react-router-dom';
 import { Container, Grid } from '@material-ui/core';
 import Axios from 'axios';
 
-import ThreadCard from '../Layout/Threads/ThreadCard';
-import ThreadDialog from '../Layout/Threads/ThreadDialog';
-import CreateThreadCard from '../Layout/Threads/CreateThreadCard';
-import ThreadFilter from '../Layout/Threads/ThreadFilter';
-import SubBanner from '../Layout/Sub/SubBanner';
-import appConstant from '../../constant/constant';
+import ThreadCard from '../components/layout/threads/ThreadCard';
+import ThreadDialog from '../components/layout/threads/ThreadDialog';
+import CreateThreadCard from '../components/layout/threads/CreateThreadCard';
+import ThreadFilter from '../components/layout/threads/ThreadFilter';
+import SubBanner from '../components/layout/sub/SubBanner';
+import appConstant from '../constant/constant';
 
 const MainPage = (props: any) => {
   const [threads, setThreads] = useState([])

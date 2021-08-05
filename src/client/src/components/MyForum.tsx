@@ -3,12 +3,12 @@ import { Route, Switch } from 'react-router-dom'
 import { CookiesProvider, useCookies } from "react-cookie"
 import jwt from 'jwt-decode'
 
-import Header from './Layout/General/Header'
-import MainPage from './Page/MainPage'
-import ProfilePage from './Page/ProfilePage'
-import UserSettingPage from './Page/UserSettingPage'
-import SubmitPage from './Page/SubmitPage'
-import ChangelogPage from './Page/ChangelogPage'
+import Header from './layout/general/Header'
+import MainPage from '../page/MainPage'
+import ProfilePage from '../page/ProfilePage'
+import UserSettingPage from '../page/UserSettingPage'
+import SubmitPage from '../page/SubmitPage'
+import ChangelogPage from '../page/ChangelogPage'
 import AuthContext from '../context/auth-context'
 import UiContext from '../context/ui-context'
 
