@@ -1,5 +1,4 @@
-import express from 'express'
-export const initErrorHandler = (app: express.Express) => {
+export const initErrorHandler = (app) => {
   app.use((req, res, next) => {
     var err = new Error("Not found");
     next(err);
