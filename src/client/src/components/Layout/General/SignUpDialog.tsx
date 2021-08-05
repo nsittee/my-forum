@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { TextField, Button, Dialog } from '@material-ui/core'
+import { TextField, Button, Dialog, Card, CardContent } from '@material-ui/core'
 import UiContext from '../../../context/ui-context'
 
 const SignUpDialog = (props: any) => {
@@ -13,36 +13,37 @@ const SignUpDialog = (props: any) => {
       onBackdropClick={() => setSignUp(false)}
       onEscapeKeyDown={() => setSignUp(false)}
       transitionDuration={0}
-      maxWidth='lg'
       fullWidth={true} >
-      <div>
-        <form autoComplete="off">
-          <br />
-          <TextField
-            label="Username"
-            value=""
-          />
-          <br />
-          <TextField
-            label="Password"
-            type="password"
-            value=""
-          />
-          <br />
-          <TextField
-            label="Confirm Password"
-            type="password"
-            value=""
-          />
+      <Card>
+        <CardContent>
+          <form autoComplete="off">
+            <br />
+            <TextField
+              label="Username"
+              value=""
+            />
+            <br />
+            <TextField
+              label="Password"
+              type="password"
+              value=""
+            />
+            <br />
+            <TextField
+              label="Confirm Password"
+              type="password"
+              value=""
+            />
 
-          < br /> <br />
-          <Button
-            variant="contained"
-            onClick={event => submitSignUp(event)}
-            color="primary">
-            Sign up </Button>
-        </form>
-      </div >
+            < br /> <br />
+            <Button
+              variant="contained"
+              onClick={event => submitSignUp(event)}
+              color="primary">
+              Sign up </Button>
+          </form>
+        </CardContent>
+      </Card>
     </Dialog>
   )
 }
