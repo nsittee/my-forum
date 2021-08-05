@@ -27,24 +27,17 @@ const ThreadDialog = () => {
         onBackdropClick={() => history.goBack()}
         onEscapeKeyDown={() => history.goBack()}
         transitionDuration={0}
-        maxWidth='lg'
+        maxWidth='md'
         fullWidth={true} >
-        <Container>
-          <Grid container alignContent='center'>
-            <Grid item xs={12}>
-              < br /> <br />
-              <Card variant="outlined">
-                <CardContent>
-                  <Typography color="textSecondary" gutterBottom> {t.Author.Username} </Typography>
-                  <Typography variant="h5" component="h2"> {t.Title} </Typography>
-                  <Typography color="textSecondary"> {t.CreatedDate} </Typography>
-                  <Typography variant="body2" component="p">{t.Content} </Typography>
-                </CardContent>
-              </Card>
-              < br /> <br />< br /> <br />< br /> <br />< br /> <br />
-            </Grid>
-          </Grid>
-        </Container>
+        <Card variant="outlined">
+          <CardContent>
+            <Typography color="textSecondary" gutterBottom> {t.Author.Username} </Typography>
+            <Typography variant="h5" component="h2"> {t.Title} </Typography>
+            <Typography color="textSecondary"> {t.CreatedDate} </Typography>
+            <Typography variant="body2" component="p">{t.Content} </Typography>
+            <br /><br /><br /><br /><br />
+          </CardContent>
+        </Card>
       </Dialog >
   }
 

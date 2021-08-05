@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { TextField, Button, Dialog } from '@material-ui/core'
+import { TextField, Button, Dialog, Card, CardContent } from '@material-ui/core'
 import Axios from 'axios'
 
 import UiContext from '../../../context/ui-context'
@@ -44,33 +44,34 @@ const SignInDialog = (props: any) => {
       onBackdropClick={() => setSignIn(false)}
       onEscapeKeyDown={() => setSignIn(false)}
       transitionDuration={0}
-      maxWidth='lg'
       fullWidth={true} >
-      <div>
-        <form autoComplete="off">
-          <br />
-          <TextField
-            label="Username"
-            value={username}
-            onChange={event => setUsername(event.target.value)}
-          />
-          <br />
-          <TextField
-            label="Password"
-            type="password"
-            value={password}
-            onChange={event => setPassword(event.target.value)}
-          />
+      <Card>
+        <CardContent>
+          <form autoComplete="off">
+            <br />
+            <TextField
+              label="Username"
+              value={username}
+              onChange={event => setUsername(event.target.value)}
+            />
+            <br />
+            <TextField
+              label="Password"
+              type="password"
+              value={password}
+              onChange={event => setPassword(event.target.value)}
+            />
 
-          < br /> <br />
-          <Button
-            variant="contained"
-            onClick={event => submitSignIn(event)}
-            color="primary">
-            Sign in
-          </Button>
-        </form>
-      </div >
+            < br /> <br />
+            <Button
+              variant="contained"
+              onClick={event => submitSignIn(event)}
+              color="primary">
+              Sign in
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
     </Dialog>
   )
 }
