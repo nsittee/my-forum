@@ -1,7 +1,8 @@
 import React, { useContext } from 'react'
-import { TextField, Button, Dialog, Card, CardContent } from '@material-ui/core'
+import { Dialog, Card, CardContent } from '@material-ui/core'
 import { MyButton } from '../../common/MyButton'
 import UiContext from '../../../context/ui-context'
+import { MyTextField } from '../../common/MyTextField'
 
 const SignUpDialog = (props: any) => {
   const { signUp, setSignUp } = useContext(UiContext)
@@ -19,18 +20,18 @@ const SignUpDialog = (props: any) => {
         <CardContent>
           <form autoComplete="off">
             <br />
-            <TextField
+            <MyTextField
               label="Username"
               value=""
             />
             <br />
-            <TextField
+            <MyTextField
               label="Password"
               type="password"
               value=""
             />
             <br />
-            <TextField
+            <MyTextField
               label="Confirm Password"
               type="password"
               value=""
