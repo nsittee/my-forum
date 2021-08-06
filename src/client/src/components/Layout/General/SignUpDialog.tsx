@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import { TextField, Button, Dialog, Card, CardContent } from '@material-ui/core'
+import { MyButton } from '../../common/MyButton'
 import UiContext from '../../../context/ui-context'
 
 const SignUpDialog = (props: any) => {
@@ -36,11 +37,12 @@ const SignUpDialog = (props: any) => {
             />
 
             < br /> <br />
-            <Button
+            <MyButton
               variant="contained"
-              onClick={event => submitSignUp(event)}
+              onClick={(event: any) => submitSignUp(event)}
               color="primary">
-              Sign up </Button>
+              Sign up
+            </MyButton>
           </form>
         </CardContent>
       </Card>
