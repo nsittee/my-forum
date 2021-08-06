@@ -1,7 +1,7 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
-import { TextField } from '@material-ui/core'
+import { Menu, MenuItem, TextField } from '@material-ui/core'
 import { useCookies } from 'react-cookie'
 
 import AuthContext from '../../../context/auth-context'
@@ -13,9 +13,9 @@ import { MyButton } from '../../common/MyButton'
 
 const Header = () => {
   const authContext = useContext(AuthContext)
-  const { setSignIn, setSignUp } = useContext(UiContext)
-  const removeCookie = useCookies(['my-cookie'])[2]
   const history = useHistory()
+  const removeCookie = useCookies(['my-cookie'])[2]
+  const { setSignIn, setSignUp } = useContext(UiContext)
 
   const SignOutHandler = () => {
     removeCookie('tokenbon', {
@@ -41,11 +41,10 @@ const Header = () => {
           <>
             <MyButton key="user">{authContext.username}</MyButton>
             <MyButton key="sign-out" onClick={SignOutHandler}>Sign Out</MyButton>
+            <MyButton key="changelog" href="/changelog">Changelog</MyButton>
           </>
         }
-        <MyButton key="profile" href="/profile">Profile</MyButton>
-        <MyButton key="setting" href="/setting">Setting</MyButton>
-        <MyButton key="changelog" href="/changelog">Changelog</MyButton>
+
         <SignInDialog />
         <SignUpDialog />
       </Toolbar>
