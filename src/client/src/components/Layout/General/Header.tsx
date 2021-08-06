@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
-import { Grid, Button, TextField } from '@material-ui/core'
+import { TextField } from '@material-ui/core'
 import { useCookies } from 'react-cookie'
 
 import AuthContext from '../../../context/auth-context'
@@ -9,6 +9,7 @@ import SignInDialog from './SignInDialog'
 import SignUpDialog from './SignUpDialog'
 import UiContext from '../../../context/ui-context'
 import { useHistory } from 'react-router-dom'
+import { MyButton } from '../../common/MyButton'
 
 const Header = () => {
   const authContext = useContext(AuthContext)
@@ -27,36 +28,26 @@ const Header = () => {
   return (
     <AppBar position="sticky" elevation={0} color="secondary">
       <Toolbar>
-        <Grid container>
-          <a href="/">
-            <img
-              src="logo.png"
-              alt='reddit'
-              height='40' />
-          </a>
-          <TextField variant="outlined" size="small"></TextField>
-          <div>
+        <a href="/"><img src="logo.png" alt='reddit' height='40' /> </a>
+        <TextField variant="outlined" size="small"></TextField>
 
-            <Button variant="contained" color="primary">Search</Button>
-            {!authContext.authenticated ?
-              <>
-                <Button key="sign-in" onClick={() => setSignIn(true)}>Sign In </Button>
-                <Button key="sign-up" onClick={() => setSignUp(true)}>Sign Up </Button>
-              </>
-              :
-              <>
-                <Button key="user">{authContext.username}</Button>
-                <Button key="sign-out" onClick={SignOutHandler}>Sign Out</Button>
-              </>
-            }
-            <Button key="profile" href="/profile">Profile</Button>
-            <Button key="setting" href="/setting">Setting</Button>
-            <Button key="changelog" href="/changelog">Changelog</Button>
-          </div>
-
-          <SignInDialog />
-          <SignUpDialog />
-        </Grid>
+        <MyButton variant="contained" color="primary">Search</MyButton>
+        {!authContext.authenticated ?
+          <>
+            <MyButton key="sign-in" onClick={() => setSignIn(true)}>Sign In </MyButton>
+            <MyButton key="sign-up" onClick={() => setSignUp(true)}>Sign Up </MyButton>
+          </>
+          :
+          <>
+            <MyButton key="user">{authContext.username}</MyButton>
+            <MyButton key="sign-out" onClick={SignOutHandler}>Sign Out</MyButton>
+          </>
+        }
+        <MyButton key="profile" href="/profile">Profile</MyButton>
+        <MyButton key="setting" href="/setting">Setting</MyButton>
+        <MyButton key="changelog" href="/changelog">Changelog</MyButton>
+        <SignInDialog />
+        <SignUpDialog />
       </Toolbar>
     </AppBar>
   )

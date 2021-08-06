@@ -5,7 +5,7 @@ export const MyButton = (props: any) => {
   return <Button
     variant="contained"
     onClick={props.onClick}
-    color="primary">
+    color={props.color}>
     {props.children}
   </Button>
 }
