@@ -24,22 +24,8 @@ const Header = () => {
     history.go(0)
   }
 
-  if (!authContext.authenticated)
-    var headerStatus = [
-      <Button key="sign-in" onClick={() => setSignIn(true)}>Sign In </Button>,
-      <Button key="sign-up" onClick={() => setSignUp(true)}>Sign Up </Button>,
-    ]
-  else
-    headerStatus = [
-      <Button key="user">{authContext.username}</Button>,
-      <Button key="sign-out" onClick={SignOutHandler}>Sign Out</Button>,
-    ]
-  headerStatus.push(<Button key="profile" href="/profile">Profile</Button>)
-  headerStatus.push(<Button key="setting" href="/setting">Setting</Button>)
-  headerStatus.push(<Button key="changelog" href="/changelog">Changelog</Button>)
-
   return (
-    <AppBar position="sticky" elevation={0}>
+    <AppBar position="sticky" elevation={0} color="secondary">
       <Toolbar>
         <Grid container>
           <a href="/">
@@ -49,9 +35,25 @@ const Header = () => {
               height='40' />
           </a>
           <TextField variant="outlined" size="small"></TextField>
-          <Button color="secondary" variant="contained">Search</Button>
+          <div>
 
-          {headerStatus}
+            <Button variant="contained" color="primary">Search</Button>
+            {!authContext.authenticated ?
+              <>
+                <Button key="sign-in" onClick={() => setSignIn(true)}>Sign In </Button>
+                <Button key="sign-up" onClick={() => setSignUp(true)}>Sign Up </Button>
+              </>
+              :
+              <>
+                <Button key="user">{authContext.username}</Button>
+                <Button key="sign-out" onClick={SignOutHandler}>Sign Out</Button>
+              </>
+            }
+            <Button key="profile" href="/profile">Profile</Button>
+            <Button key="setting" href="/setting">Setting</Button>
+            <Button key="changelog" href="/changelog">Changelog</Button>
+          </div>
+
           <SignInDialog />
           <SignUpDialog />
         </Grid>
