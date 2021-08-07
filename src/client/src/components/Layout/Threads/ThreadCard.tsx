@@ -12,26 +12,23 @@ const ThreadCard = (props: any) => {
 	const subParent = thread.SubParent ? thread.SubParent.SubLongName : 'null'
 
 	return (
-		<Grid item xs={12}>
-			<Card onClick={() => history.push(`/r/${subParent}/${thread._id}`)}>
-				<Grid container spacing={1}>
-					<Grid item xs={1}>
-						<KeyboardArrowUp />
-						<Typography align='center' variant='h6'>{displayVote}</Typography>
-						<KeyboardArrowDown />
-					</Grid>
-
-					<Grid item xs={10}>
-						<Typography color="textSecondary" noWrap={true}>
-							<a href={`/r/${subParent}`} onClick={e => e.stopPropagation()}>
-								{subParent} </a>
-							: posted by {subAuthor + ' '}
-							on {thread.CreatedDate} </Typography>
-						<Typography variant="h6"> {thread.Title} </Typography>
-					</Grid>
+		<Card onClick={() => history.push(`/r/${subParent}/${thread._id}`)}>
+			<Grid container spacing={1}>
+				<Grid item xs={1}>
+					<KeyboardArrowUp />
+					<Typography align='center' variant='h6'>{displayVote}</Typography>
+					<KeyboardArrowDown />
 				</Grid>
-			</Card>
-		</Grid >
+				<Grid item xs={10}>
+					<Typography color="textSecondary" noWrap={true}>
+						<a href={`/r/${subParent}`} onClick={e => e.stopPropagation()}>
+							{subParent} </a>
+						: posted by {subAuthor + ' '}
+						on {thread.CreatedDate} </Typography>
+					<Typography variant="h6"> {thread.Title} </Typography>
+				</Grid>
+			</Grid>
+		</Card>
 	)
 }
 

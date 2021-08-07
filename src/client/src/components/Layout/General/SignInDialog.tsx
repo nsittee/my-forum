@@ -43,8 +43,7 @@ const SignInDialog = (props: any) => {
   return (
     <Dialog
       open={signIn}
-      onBackdropClick={() => setSignIn(false)}
-      onEscapeKeyDown={() => setSignIn(false)}
+      onClose={() => setSignIn(false)}
       transitionDuration={0}
       fullWidth={true} >
       <Card>
