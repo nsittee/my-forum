@@ -25,8 +25,7 @@ const ThreadDialog = () => {
 
   return <Dialog
     open={true}
-    onBackdropClick={() => history.goBack()}
-    onEscapeKeyDown={() => history.goBack()}
+    onClose={() => history.goBack()}
     transitionDuration={0}
     maxWidth='md'
     fullWidth={true} >
