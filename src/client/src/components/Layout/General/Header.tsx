@@ -28,7 +28,7 @@ const Header = () => {
   return (
     <AppBar position="sticky" elevation={0} color="secondary">
       <Toolbar>
-        <a href="/"><img src="logo.png" alt='reddit' height='40' /> </a>
+        <a href="/"><img src="/logo.png" alt='reddit' height='40' /> </a>
         <TextField variant="outlined" size="small"></TextField>
 
         <MyButton variant="contained" color="primary">Search</MyButton>
