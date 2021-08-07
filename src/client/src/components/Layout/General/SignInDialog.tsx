@@ -1,11 +1,13 @@
 import React, { useContext, useState } from 'react'
-import { TextField, Button, Dialog, Card, CardContent } from '@material-ui/core'
+import { Dialog, Card, CardContent } from '@material-ui/core'
 import Axios from 'axios'
 
 import UiContext from '../../../context/ui-context'
 import { useCookies } from 'react-cookie'
 import { useHistory } from 'react-router-dom'
 import appConstant from '../../../constant/constant'
+import { MyButton } from '../../common/MyButton'
+import { MyTextField } from '../../common/MyTextField'
 
 const SignInDialog = (props: any) => {
   const [username, setUsername] = useState('test-user-0.07546525770485024')
@@ -49,26 +51,26 @@ const SignInDialog = (props: any) => {
         <CardContent>
           <form autoComplete="off">
             <br />
-            <TextField
+            <MyTextField
               label="Username"
               value={username}
-              onChange={event => setUsername(event.target.value)}
+              onChange={(event: any) => setUsername(event.target.value)}
             />
             <br />
-            <TextField
+            <MyTextField
               label="Password"
               type="password"
               value={password}
-              onChange={event => setPassword(event.target.value)}
+              onChange={(event: any) => setPassword(event.target.value)}
             />
 
             < br /> <br />
-            <Button
+            <MyButton
               variant="contained"
-              onClick={event => submitSignIn(event)}
+              onClick={(event: any) => submitSignIn(event)}
               color="primary">
               Sign in
-            </Button>
+            </MyButton>
           </form>
         </CardContent>
       </Card>

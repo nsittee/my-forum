@@ -1,7 +1,7 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
-import { Grid, Button, TextField } from '@material-ui/core'
+import { Menu, MenuItem, TextField } from '@material-ui/core'
 import { useCookies } from 'react-cookie'
 
 import AuthContext from '../../../context/auth-context'
@@ -9,12 +9,13 @@ import SignInDialog from './SignInDialog'
 import SignUpDialog from './SignUpDialog'
 import UiContext from '../../../context/ui-context'
 import { useHistory } from 'react-router-dom'
+import { MyButton } from '../../common/MyButton'
 
 const Header = () => {
   const authContext = useContext(AuthContext)
-  const { setSignIn, setSignUp } = useContext(UiContext)
-  const removeCookie = useCookies(['my-cookie'])[2]
   const history = useHistory()
+  const removeCookie = useCookies(['my-cookie'])[2]
+  const { setSignIn, setSignUp } = useContext(UiContext)
 
   const SignOutHandler = () => {
     removeCookie('tokenbon', {
@@ -24,37 +25,28 @@ const Header = () => {
     history.go(0)
   }
 
-  if (!authContext.authenticated)
-    var headerStatus = [
-      <Button key="sign-in" onClick={() => setSignIn(true)}>Sign In </Button>,
-      <Button key="sign-up" onClick={() => setSignUp(true)}>Sign Up </Button>,
-    ]
-  else
-    headerStatus = [
-      <Button key="user">{authContext.username}</Button>,
-      <Button key="sign-out" onClick={SignOutHandler}>Sign Out</Button>,
-    ]
-  headerStatus.push(<Button key="profile" href="/profile">Profile</Button>)
-  headerStatus.push(<Button key="setting" href="/setting">Setting</Button>)
-  headerStatus.push(<Button key="changelog" href="/changelog">Changelog</Button>)
-
   return (
-    <AppBar position="sticky" elevation={0}>
+    <AppBar position="sticky" elevation={0} color="secondary">
       <Toolbar>
-        <Grid container>
-          <a href="/">
-            <img
-              src="logo.png"
-              alt='reddit'
-              height='40' />
-          </a>
-          <TextField variant="outlined" size="small"></TextField>
-          <Button color="secondary" variant="contained">Search</Button>
+        <a href="/"><img src="logo.png" alt='reddit' height='40' /> </a>
+        <TextField variant="outlined" size="small"></TextField>
 
-          {headerStatus}
-          <SignInDialog />
-          <SignUpDialog />
-        </Grid>
+        <MyButton variant="contained" color="primary">Search</MyButton>
+        {!authContext.authenticated ?
+          <>
+            <MyButton key="sign-in" onClick={() => setSignIn(true)}>Sign In </MyButton>
+            <MyButton key="sign-up" onClick={() => setSignUp(true)}>Sign Up </MyButton>
+          </>
+          :
+          <>
+            <MyButton key="user">{authContext.username}</MyButton>
+            <MyButton key="sign-out" onClick={SignOutHandler}>Sign Out</MyButton>
+            <MyButton key="changelog" href="/changelog">Changelog</MyButton>
+          </>
+        }
+
+        <SignInDialog />
+        <SignUpDialog />
       </Toolbar>
     </AppBar>
   )
