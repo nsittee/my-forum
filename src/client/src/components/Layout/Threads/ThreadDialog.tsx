@@ -12,11 +12,9 @@ const ThreadDialog = () => {
 
   useEffect(() => {
     const getThread = (id: string) => {
-      setTimeout(() => {
-        Axios.get(`${appConstant.URL}/api/threads/${id}`)
-          .then(res => setThread(res.data))
-          .catch(err => console.log(err));
-      }, 0)
+      Axios.get(`${appConstant.URL}/api/threads/${id}`)
+        .then(res => setThread(res.data))
+        .catch(err => console.log(err));
     }
     getThread(threadId)
   }, [threadId])
@@ -42,10 +40,13 @@ const ThreadDialog = () => {
       :
       <Card>
         <CardContent>
-          <Typography variant="body2" color="textSecondary" gutterBottom> <Skeleton /></Typography>
-          <Typography variant="h5">   <Skeleton /></Typography>
-          <Typography variant="body2" color="textSecondary">  <Skeleton /></Typography>
+          <Typography variant="body2" color="textSecondary" gutterBottom> <Skeleton width="20%" /></Typography>
+          <Typography variant="h5">   <Skeleton width="60%" /></Typography>
+          <Typography variant="body2" color="textSecondary">  <Skeleton width="15%" /></Typography>
           <Typography variant="body1">  <Skeleton /></Typography>
+          <Typography variant="body1">  <Skeleton /></Typography>
+          <Typography variant="body1">  <Skeleton /></Typography>
+          <Typography variant="body1">  <Skeleton width="30%" /></Typography>
         </CardContent>
       </Card>
     }
