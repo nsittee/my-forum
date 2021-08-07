@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Card, Grid, Container, Typography, CardContent, Dialog } from '@material-ui/core'
+import { Card, Typography, CardContent, Dialog } from '@material-ui/core'
+import { Skeleton } from '@material-ui/lab';
 import Axios from 'axios'
 import { useHistory, useParams } from 'react-router-dom'
 import appConstant from '../../../constant/constant';
@@ -39,13 +40,36 @@ const ThreadDialog = () => {
           </CardContent>
         </Card>
       </Dialog >
+  } else {
+    threadDialog =
+      <Skeleton>
+
+      </Skeleton>
   }
 
-  return (
-    <div>
-      {threadDialog}
-    </div >
-  )
+  return <Dialog
+    open={true}
+    onBackdropClick={() => history.goBack()}
+    onEscapeKeyDown={() => history.goBack()}
+    transitionDuration={0}
+    maxWidth='md'
+    fullWidth={true} >
+    <Card variant="outlined">
+      <CardContent>
+        {thread ?
+          <>
+            <Typography color="textSecondary" gutterBottom> {t.Author.Username} </Typography>
+            <Typography variant="h5" component="h2"> {t.Title} </Typography>
+            <Typography color="textSecondary"> {t.CreatedDate} </Typography>
+            <Typography variant="body2" component="p">{t.Content} </Typography>
+            <br /><br /><br /><br /><br />
+          </>
+          :
+          <Skeleton></Skeleton>
+        }
+      </CardContent>
+    </Card>
+  </Dialog >
 }
 
 
