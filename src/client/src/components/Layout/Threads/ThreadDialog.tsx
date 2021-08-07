@@ -16,7 +16,7 @@ const ThreadDialog = () => {
         Axios.get(`${appConstant.URL}/api/threads/${id}`)
           .then(res => setThread(res.data))
           .catch(err => console.log(err));
-      }, 2000)
+      }, 0)
     }
     getThread(threadId)
   }, [threadId])
