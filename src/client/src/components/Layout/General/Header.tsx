@@ -1,7 +1,7 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
-import { Menu, MenuItem, TextField } from '@material-ui/core'
+import { TextField } from '@material-ui/core'
 import { useCookies } from 'react-cookie'
 
 import AuthContext from '../../../context/auth-context'

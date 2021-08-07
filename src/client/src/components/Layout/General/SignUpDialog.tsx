@@ -12,8 +12,7 @@ const SignUpDialog = (props: any) => {
   return (
     <Dialog
       open={signUp}
-      onBackdropClick={() => setSignUp(false)}
-      onEscapeKeyDown={() => setSignUp(false)}
+      onClose={() => setSignUp(false)}
       transitionDuration={0}
       fullWidth={true} >
       <Card>
