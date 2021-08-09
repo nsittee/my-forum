@@ -1,11 +1,13 @@
 import React, { useContext, useState } from 'react'
-import { TextField, Button, Dialog } from '@material-ui/core'
+import { Dialog, Card, CardContent } from '@material-ui/core'
 import Axios from 'axios'
 
 import UiContext from '../../../context/ui-context'
 import { useCookies } from 'react-cookie'
 import { useHistory } from 'react-router-dom'
 import appConstant from '../../../constant/constant'
+import { MyButton } from '../../common/MyButton'
+import { MyTextField } from '../../common/MyTextField'
 
 const SignInDialog = (props: any) => {
   const [username, setUsername] = useState('test-user-0.07546525770485024')
@@ -41,36 +43,36 @@ const SignInDialog = (props: any) => {
   return (
     <Dialog
       open={signIn}
-      onBackdropClick={() => setSignIn(false)}
-      onEscapeKeyDown={() => setSignIn(false)}
+      onClose={() => setSignIn(false)}
       transitionDuration={0}
-      maxWidth='lg'
       fullWidth={true} >
-      <div>
-        <form autoComplete="off">
-          <br />
-          <TextField
-            label="Username"
-            value={username}
-            onChange={event => setUsername(event.target.value)}
-          />
-          <br />
-          <TextField
-            label="Password"
-            type="password"
-            value={password}
-            onChange={event => setPassword(event.target.value)}
-          />
+      <Card>
+        <CardContent>
+          <form autoComplete="off">
+            <br />
+            <MyTextField
+              label="Username"
+              value={username}
+              onChange={(event: any) => setUsername(event.target.value)}
+            />
+            <br />
+            <MyTextField
+              label="Password"
+              type="password"
+              value={password}
+              onChange={(event: any) => setPassword(event.target.value)}
+            />
 
-          < br /> <br />
-          <Button
-            variant="contained"
-            onClick={event => submitSignIn(event)}
-            color="primary">
-            Sign in
-          </Button>
-        </form>
-      </div >
+            < br /> <br />
+            <MyButton
+              variant="contained"
+              onClick={(event: any) => submitSignIn(event)}
+              color="primary">
+              Sign in
+            </MyButton>
+          </form>
+        </CardContent>
+      </Card>
     </Dialog>
   )
 }
