@@ -18,7 +18,7 @@ const MainPage = (props: any) => {
 
   var mainThreads: Array<any> = [];
   mainThreads = threads.map((thread: any) => {
-    return <Grid item xs={12}>
+    return <Grid item xs={12} key={thread._id}>
       <ThreadCard
         key={thread._id}
         thread={thread} />

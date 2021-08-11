@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
-import { Button, Card, CardContent, MenuItem, Typography } from "@material-ui/core"
+import { Card, CardContent, MenuItem, Typography } from "@material-ui/core"
 import { TextField, Select } from "mui-rff"
 import { Form, Field } from 'react-final-form'
 
@@ -17,7 +17,7 @@ const CreateThreadForm = () => {
   useEffect(() => {
     const fetchData = () => {
       // FIXME : Add api that get userSub from back-end
-      console.log(authContext)
+      // console.log(authContext)
       Axios.get(`${appConstant.URL}/api/users/`, {
         headers: {
           authorization: authContext.token
