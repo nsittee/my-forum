@@ -1,11 +1,13 @@
 import React, { useContext, useEffect, useState } from "react"
-import { Button, Card, CardContent } from "@material-ui/core"
+import { Button, Card, CardContent, MenuItem, Typography } from "@material-ui/core"
+import { TextField, Select } from "mui-rff"
 import { Form, Field } from 'react-final-form'
 
 import AuthContext from '../../../context/auth-context'
 import { useHistory } from "react-router-dom"
 import Axios from "axios"
 import appConstant from '../../../constant/constant';
+import { MyButton } from "../../common/MyButton"
 
 const CreateThreadForm = () => {
   const [userSub, setUserSub] = useState([])
@@ -21,12 +23,7 @@ const CreateThreadForm = () => {
           authorization: authContext.token
         }
       }).then(res => {
-        console.log(res.data)
-        const subList = res.data.data.UserSub
-
-        setUserSub(subList.map((sub: any, i: number) => {
-          return <option key={sub._id + "" + i} value={sub._id}> {sub.SubLongName} </option>
-        }))
+        setUserSub(res.data.data.UserSub)
       }).catch(err => {
         console.log(err)
       })
@@ -34,56 +31,62 @@ const CreateThreadForm = () => {
     fetchData()
   }, [authContext])
 
+  const onSubmit = (formData: any) => {
+    const data = {
+      Thread: {
+        Title: formData.title,
+        Author: { _id: formData.userId },
+        SubParent: { _id: formData.subId },
+        Content: formData.content
+      }
+    }
+    console.log(formData)
+    Axios.post(`${appConstant.URL}/api/threads/`, data, {
+      headers: {
+        authorization: authContext.token
+      }
+    })
+      .then(res => {
+        console.log("Added New Thread" + res)
+      }).catch(err => {
+        console.log("ERROR " + err)
+      })
+    history.push('/')
+  }
+
   return (
     <Card>
       <CardContent>
         <Form
-          onSubmit={(formData: any) => {
-            const data = {
-              Thread: {
-                Title: formData.title,
-                Author: { _id: formData.userId },
-                SubParent: { _id: formData.subId },
-                Content: formData.content
-              }
-            }
-            console.log(formData)
-            Axios.post(`${appConstant.URL}/api/threads/`, data, {
-              headers: {
-                authorization: authContext.token
-              }
-            })
-              .then(res => {
-                console.log("Added New Thread" + res)
-              }).catch(err => {
-                console.log("ERROR " + err)
-              })
-            history.push('/')
-          }}
+          onSubmit={onSubmit}
           render={props => (
             // TODO: Use material UI form component
             <form onSubmit={(event) => props.handleSubmit(event)}>
 
               <Field name="userId" defaultValue={authContext.id} type="hidden" component="input" />
               <div>
-                <label>Community</label><br />
-                <Field name="subId" component="select" >
-                  {userSub}
-                </Field>
+                <Typography>Community</Typography>
+                <Select name="subId" placeholder="xx">
+                  <MenuItem key="default" disabled value="Select Community">Select Community</MenuItem>
+                  {
+                    userSub.map((sub: any, i: number) => {
+                      return <MenuItem key={sub._id + "" + i} value={sub._id}>{sub.SubLongName}</MenuItem>
+                    })
+                  }
+                </Select>
               </div>
 
               <div>
-                <label>Title</label><br />
-                <Field name="title" component="input" placeholder="First Name" />
+                <Typography>Title</Typography>
+                <TextField name="title" placeholder="Title"></TextField>
               </div>
 
               <div>
-                <label>Content</label><br />
-                <Field name="content" component="textarea" placeholder="First Name" />
+                <Typography>Content</Typography>
+                <TextField name="content" multiline rows={8} placeholder="Text"></TextField>
               </div>
-
-              <Button type="submit" variant="contained" color="secondary">
-                Submit </Button>
+              <br />
+              <MyButton type="submit" color="primary">Submit</MyButton>
             </form>
           )}
         />
