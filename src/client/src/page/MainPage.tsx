@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Route } from 'react-router-dom';
 import { Container, Grid } from '@material-ui/core';
-import Axios from 'axios';
 
 import ThreadCard from '../components/layout/threads/ThreadCard';
 import ThreadDialog from '../components/layout/threads/ThreadDialog';
 import CreateThreadCard from '../components/layout/threads/CreateThreadCard';
 import ThreadFilter from '../components/layout/threads/ThreadFilter';
 import SubBanner from '../components/layout/sub/SubBanner';
-import appConstant from '../constant/constant';
 import { Skeleton } from '@material-ui/lab';
+import { myAxios } from '../config/axios-config';
 
 const MainPage = (props: any) => {
   const [threads, setThreads] = useState([])
@@ -17,18 +16,18 @@ const MainPage = (props: any) => {
   const [subId, setSubId] = useState()
 
   var mainThreads: Array<any> = [];
-  mainThreads = threads.map((thread: any) => {
-    return <Grid item xs={12} key={thread._id}>
+  mainThreads = threads.map((thread: any) =>
+    <Grid item xs={12} key={thread._id}>
       <ThreadCard
         key={thread._id}
         thread={thread} />
     </Grid>
-  });
+  );
   var loaded = threads.length > 0
 
   useEffect(() => {
     const fetchData = () => {
-      Axios.get(`${appConstant.URL}/api/subs/${subName}`)
+      myAxios.get(`/api/subs/${subName}`)
         .then(res => {
           // console.log(res.data.data)
           setThreads(res.data.data.SubThread)
