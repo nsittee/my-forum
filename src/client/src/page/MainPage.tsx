@@ -33,7 +33,7 @@ const MainPage = (props: any) => {
       myAxios.get<IResponseEntity<ISub>>(`/api/subs/${subName}`)
         .then(res => {
           const re = res.data
-          setThreads(re.data.SubThread)
+          setThreads(re.data.SubThread!!)
 
           // SubId is use to check if user is a member or not
           if (subName) setSubId(re.data._id)

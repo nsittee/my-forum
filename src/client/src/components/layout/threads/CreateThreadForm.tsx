@@ -7,22 +7,22 @@ import AuthContext from '../../../context/auth-context'
 import { useHistory } from "react-router-dom"
 import { MyButton } from "../../common/MyButton"
 import { myAxios } from "../../../config/axios-config"
+import { IThread } from "../../../shared/model/thread.model"
+import { IResponseEntity } from "../../../shared/response.model"
+import { IUser } from "../../../shared/model/user.model"
+import { ISub } from "../../../shared/model/sub.model"
 
 const CreateThreadForm = () => {
-  const [userSub, setUserSub] = useState([])
+  const [userSub, setUserSub] = useState<ISub[]>([])
   const authContext = useContext(AuthContext)
   const history = useHistory()
 
   useEffect(() => {
     const fetchData = () => {
-      // FIXME : Add api that get userSub from back-end
-      // console.log(authContext)
-      myAxios.get(`/api/users/`, {
-        headers: {
-          authorization: authContext.token
-        }
+      myAxios.get<IResponseEntity<IUser>>(`/api/users/`, {
+        headers: { authorization: authContext.token }
       }).then(res => {
-        setUserSub(res.data.data.UserSub)
+        setUserSub(res.data.data.UserSub!!)
       }).catch(err => {
         console.log(err)
       })
@@ -31,24 +31,19 @@ const CreateThreadForm = () => {
   }, [authContext])
 
   const onSubmit = (formData: any) => {
-    const data = {
-      Thread: {
-        Title: formData.title,
-        Author: { _id: formData.userId },
-        SubParent: { _id: formData.subId },
-        Content: formData.content
-      }
+    const thread: IThread = {
+      Title: formData.title,
+      Content: formData.content,
+      Author: { _id: formData.userId },
+      SubParent: { _id: formData.subId },
     }
-    myAxios.post(`/api/threads/`, data, {
-      headers: {
-        authorization: authContext.token
-      }
+    myAxios.post<IResponseEntity<IThread>>(`/api/threads/`, { Thread: thread }, {
+      headers: { authorization: authContext.token }
+    }).then(res => {
+      console.log("Added New Thread" + res)
+    }).catch(err => {
+      console.log("ERROR " + err)
     })
-      .then(res => {
-        console.log("Added New Thread" + res)
-      }).catch(err => {
-        console.log("ERROR " + err)
-      })
     history.push('/')
   }
 
