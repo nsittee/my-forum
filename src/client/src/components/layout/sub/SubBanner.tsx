@@ -4,9 +4,11 @@ import AuthContext from '../../../context/auth-context'
 import PropTypes from 'prop-types'
 import { myAxios } from '../../../config/axios-config'
 import { ISub } from '../../../shared/model/sub.model'
+import randomColor from 'randomcolor'
 
 const SubBanner = (props: any) => {
   const authContext = useContext(AuthContext)
+  const [color] = useState(randomColor({ count: 2, luminosity: 'light' }))
   const [joined, setJoined] = useState(false)
 
   useEffect(() => {
@@ -47,12 +49,12 @@ const SubBanner = (props: any) => {
 
   return (
     <div style={{
-      background: 'MediumSlateBlue',
+      background: color[0],
       minHeight: '180px'
     }}>
       <div style={{
         height: '80px',
-        background: 'NavajoWhite'
+        background: color[1]
       }}>
         <Container maxWidth="md">
           <CardContent>
