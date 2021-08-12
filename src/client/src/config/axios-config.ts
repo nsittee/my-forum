@@ -12,6 +12,13 @@ myAxios.interceptors.request.use(config => {
   return config
 }, (error) => {
   // TODO: Display toast message or popup of internal error
+  console.log("intercepted error req");
+})
+
+myAxios.interceptors.response.use(response => {
+  return response
+}, (error) => {
+  console.log("intercepted error resp");
 })
 
 export { myAxios }

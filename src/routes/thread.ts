@@ -16,7 +16,10 @@ router.get('/:id', (req, res, next) => {
     .populate('SubParent', ['SubLongName', 'SubShortName'])
     .where('_id', id)
     .exec()
-    .then(thread => res.status(200).json(thread));
+    .then(thread => res.status(200).json({
+      message: 'get specific thread data',
+      data: thread
+    }));
 });
 
 router.post('/', authenticate, (req, res, next) => {
