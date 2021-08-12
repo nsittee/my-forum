@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Route } from 'react-router-dom';
 import { Container, Grid } from '@material-ui/core';
 
@@ -9,11 +9,18 @@ import ThreadFilter from '../components/layout/threads/ThreadFilter';
 import SubBanner from '../components/layout/sub/SubBanner';
 import { Skeleton } from '@material-ui/lab';
 import { myAxios } from '../config/axios-config';
+import { IResponseEntity } from '../shared/response.model';
+import { IThread } from '../shared/model/thread.model';
+import { ISub } from '../shared/model/sub.model';
+import AuthContext from '../context/auth-context';
+import { defaultUser, IUser } from '../shared/model/user.model';
 
 const MainPage = (props: any) => {
-  const [threads, setThreads] = useState([])
-  const [subName] = useState(props.match.params.sub ? props.match.params.sub : '')
-  const [subId, setSubId] = useState()
+  const authContext = useContext(AuthContext)
+  const [threads, setThreads] = useState<IThread[]>([])
+  const [user, setUser] = useState<IUser>(defaultUser)
+  const [subName] = useState<string>(props.match.params.sub ? props.match.params.sub : '')
+  const [subId, setSubId] = useState<string>('')
 
   var mainThreads: Array<any> = [];
   mainThreads = threads.map((thread: any) =>
@@ -26,23 +33,30 @@ const MainPage = (props: any) => {
   var loaded = threads.length > 0
 
   useEffect(() => {
-    const fetchData = () => {
-      myAxios.get(`/api/subs/${subName}`)
+    const fetchThreadData = () => {
+      myAxios.get<IResponseEntity<ISub>>(`/api/subs/${subName}`)
         .then(res => {
-          // console.log(res.data.data)
-          setThreads(res.data.data.SubThread)
-
-          if (subName) setSubId(res.data.data._id)
+          setThreads(res.data.data.SubThread!!)
+          if (subName) setSubId(res.data.data._id!!) // SubId is use to check if user is a member or not
         })
         .catch(err => console.log(err))
     }
-    fetchData()
-  }, [subName])
+    const fetchUserData = async () => {
+      try {
+        const res = await myAxios.get<IResponseEntity<IUser>>(`/api/users/`, authContext.header)
+        setUser(res.data.data!!)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    if (authContext.authenticated) fetchUserData()
+    fetchThreadData()
+  }, [subName, authContext])
 
   return (
     <div>
       {/* only for /r/subName path */}
-      {subName && <SubBanner subName={subName} subId={subId} />}
+      {subName && <SubBanner subName={subName} subId={subId} user={user} />}
       <Container maxWidth='md'>
         <Grid container spacing={1}>
 

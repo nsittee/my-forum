@@ -2,10 +2,17 @@ import { IThread } from './thread.model';
 import { IUser } from "./user.model";
 
 export interface ISub {
-  _id: string,
-  subLongName: string,
-  subShortName: string,
+  _id?: string,
+  SubLongName?: string,
+  SubShortName?: string,
+  SubUser?: IUser[],
+  SubThread?: IThread[]
+}
 
-  subUser: [IUser],
-  subThread: [IThread]
+export const defaultSub: ISub = {
+  _id: '',
+  SubLongName: '',
+  SubShortName: '',
+  SubUser: [],
+  SubThread: []
 }
