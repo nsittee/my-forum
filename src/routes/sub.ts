@@ -29,10 +29,7 @@ router.post('/join', authenticate, (req, res) => {
       joiningUser.save()
       res.status(200).json({
         message: "joining sub completed",
-        data: {
-          user: joiningUser,
-          sub: joinedSub
-        }
+        data: {}
       })
     })
   }).catch(err => {
