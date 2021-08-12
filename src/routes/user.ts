@@ -71,7 +71,9 @@ router.post('/signin', (req, res, next) => {
             });
             return res.status(200).json({
               message: "signin completed",
-              token: token,
+              data: {
+                token: token
+              },
             });
           }
         });

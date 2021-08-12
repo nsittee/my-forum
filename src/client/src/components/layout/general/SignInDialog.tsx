@@ -25,7 +25,7 @@ const SignInDialog = (props: any) => {
     }
     const url = `/api/users/signin`
     myAxios.post(url, data).then(res => {
-      const token = res.data.token
+      const token = res.data.data.token
       setCookie('tokenbon', token, {
         path: '/',
         maxAge: 6000, // in second
