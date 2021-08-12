@@ -9,11 +9,14 @@ import ThreadFilter from '../components/layout/threads/ThreadFilter';
 import SubBanner from '../components/layout/sub/SubBanner';
 import { Skeleton } from '@material-ui/lab';
 import { myAxios } from '../config/axios-config';
+import { IResponseEntity } from '../shared/response.model';
+import { IThread } from '../shared/model/thread.model';
+import { ISub } from '../shared/model/sub.model';
 
 const MainPage = (props: any) => {
-  const [threads, setThreads] = useState([])
-  const [subName] = useState(props.match.params.sub ? props.match.params.sub : '')
-  const [subId, setSubId] = useState()
+  const [threads, setThreads] = useState<IThread[]>([])
+  const [subName] = useState<string>(props.match.params.sub ? props.match.params.sub : '')
+  const [subId, setSubId] = useState<string>()
 
   var mainThreads: Array<any> = [];
   mainThreads = threads.map((thread: any) =>
@@ -27,12 +30,13 @@ const MainPage = (props: any) => {
 
   useEffect(() => {
     const fetchData = () => {
-      myAxios.get(`/api/subs/${subName}`)
+      myAxios.get<IResponseEntity<ISub>>(`/api/subs/${subName}`)
         .then(res => {
-          // console.log(res.data.data)
-          setThreads(res.data.data.SubThread)
+          const re = res.data
+          setThreads(re.data.SubThread)
 
-          if (subName) setSubId(res.data.data._id)
+          // SubId is use to check if user is a member or not
+          if (subName) setSubId(re.data._id)
         })
         .catch(err => console.log(err))
     }

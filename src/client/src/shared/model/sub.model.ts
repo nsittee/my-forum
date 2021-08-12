@@ -3,9 +3,9 @@ import { IUser } from "./user.model";
 
 export interface ISub {
   _id: string,
-  subLongName: string,
-  subShortName: string,
+  SubLongName: string,
+  SubShortName: string,
 
-  subUser: [IUser],
-  subThread: [IThread]
+  SubUser: IUser[],
+  SubThread: IThread[]
 }
