@@ -1,5 +1,5 @@
 import axios from 'axios'
-import appConstant from '../constant/constant'
+import appConstant from '../constant/app-constant'
 
 const myAxios = axios.create({
   baseURL: appConstant.URL,
