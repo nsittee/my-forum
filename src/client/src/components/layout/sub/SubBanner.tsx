@@ -3,30 +3,18 @@ import React, { useContext, useEffect, useState } from 'react'
 import AuthContext from '../../../context/auth-context'
 import PropTypes from 'prop-types'
 import { myAxios } from '../../../config/axios-config'
+import { ISub } from '../../../shared/model/sub.model'
 
 const SubBanner = (props: any) => {
   const authContext = useContext(AuthContext)
   const [joined, setJoined] = useState(false)
 
   useEffect(() => {
-    if (authContext.authenticated) {
-      const fetchData = async () => {
-        try {
-          const res = await myAxios.get(
-            `/api/users/`,
-            authContext.header
-          )
-          const userSub: Array<any> = res.data.data.UserSub
-            .map((sub: any) => sub._id)
-          if (userSub.includes(props.subId)) setJoined(true)
-        } catch (err) {
-          console.log(err)
-        }
-      }
-      fetchData()
-    }
+    const subList = props.user.UserSub as ISub[]
+    const currentSub = subList.find(sub => sub._id === props.subId)
+    if (currentSub) setJoined(true)
+  }, [props])
 
-  }, [authContext, props.subId])
 
   const joinButtonHandler = () => {
     if (!props.subId || !authContext.authenticated) {
@@ -93,6 +81,7 @@ const SubBanner = (props: any) => {
 SubBanner.propTypes = {
   subId: PropTypes.string,
   subName: PropTypes.string,
+  user: PropTypes.object,
 }
 
 export default SubBanner
