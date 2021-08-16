@@ -3,8 +3,8 @@ import React from 'react'
 
 export const MyButton = (props: any) => {
   return <Button
-    {...props}
-    variant="contained">
+    variant="contained"
+    {...props}>
     {props.children}
   </Button>
 }
