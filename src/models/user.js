@@ -7,6 +7,14 @@ var userSchema = mongoose.Schema({
   Username: { type: String, required: true, unique: true },
   Password: { type: String, required: true },
 
+  UpvoteThread: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: table.thread
+  }],
+  DownvoteThread: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: table.thread
+  }],
   UserThread: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: table.thread
