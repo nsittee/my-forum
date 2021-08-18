@@ -22,7 +22,7 @@ router.get('/:id', (req, res, next) => {
     }));
 });
 
-router.post('/', authenticate, (req, res, next) => {
+router.post('/', authenticate(), (req, res, next) => {
   const reqThread = req.body.Thread;
   if (!reqThread)
     return res.status(400).json({ message: "invalid json" });
@@ -54,7 +54,7 @@ router.post('/', authenticate, (req, res, next) => {
   });
 });
 
-router.get('/vote/:id/:vote', authenticate, async (req, res) => {
+router.get('/vote/:id/:vote', authenticate(), async (req, res) => {
   const userId = res.locals.userId
   const threadId = req.params.id
   const userVote = req.params.vote

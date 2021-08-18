@@ -9,11 +9,10 @@ interface JwtData {
   exp: string
 }
 
-export const authenticate: RequestHandler = (req, res, next) => {
+export const authenticate = (opt: boolean = false) => (req, res, next): RequestHandler => {
   try {
     jwt.verify(req.headers.authorization, config.secretKey)
     const decoded: any = jwt.decode(req.headers.authorization)
-
     res.locals.userId = decoded.id
     // TODO: check if the session is valid and the user exists in database
     // console.log(req.body.Thread)
