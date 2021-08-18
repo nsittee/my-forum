@@ -68,7 +68,7 @@ router.get('/vote/:id/:vote', authenticate(), async (req, res) => {
 
   const thread = await Thread.findOne().where('_id').equals(threadId).exec()
   if (userVote === 'up') thread.Upvote = thread.Upvote + 1
-  else thread.Downvote = thread.Downvote - 1
+  else thread.Downvote = thread.Downvote + 1
 
   console.log(thread);
 
