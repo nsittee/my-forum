@@ -13,8 +13,9 @@ const ThreadCard = (props: any) => {
 	const displayVote = thread.Upvote - thread.Downvote
 	const subAuthor = thread.Author ? thread.Author.Username : 'null'
 	const subParent = thread.SubParent ? thread.SubParent.SubLongName : 'null'
+	const vote = props.vote
 
-	const voteHandler = (e: any, vote: string) => {
+	const voteHandler = async (e: any, vote: string) => {
 		myAxios.get(`/api/threads/vote/${thread._id}/${vote}`, authContext.header)
 		console.log('vote clicked ' + vote);
 	}
@@ -23,11 +24,11 @@ const ThreadCard = (props: any) => {
 			<Grid container spacing={1}>
 				<Card onClick={e => e.stopPropagation()}>
 					<IconButton onClick={(e: any) => voteHandler(e, 'up')}>
-						<KeyboardArrowUp />
+						<KeyboardArrowUp color={vote === 'up' ? "primary" : "inherit"} />
 					</IconButton>
 					<Typography align='center' variant='subtitle2'>{displayVote}</Typography>
 					<IconButton onClick={(e: any) => voteHandler(e, 'down')}>
-						<KeyboardArrowDown />
+						<KeyboardArrowDown color={vote === 'down' ? "error" : "inherit"} />
 					</IconButton>
 				</Card>
 				<Grid item xs={10}>
