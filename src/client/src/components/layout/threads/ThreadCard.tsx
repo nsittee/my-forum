@@ -4,16 +4,17 @@ import { Card, Typography, Grid, IconButton } from '@material-ui/core'
 import { KeyboardArrowUp, KeyboardArrowDown } from '@material-ui/icons'
 import { myAxios } from '../../../config/axios-config'
 import AuthContext from '../../../context/auth-context'
+import { IThread } from '../../../shared/model/thread.model'
 
 const ThreadCard = (props: any) => {
 	const authContext = useContext(AuthContext)
 	const history = useHistory()
 
-	const thread = props.thread
-	const displayVote = thread.Upvote - thread.Downvote
+	const thread: IThread = props.thread
+	const displayVote = thread.Upvote!! - thread.Downvote!!
 	const subAuthor = thread.Author ? thread.Author.Username : 'null'
 	const subParent = thread.SubParent ? thread.SubParent.SubLongName : 'null'
-	const vote = props.vote
+	const vote = thread.vote
 
 	const voteHandler = async (e: any, vote: string) => {
 		myAxios.get(`/api/threads/vote/${thread._id}/${vote}`, authContext.header)

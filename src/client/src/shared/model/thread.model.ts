@@ -10,6 +10,8 @@ export interface IThread {
   Downvote?: number,
   Author?: IUser,
   SubParent?: ISub,
+
+  vote?: string
 }
 
 export const defaultThread: IThread = {
@@ -21,4 +23,6 @@ export const defaultThread: IThread = {
   Downvote: 0,
   Author: defaultUser,
   SubParent: defaultSub,
+
+  vote: ''
 }

@@ -25,30 +25,41 @@ const MainPage = (props: any) => {
   var mainThreads: Array<any> = []
   mainThreads = threads.map((thread: any) =>
     <Grid item xs={12} key={thread._id}>
-      <ThreadCard key={thread._id} thread={thread} vote="up" />
+      <ThreadCard key={thread._id} thread={thread} />
     </Grid>
   )
   var loaded = threads.length > 0
 
   useEffect(() => {
-    const fetchThreadData = () => {
+    const fetchThreadData = (u: IUser) => {
       myAxios.get<IResponseEntity<ISub>>(`/api/subs/${subName}`)
         .then(res => {
-          setThreads(res.data.data.SubThread!!)
           if (subName) setSubId(res.data.data._id!!) // SubId is use to check if user is a member or not
+          if (u._id && u._id!! !== '') {
+            const resThread: IThread[] = res.data.data.SubThread!!.map(t => {
+              var upList = u.UpvoteThread!! as string[]
+              var downList = u.DownvoteThread!! as string[]
+
+              if (upList?.includes(t._id!!)) t.vote = 'up'
+              else if (downList?.includes(t._id!!)) t.vote = 'down'
+              return t
+            })
+            setThreads(resThread)
+          }
+          else setThreads(res.data.data.SubThread!!)
         })
         .catch(err => console.log(err))
     }
-    const fetchUserData = async () => {
-      try {
-        const res = await myAxios.get<IResponseEntity<IUser>>(`/api/users/`, authContext.header)
-        setUser(res.data.data!!)
-      } catch (error) {
-        console.log(error)
-      }
+    const fetchUserData = () => {
+      myAxios.get<IResponseEntity<IUser>>(`/api/users/`, authContext.header)
+        .then(res => {
+          setUser(res.data.data!!)
+          fetchThreadData(res.data.data!!)
+        })
+        .catch(err => console.log(err))
     }
     if (authContext.authenticated) fetchUserData()
-    fetchThreadData()
+    else fetchThreadData(defaultUser)
   }, [subName, authContext])
 
   return (
