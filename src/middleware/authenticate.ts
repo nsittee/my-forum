@@ -17,9 +17,10 @@ export const authenticate = (opt: boolean = false) => (req, res, next): RequestH
     // TODO: check if the session is valid and the user exists in database
     // console.log(req.body.Thread)
   } catch {
-    return res.status(401).json({
-      message: "auth failed",
-    });
+    if (!opt)
+      return res.status(401).json({
+        message: "auth failed",
+      });
   }
   next();
 }
