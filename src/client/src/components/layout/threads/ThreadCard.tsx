@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { useHistory } from 'react-router'
 import { Card, Typography, Grid, IconButton } from '@material-ui/core'
 import { KeyboardArrowUp, KeyboardArrowDown } from '@material-ui/icons'
@@ -7,10 +7,10 @@ import AuthContext from '../../../context/auth-context'
 import { IThread } from '../../../shared/model/thread.model'
 
 const ThreadCard = (props: any) => {
+	const [thread, setThread] = useState<IThread>(props.thread)
 	const authContext = useContext(AuthContext)
 	const history = useHistory()
 
-	const thread: IThread = props.thread
 	const displayVote = thread.Upvote!! - thread.Downvote!!
 	const subAuthor = thread.Author ? thread.Author.Username : 'null'
 	const subParent = thread.SubParent ? thread.SubParent.SubLongName : 'null'
@@ -18,6 +18,10 @@ const ThreadCard = (props: any) => {
 
 	const voteHandler = async (e: any, vote: string) => {
 		myAxios.get(`/api/threads/vote/${thread._id}/${vote}`, authContext.header)
+		setThread({
+			...thread,
+			vote: vote
+		})
 		console.log('vote clicked ' + vote);
 	}
 	return (
