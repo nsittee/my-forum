@@ -64,7 +64,7 @@ router.get('/vote/:id/:vote', authenticate(), async (req, res) => {
 
   const thread = await Thread.findOne().where('_id').equals(threadId).exec()
   if (userVote === 'up') {
-    if (user.UpvoteThread.includes(threadId)) {
+    if ((user.UpvoteThread as string[]).includes(threadId)) {
       console.log('1 > 0')
       thread.Upvote = thread.Upvote - 1
       user.UpvoteThread = _.remove(user.UpvoteThread, (id: string) => id === threadId)

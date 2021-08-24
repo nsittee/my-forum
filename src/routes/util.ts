@@ -57,11 +57,18 @@ router.get('/populate', (req, res) => {
   response.user = user;
   response.threads = threads;
 
-  sub.save().then(
-    user.save().then(
-      threads.map(t => t.save())
-    )
-  )
+  // Before adding ts interface
+  // sub.save().then(
+  //   user.save().then(
+  //     threads.map(t => t.save())
+  //   )
+  // )
+  sub.save().then(subRes => {
+    user.save().then(userRes => {
+      threads.map(t => t.save)
+    })
+  })
+
 
   return res.status(200).json(response);
 });
