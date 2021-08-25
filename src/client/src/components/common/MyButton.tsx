@@ -4,9 +4,7 @@ import React from 'react'
 export const MyButton = (props: any) => {
   return <Button
     variant="contained"
-    type={props.type}
-    onClick={props.onClick}
-    color={props.color}>
+    {...props}>
     {props.children}
   </Button>
 }

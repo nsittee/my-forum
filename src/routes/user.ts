@@ -8,7 +8,7 @@ import { authenticate } from '../middleware/authenticate';
 
 const router = express.Router();
 
-router.get('/', authenticate, (req, res, next) => {
+router.get('/', authenticate(), (req, res, next) => {
   const tokenData: any = jwt.decode(req.headers.authorization)
   User.findById(tokenData.id)
     .populate('UserSub', 'SubLongName')
