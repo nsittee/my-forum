@@ -1,10 +1,22 @@
+import { ISub } from './sub.model';
 import { IThread } from './thread.model';
 
 export interface IUser {
-  _id: string,
-  username: string,
-  password: string,
+  _id?: string,
+  Username?: string,
+  Password?: string,
+  UpvoteThread?: IThread[],
+  DownvoteThread?: IThread[],
+  UserThread?: IThread[],
+  UserSub?: ISub[]
+}
 
-  userThread: [IThread],
-  userSub: [{}]
+export const defaultUser: IUser = {
+  _id: '',
+  Username: '',
+  Password: '',
+  UpvoteThread: [],
+  DownvoteThread: [],
+  UserThread: [],
+  UserSub: []
 }

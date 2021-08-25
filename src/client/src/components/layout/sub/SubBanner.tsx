@@ -1,33 +1,22 @@
 import { Button, CardContent, Container, Grid } from '@material-ui/core'
-import Axios from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
 import AuthContext from '../../../context/auth-context'
 import PropTypes from 'prop-types'
-import appConstant from '../../../constant/constant';
+import { myAxios } from '../../../config/axios-config'
+import { ISub } from '../../../shared/model/sub.model'
+import randomColor from 'randomcolor'
 
 const SubBanner = (props: any) => {
   const authContext = useContext(AuthContext)
+  const [color] = useState(randomColor({ count: 2, luminosity: 'light' }))
   const [joined, setJoined] = useState(false)
 
   useEffect(() => {
-    if (authContext.authenticated) {
-      const fetchData = async () => {
-        try {
-          const res = await Axios.get(
-            `${appConstant.URL}/api/users/`,
-            authContext.header
-          )
-          const userSub: Array<any> = res.data.data.UserSub
-            .map((sub: any) => sub._id)
-          if (userSub.includes(props.subId)) setJoined(true)
-        } catch (err) {
-          console.log(err)
-        }
-      }
-      fetchData()
-    }
+    const subList = props.user.UserSub as ISub[]
+    const currentSub = subList.find(sub => sub._id === props.subId)
+    if (currentSub) setJoined(true)
+  }, [props])
 
-  }, [authContext, props.subId])
 
   const joinButtonHandler = () => {
     if (!props.subId || !authContext.authenticated) {
@@ -40,8 +29,8 @@ const SubBanner = (props: any) => {
     console.log(props.subName)
 
     var action = joined ? 'leave' : 'join'
-    var url = `${appConstant.URL}/api/subs/${action}?subId=${props.subId}`
-    Axios.post(url, null, {
+    var url = `/api/subs/${action}?subId=${props.subId}`
+    myAxios.post(url, null, {
       headers: {
         authorization: authContext.token
       }
@@ -60,12 +49,12 @@ const SubBanner = (props: any) => {
 
   return (
     <div style={{
-      background: 'MediumSlateBlue',
+      background: color[0],
       minHeight: '180px'
     }}>
       <div style={{
         height: '80px',
-        background: 'NavajoWhite'
+        background: color[1]
       }}>
         <Container maxWidth="md">
           <CardContent>
@@ -94,6 +83,7 @@ const SubBanner = (props: any) => {
 SubBanner.propTypes = {
   subId: PropTypes.string,
   subName: PropTypes.string,
+  user: PropTypes.object,
 }
 
 export default SubBanner

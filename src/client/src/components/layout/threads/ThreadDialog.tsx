@@ -1,25 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import { Card, Typography, CardContent, Dialog } from '@material-ui/core'
 import { Skeleton } from '@material-ui/lab';
-import Axios from 'axios'
 import { useHistory, useParams } from 'react-router-dom'
-import appConstant from '../../../constant/constant';
+import { myAxios } from '../../../config/axios-config';
+import { defaultThread, IThread } from '../../../shared/model/thread.model';
+import { IResponseEntity } from '../../../shared/response.model';
 
 const ThreadDialog = () => {
-  const [thread, setThread] = useState(null)
+  const [thread, setThread] = useState<IThread>(defaultThread)
   const { id: threadId }: any = useParams()
   const history = useHistory()
 
   useEffect(() => {
     const getThread = (id: string) => {
-      Axios.get(`${appConstant.URL}/api/threads/${id}`)
-        .then(res => setThread(res.data))
+      myAxios.get<IResponseEntity<IThread>>(`/api/threads/${id}`)
+        .then(res => setThread(res.data.data))
         .catch(err => console.log(err));
     }
     getThread(threadId)
   }, [threadId])
-
-  var t: any = thread
 
   return <Dialog
     open={true}
@@ -30,10 +29,10 @@ const ThreadDialog = () => {
     {thread ?
       <Card variant="outlined">
         <CardContent>
-          <Typography variant="body2" color="textSecondary" gutterBottom> {t.Author.Username} </Typography>
-          <Typography variant="h5"> {t.Title} </Typography>
-          <Typography variant="body2" color="textSecondary"> {t.CreatedDate} </Typography>
-          <Typography variant="body1">{t.Content} </Typography>
+          <Typography variant="body2" color="textSecondary" gutterBottom> {thread.Author.Username} </Typography>
+          <Typography variant="h5"> {thread.Title} </Typography>
+          <Typography variant="body2" color="textSecondary"> {thread.CreatedDate} </Typography>
+          <Typography variant="body1">{thread.Content} </Typography>
           <br /><br /><br /><br /><br />
         </CardContent>
       </Card>

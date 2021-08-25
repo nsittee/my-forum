@@ -8,7 +8,7 @@ import { authenticate } from '../middleware/authenticate';
 
 const router = express.Router();
 
-router.get('/', authenticate, (req, res, next) => {
+router.get('/', authenticate(), (req, res, next) => {
   const tokenData: any = jwt.decode(req.headers.authorization)
   User.findById(tokenData.id)
     .populate('UserSub', 'SubLongName')
@@ -71,7 +71,9 @@ router.post('/signin', (req, res, next) => {
             });
             return res.status(200).json({
               message: "signin completed",
-              token: token,
+              data: {
+                token: token
+              },
             });
           }
         });

@@ -10,7 +10,7 @@ import { authenticate } from '../middleware/authenticate';
 
 const router = express.Router()
 
-router.post('/join', authenticate, (req, res) => {
+router.post('/join', authenticate(), (req, res) => {
   // FIXME: User can join the same sub again, so the Sub ID will duplicate
   const joinedSubId = req.query.subId
   if (!joinedSubId) {
@@ -29,10 +29,7 @@ router.post('/join', authenticate, (req, res) => {
       joiningUser.save()
       res.status(200).json({
         message: "joining sub completed",
-        data: {
-          user: joiningUser,
-          sub: joinedSub
-        }
+        data: {}
       })
     })
   }).catch(err => {
@@ -44,7 +41,7 @@ router.post('/join', authenticate, (req, res) => {
   })
 })
 
-router.post('/leave', authenticate, (req, res) => {
+router.post('/leave', authenticate(), (req, res) => {
   res.status(400).json({
     message: "leaving sub completed",
   })
