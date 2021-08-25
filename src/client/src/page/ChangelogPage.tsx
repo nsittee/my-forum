@@ -1,21 +1,21 @@
 import { Card, Container, Grid } from '@material-ui/core';
 import React from 'react'
+import { MyCard } from '../components/common/MyCard';
 
 const ChangelogPage = () => {
   return (
     <Container maxWidth="md">
-      <h1>About</h1>
-      <Card>
-        <Grid container spacing={2}>
-          <Grid item xs>
-            <h3>Release-1.0.0</h3>
-          </Grid>
-          <Grid item xs={10}>
+      <br />
+      <MyCard header="Change Log" />
+      <br />
+      <Grid container spacing={1} direction="column">
+        <Grid item>
+          <MyCard header="1.0.0">
             <ul>
               <ul>
                 <li>
                   Backend
-                <ul>
+                  <ul>
                     <li>Using MongoDB to store information, these include User, Thread and Sub</li>
                     <li>Using Express JS framwwork for the to perform backend and communicate with DB</li>
                     <li>Using mongoose to open connection to MongoDB and perform basic CRUD operation</li>
@@ -27,7 +27,7 @@ const ChangelogPage = () => {
               <ul>
                 <li>
                   Frontend
-                <ul>
+                  <ul>
                     <li>React JS for frontend UI</li>
                     <li>Using MaterialUI for the most part</li>
                     <li>Using stateless functional component for most of the project</li>
@@ -40,9 +40,59 @@ const ChangelogPage = () => {
                 </li>
               </ul>
             </ul>
-          </Grid>
+          </MyCard>
+          <br />
+          <MyCard header="1.0.4">
+            <ul>
+              <ul>
+                <li>
+                  Backend
+                  <ul>
+                    <li>Refactor code structure</li>
+                    <li>Simplified DB connection string</li>
+                  </ul>
+                </li>
+              </ul>
+              <ul>
+                <li>
+                  Frontend
+                  <ul>
+                    <li>Refactor code structure</li>
+                    <li>Fix thread dialog and card size</li>
+                    <li>Add skeleton on main page when loading the thread</li>
+                  </ul>
+                </li>
+              </ul>
+            </ul>
+          </MyCard>
+          <br />
+          <MyCard header="1.0.5">
+            <ul>
+              <ul>
+                <li>
+                  Backend
+                  <ul>
+                    <li>Voting thread api</li>
+                  </ul>
+                </li>
+              </ul>
+              <ul>
+                <li>
+                  Frontend
+                  <ul>
+                    <li>Update create thread form to use react final form</li>
+                    <li>Redesign create thread form</li>
+                    <li>Add custom Axios instance </li>
+                    <li>Add type for frontend and refactor code with type</li>
+                    <li>Implement voting system</li>
+                  </ul>
+                </li>
+              </ul>
+            </ul>
+          </MyCard>
         </Grid>
-      </Card>
+      </Grid>
+      <br />
     </Container>
   )
 }
