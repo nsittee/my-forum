@@ -1,10 +1,9 @@
-import express from 'express';
-import bcrypt from 'bcryptjs';
+import express from 'express'
+import bcrypt from 'bcryptjs'
 
-import ThreadModel from '../models/thread';
-import UserModel from '../models/user';
-import SubModel from '../models/sub';
-import CommentModel from '../models/comment';
+import ThreadModel from '../models/thread'
+import UserModel from '../models/user'
+import SubModel from '../models/sub'
 
 const router = express.Router();
 router.get('/populate', (req, res) => {
@@ -13,7 +12,7 @@ router.get('/populate', (req, res) => {
   }
 
   // Create Sub Reddit
-  const subNumber = Math.floor(Math.random() * 1000) + 1;
+  const subNumber = Math.floor(Math.random() * 1000) + 1
   const sub = new SubModel({
     SubLongName: `sub-reddit-${subNumber}`,
     SubShortName: `${subNumber}`,
@@ -29,8 +28,8 @@ router.get('/populate', (req, res) => {
     UserThread: [],
     UserSub: [],
   });
-  sub.SubUser.push(user._id);
-  user.UserSub.push(sub._id);
+  sub.SubUser.push(user._id)
+  user.UserSub.push(sub._id)
 
   // Create Thread for this user in this sub
   const num = Math.floor(Math.random() * 10) + 1;
@@ -47,15 +46,15 @@ router.get('/populate', (req, res) => {
       ThreadComment: [],
       SubParent: sub._id,
     });
-    threads.push(thread);
+    threads.push(thread)
 
-    user.UserThread.push(thread);
-    sub.SubThread.push(thread);
+    user.UserThread.push(thread)
+    sub.SubThread.push(thread)
   }
 
-  response.sub = sub;
-  response.user = user;
-  response.threads = threads;
+  response.sub = sub
+  response.user = user
+  response.threads = threads
 
   // Before adding ts interface
   // sub.save().then(
@@ -65,7 +64,7 @@ router.get('/populate', (req, res) => {
   // )
   sub.save().then(subRes => {
     user.save().then(userRes => {
-      threads.map(t => t.save)
+      threads.map(t => t.save())
     })
   })
 
