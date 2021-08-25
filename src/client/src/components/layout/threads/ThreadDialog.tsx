@@ -29,7 +29,7 @@ const ThreadDialog = () => {
     {thread ?
       <Card variant="outlined">
         <CardContent>
-          <Typography variant="body2" color="textSecondary" gutterBottom> {thread.Author.Username} </Typography>
+          <Typography variant="body2" color="textSecondary" gutterBottom> {thread.Author!!.Username!!} </Typography>
           <Typography variant="h5"> {thread.Title} </Typography>
           <Typography variant="body2" color="textSecondary"> {thread.CreatedDate} </Typography>
           <Typography variant="body1">{thread.Content} </Typography>
