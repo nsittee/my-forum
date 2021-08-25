@@ -17,12 +17,14 @@ const ThreadCard = (props: any) => {
 	const vote = thread.vote
 
 	const voteHandler = async (e: any, vote: string) => {
-		myAxios.get(`/api/threads/vote/${thread._id}/${vote}`, authContext.header)
+		const resp = await myAxios.get<IThread>(`/api/threads/vote/${thread._id}/${vote}`, authContext.header)
+		const respThread = resp.data
 		setThread({
 			...thread,
-			vote: vote
+			Upvote: respThread.Upvote,
+			Downvote: respThread.Downvote,
+			vote: thread.vote === vote ? '' : vote
 		})
-		console.log('vote clicked ' + vote);
 	}
 	return (
 		<Card onClick={() => history.push(`/r/${subParent}/${thread._id}`)}>

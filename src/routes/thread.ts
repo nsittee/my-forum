@@ -102,12 +102,12 @@ router.get('/vote/:id/:vote', authenticate(), async (req, res) => {
     }
   }
 
-  console.log(thread.Upvote);
-  console.log(thread.Downvote);
   user.save()
   thread.save()
-
-  res.status(200)
+  res.json({
+    Upvote: thread.Upvote,
+    Downvote: thread.Downvote,
+  })
 })
 
 export default router
