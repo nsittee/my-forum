@@ -6,13 +6,17 @@ import { io } from 'socket.io-client'
 import { MyButton } from '../components/common/MyButton'
 import { MyTextField } from '../components/common/MyTextField'
 
+const socket = io('http://localhost:8080')  // TODO: Dynamic address for socket.io
 const ChatPage = () => {
   const [message, setMessage] = useState<string>('')
-  const socket = io('http://localhost:8080')  // TODO: Dynamic address for socket.io
 
+  socket.on('message', recMessage => {
+    console.log(`got message: ${recMessage}`);
+
+  })
   useEffect(() => {
     socket.connect()
-  }, [socket])
+  }, [])
 
   return (
     <Container maxWidth="md">
@@ -29,6 +33,7 @@ const ChatPage = () => {
         <MyButton onClick={() => {
           console.log(`send => ${message}`)
           socket.send(message)
+          socket.emit('message', message)
           setMessage('')
         }}>
           Send
