@@ -8,6 +8,7 @@ import { MyTextField } from '../components/common/MyTextField'
 import { DefaultEventsMap } from 'socket.io-client/build/typed-events'
 
 let socket: Socket<DefaultEventsMap, DefaultEventsMap>
+const eventName = 'message'
 const ChatPage = () => {
   const [message, setMessage] = useState<string>('')
   const [chatFeed, setChatFeed] = useState<string[]>([])
@@ -19,7 +20,7 @@ const ChatPage = () => {
     console.log('init client socket io')
     socket = io('http://localhost:8080') // TODO: Dynamic address for socket.io
     socket.connect()
-    socket.on('message', onNewMessage)
+    socket.on(eventName, onNewMessage)
   }, [])
 
   return (
@@ -38,7 +39,7 @@ const ChatPage = () => {
           onChange={(event: any) => setMessage(event.target.value)}
         />
         <MyButton onClick={() => {
-          socket.emit('message', message)
+          socket.emit(eventName, message)
           setMessage('')
         }}>
           Send

@@ -10,11 +10,14 @@ const initSocketIO = (server: http.Server) => {
     socket.on('disconnect', () => {
       console.log('############## user disconnected ##############');
     })
-    socket.on('message', message => {
-      console.log(`message: ${message}`)
-      // socket.emit('socket message', message)
-      io.emit('message', message)
+    socket.onAny((eventName, message) => {
+      io.emit(eventName, message)
+      console.log(`${eventName}: ${message}`)
     })
+    // socket.on('message', message => {
+    //   console.log(`message: ${message}`)
+    //   io.emit('message', message)
+    // })
   })
 }
 
