@@ -1,22 +1,25 @@
 import React, { useEffect, useState } from 'react'
-import { Card, Container, Paper } from '@material-ui/core'
+import { Container, Paper } from '@material-ui/core'
 import { MyCard } from '../components/common/MyCard'
 
-import { io } from 'socket.io-client'
+import { io, Socket } from 'socket.io-client'
 import { MyButton } from '../components/common/MyButton'
 import { MyTextField } from '../components/common/MyTextField'
+import { DefaultEventsMap } from 'socket.io-client/build/typed-events'
 
-const socket = io('http://localhost:8080')  // TODO: Dynamic address for socket.io
+let socket: Socket<DefaultEventsMap, DefaultEventsMap>
 const ChatPage = () => {
   const [message, setMessage] = useState<string>('')
-  const [chatFeed, setChatFeed] = useState<JSX.Element[]>([])
+  const [chatFeed, setChatFeed] = useState<string[]>([])
 
-  socket.on('message', recMessage => {
-    console.log(`recMessage: ${recMessage}`);
-    setChatFeed([...chatFeed, <Card key={chatFeed.length}>{recMessage}</Card>])
-  })
   useEffect(() => {
+    const onNewMessage = (newMessage: string) => {
+      setChatFeed(c => [...c, newMessage])
+    }
+    console.log('init client socket io')
+    socket = io('http://localhost:8080') // TODO: Dynamic address for socket.io
     socket.connect()
+    socket.on('message', onNewMessage)
   }, [])
 
   return (
@@ -25,7 +28,7 @@ const ChatPage = () => {
       <MyCard header="Chat" />
       <br />
       <MyCard>
-        {chatFeed}
+        {chatFeed.map((message, i) => <Paper key={i}>{message}</Paper>)}
       </MyCard>
       <br />
       <MyCard>
@@ -35,8 +38,6 @@ const ChatPage = () => {
           onChange={(event: any) => setMessage(event.target.value)}
         />
         <MyButton onClick={() => {
-          console.log(`send => ${message}`)
-          socket.send(message)
           socket.emit('message', message)
           setMessage('')
         }}>
