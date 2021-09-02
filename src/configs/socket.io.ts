@@ -14,10 +14,6 @@ const initSocketIO = (server: http.Server) => {
       io.emit(event, username, type, detail)
       console.log(`${event}:${username}:${type}:${detail}`)
     })
-    // socket.on('message', message => {
-    //   console.log(`message: ${message}`)
-    //   io.emit('message', message)
-    // })
   })
 }
 
