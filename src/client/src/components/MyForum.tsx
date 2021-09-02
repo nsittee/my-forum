@@ -11,6 +11,7 @@ import SubmitPage from '../page/SubmitPage'
 import ChangelogPage from '../page/ChangelogPage'
 import AuthContext from '../context/auth-context'
 import UiContext from '../context/ui-context'
+import ChatPage from '../page/ChatPage'
 
 const MyForum = () => {
   const [signIn, setSignIn] = useState(false)
@@ -23,7 +24,7 @@ const MyForum = () => {
     username: '',
     authenticated: false,
     token: '',
-    header: {}
+    header: { }
   }
   if (cookies.tokenbon) {
     const userData: any = jwt(cookies.tokenbon)
@@ -51,6 +52,7 @@ const MyForum = () => {
               <Route path="/setting" component={UserSettingPage} />
               <Route path="/submit" component={SubmitPage} />
               <Route path="/changelog" component={ChangelogPage} />
+              <Route path="/chat" component={ChatPage} />
 
               <Route path="/r/:sub" component={MainPage} />
               <Route path="/" component={MainPage} />

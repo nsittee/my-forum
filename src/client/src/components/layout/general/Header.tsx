@@ -41,6 +41,7 @@ const Header = () => {
           <>
             <MyButton key="user">{authContext.username}</MyButton>
             <MyButton key="sign-out" onClick={SignOutHandler}>Sign Out</MyButton>
+            <MyButton key="chat" href="/chat">Chat</MyButton>
             <MyButton key="changelog" href="/changelog">Changelog</MyButton>
           </>
         }
