@@ -6,13 +6,13 @@ const initSocketIO = (server: http.Server) => {
     cors: { origin: '*' }
   })
   io.on('connection', (socket) => {
-    console.log('############## a user connected ###############')
+    // console.log('############## a user connected ###############')
     socket.on('disconnect', () => {
-      console.log('############## user disconnected ##############')
+      // console.log('############## user disconnected ##############')
     })
     socket.onAny((event, username, type, detail) => {
       io.emit(event, username, type, detail)
-      console.log(`${event}:${username}:${type}:${detail}`)
+      // console.log(`${event}:${username}:${type}:${detail}`)
     })
   })
 }

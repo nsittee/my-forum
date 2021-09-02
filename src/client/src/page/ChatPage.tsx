@@ -7,19 +7,19 @@ import { MyButton } from '../components/common/MyButton'
 import { MyTextField } from '../components/common/MyTextField'
 import { DefaultEventsMap } from 'socket.io-client/build/typed-events'
 import AuthContext from '../context/auth-context'
+import appConstant from '../constant/app-constant'
 
 let socket: Socket<DefaultEventsMap, DefaultEventsMap>
 const eventName = 'message'
 const ChatPage = () => {
   const authContext = useContext(AuthContext)
+  const [prevMessage, setPrevMessage] = useState<string>('')
   const [message, setMessage] = useState<string>('')
   const [chatFeed, setChatFeed] = useState<string[]>([])
   const [typingList, setTypingList] = useState<string[]>([])
-  console.log(typingList)
 
   useEffect(() => {
-    console.log('init client socket io')
-    socket = io('http://localhost:8080') // TODO: Dynamic address for socket.io
+    socket = io(appConstant.URL!)
     socket.connect()
     socket.on(eventName, (username, type, newMessage) => {
       // console.log(username, type, newMessage)
@@ -41,6 +41,7 @@ const ChatPage = () => {
   const onSendMessage = () => {
     socket.emit(eventName, authContext.username, 'message', message)
     socket.emit(eventName, authContext.username, 'nottyping')
+    setPrevMessage('')
     setMessage('')
   }
 
@@ -60,21 +61,20 @@ const ChatPage = () => {
         <MyTextField
           value={message}
           onChange={(event: any) => {
-            const prev = event.target.preValue
+            const prev = prevMessage
             const msg = event.target.value
-            console.log(prev, msg)
+            // console.log(prev, msg)
 
             if ((prev === '' || !prev) && msg !== '')
               socket.emit(eventName, authContext.username, 'typing')
             if ((msg === '' && prev !== ''))
               socket.emit(eventName, authContext.username, 'nottyping')
 
-            event.target.preValue = msg
+            setPrevMessage(msg)
             setMessage(msg)
           }}
         />
-        <MyButton
-          onClick={onSendMessage}>
+        <MyButton onClick={onSendMessage}>
           Send
         </MyButton>
       </MyCard>
