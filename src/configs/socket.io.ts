@@ -8,11 +8,11 @@ const initSocketIO = (server: http.Server) => {
   io.on('connection', (socket) => {
     console.log('############## a user connected ###############')
     socket.on('disconnect', () => {
-      console.log('############## user disconnected ##############');
+      console.log('############## user disconnected ##############')
     })
-    socket.onAny((eventName, message) => {
-      io.emit(eventName, message)
-      console.log(`${eventName}: ${message}`)
+    socket.onAny((event, username, type, detail) => {
+      io.emit(event, username, type, detail)
+      console.log(`${event}:${username}:${type}:${detail}`)
     })
     // socket.on('message', message => {
     //   console.log(`message: ${message}`)
