@@ -90,6 +90,28 @@ const ChangelogPage = () => {
               </ul>
             </ul>
           </MyCard>
+          <br />
+          <MyCard header="1.0.6">
+            <ul>
+              <ul>
+                <li>
+                  Backend
+                  <ul>
+                    <li>Support live chat using Socket.io</li>
+                  </ul>
+                </li>
+              </ul>
+              <ul>
+                <li>
+                  Frontend
+                  <ul>
+                    <li>Support live chat using Socket.io</li>
+                    <li>Display `username` is typing</li>
+                  </ul>
+                </li>
+              </ul>
+            </ul>
+          </MyCard>
         </Grid>
       </Grid>
       <br />
