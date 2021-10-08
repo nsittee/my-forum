@@ -1,4 +1,4 @@
-import { Card, Container, Grid } from '@material-ui/core';
+import { Container, Grid } from '@material-ui/core';
 import React from 'react'
 import { MyCard } from '../components/common/MyCard';
 
@@ -85,6 +85,28 @@ const ChangelogPage = () => {
                     <li>Add custom Axios instance </li>
                     <li>Add type for frontend and refactor code with type</li>
                     <li>Implement voting system</li>
+                  </ul>
+                </li>
+              </ul>
+            </ul>
+          </MyCard>
+          <br />
+          <MyCard header="1.0.6">
+            <ul>
+              <ul>
+                <li>
+                  Backend
+                  <ul>
+                    <li>Support live chat using Socket.io</li>
+                  </ul>
+                </li>
+              </ul>
+              <ul>
+                <li>
+                  Frontend
+                  <ul>
+                    <li>Support live chat using Socket.io</li>
+                    <li>Display `username` is typing</li>
                   </ul>
                 </li>
               </ul>
