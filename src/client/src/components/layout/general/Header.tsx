@@ -2,7 +2,6 @@ import React, { useContext } from 'react'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import { TextField } from '@material-ui/core'
-import { useCookies } from 'react-cookie'
 
 import AuthContext from '../../../context/auth-context'
 import SignInDialog from './SignInDialog'
@@ -14,7 +13,6 @@ import { MyButton } from '../../common/MyButton'
 const Header = () => {
   const authContext = useContext(AuthContext)
   const history = useHistory()
-  const removeCookie = useCookies(['my-cookie'])[2]
   const { setSignIn, setSignUp } = useContext(UiContext)
 
   const SignOutHandler = () => {

@@ -2,7 +2,6 @@ import React, { useContext, useState } from 'react'
 import { Dialog, Card, CardContent } from '@material-ui/core'
 
 import UiContext from '../../../context/ui-context'
-import { useCookies } from 'react-cookie'
 import { useHistory } from 'react-router-dom'
 import { MyButton } from '../../common/MyButton'
 import { MyTextField } from '../../common/MyTextField'
@@ -11,10 +10,7 @@ import { myAxios } from '../../../config/axios-config'
 const SignInDialog = (props: any) => {
   const [username, setUsername] = useState('test-user-0.07546525770485024')
   const [password, setPassword] = useState('passwordXD')
-
   const { signIn, setSignIn } = useContext(UiContext)
-
-  const setCookie = useCookies(['my-cookie'])[1]
   const history = useHistory()
 
   const submitSignIn = (event: any) => {
