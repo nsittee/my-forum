@@ -26,13 +26,17 @@ const MyForum = () => {
   }
 
   if (localStorage.getItem('a-token') && localStorage.getItem('b-token')) {
-    const aToken = localStorage.getItem('a-token')!!
-    const userData: any = jwt(aToken)
-    authContextValue.id = userData.id
-    authContextValue.username = userData.username
-    authContextValue.authenticated = true
-    authContextValue.token = aToken
-    authContextValue.header = { headers: { authorization: aToken } }
+    try {
+      const aToken = localStorage.getItem('a-token')!!
+      const userData: any = jwt(aToken)
+      authContextValue.id = userData.id
+      authContextValue.username = userData.username
+      authContextValue.authenticated = true
+      authContextValue.token = aToken
+      authContextValue.header = { headers: { authorization: aToken } }
+    } catch (err) {
+      localStorage.clear()
+    }
   } else {
     localStorage.clear()
   }
