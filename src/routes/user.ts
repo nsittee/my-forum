@@ -1,12 +1,12 @@
-import express from 'express';
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-import { config } from '../configs/config';
+import express from 'express'
+import bcrypt from 'bcryptjs'
+import jwt from 'jsonwebtoken'
+import { config } from '../configs/config'
 
-import User from '../models/user';
-import { authenticate } from '../middleware/authenticate';
+import User from '../models/user'
+import { authenticate } from '../middleware/authenticate'
 
-const router = express.Router();
+const router = express.Router()
 
 router.get('/', authenticate(), (req, res, next) => {
   const tokenData: any = jwt.decode(req.headers.authorization)
@@ -55,30 +55,30 @@ router.post('/signin', (req, res, next) => {
   User.find({ Username: req.body.username })
     // .populate('UserSub', 'SubLongName')
     .exec().then(userList => {
-      console.log(userList)
       if (userList.length == 1) {
-        const user = userList[0];
+        const user = userList[0]
         bcrypt.compare(req.body.password, user.Password, (err, hashResult) => {
-          if (err) return res.status(401).json({ message: "auth failed" });
+          if (err) return res.status(401).json({ message: "auth failed" })
           if (hashResult) {
-            jwt.sign
-            const token = jwt.sign({
-              id: user._id,
-              username: user.Username,
-            },
+            const atoken = jwt.sign({ id: user._id, username: user.Username },
+              config.secretKey, {
+              expiresIn: "5m"
+            })
+            const bToken = jwt.sign({ id: user._id },
               config.secretKey, {
               expiresIn: "1h"
-            });
+            })
             return res.status(200).json({
               message: "signin completed",
               data: {
-                token: token
+                aToken: atoken,
+                bToken: bToken
               },
-            });
+            })
           }
-        });
+        })
       } else res.status(409).send({ message: "username or password incorrect" });
-    });
+    })
 })
 
 router.post('/sub-list', (req, res, next) => {

@@ -18,10 +18,7 @@ const Header = () => {
   const { setSignIn, setSignUp } = useContext(UiContext)
 
   const SignOutHandler = () => {
-    removeCookie('tokenbon', {
-      // If path is not set, the cookie cannot be removed outside of the root path
-      path: '/'
-    })
+    localStorage.clear()
     history.go(0)
   }
 

@@ -18,21 +18,18 @@ const SignInDialog = (props: any) => {
   const history = useHistory()
 
   const submitSignIn = (event: any) => {
-    console.log(`Submit info is ${username} with ${password}`)
     const data = {
       username: username,
       password: password
     }
     const url = `/api/users/signin`
     myAxios.post(url, data).then(res => {
-      const token = res.data.data.token
-      setCookie('tokenbon', token, {
-        path: '/',
-        maxAge: 6000, // in second
-        // httpOnly: true,
-        sameSite: true
-      })
-      console.log(token)
+      const aToken = res.data.data.aToken
+      const bToken = res.data.data.bToken
+
+      localStorage.setItem('a-token', aToken)
+      localStorage.setItem('b-token', bToken)
+
       history.go(0)
     }).catch(err => {
       console.log(err)
