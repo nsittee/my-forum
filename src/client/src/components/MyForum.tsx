@@ -21,8 +21,7 @@ const MyForum = () => {
     id: '',
     username: '',
     authenticated: false,
-    token: '',
-    header: {}
+    token: ''
   }
 
   if (localStorage.getItem('a-token') && localStorage.getItem('b-token')) {
@@ -32,8 +31,7 @@ const MyForum = () => {
       authContextValue.id = userData.id
       authContextValue.username = userData.username
       authContextValue.authenticated = true
-      authContextValue.token = aToken
-      authContextValue.header = { headers: { authorization: aToken } }
+      authContextValue.token = `Bearer ${aToken}`
     } catch (err) {
       localStorage.clear()
     }

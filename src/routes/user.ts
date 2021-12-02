@@ -9,8 +9,8 @@ import { authenticate } from '../middleware/authenticate'
 const router = express.Router()
 
 router.get('/', authenticate(), (req, res, next) => {
-  const tokenData: any = jwt.decode(req.headers.authorization)
-  User.findById(tokenData.id)
+  const userId = res.locals.userId
+  User.findById(userId)
     .populate('UserSub', 'SubLongName')
     .exec().then(user => {
       res.status(200).json({
@@ -20,7 +20,7 @@ router.get('/', authenticate(), (req, res, next) => {
     }).catch(err => {
       res.status(400).json(err);
     });
-});
+})
 
 router.post('/signup', (req, res, next) => {
   if (req.body.username == null || req.body.password == null) {
@@ -49,7 +49,7 @@ router.post('/signup', (req, res, next) => {
       res.status(409).send({ message: "duplicate username" });
     }
   });
-});
+})
 
 router.post('/signin', (req, res, next) => {
   User.find({ Username: req.body.username })

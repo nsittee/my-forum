@@ -31,9 +31,7 @@ const SubBanner = (props: any) => {
     var action = joined ? 'leave' : 'join'
     var url = `/api/subs/${action}?subId=${props.subId}`
     myAxios.post(url, null, {
-      headers: {
-        authorization: authContext.token
-      }
+      headers: { authorization: authContext.token }
     }).then(res => {
       if (joined) {
         console.log('leave success')
