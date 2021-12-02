@@ -60,9 +60,9 @@ router.post('/signin', (req, res, next) => {
         bcrypt.compare(req.body.password, user.Password, (err, hashResult) => {
           if (err) return res.status(401).json({ message: "auth failed" })
           if (hashResult) {
-            const atoken = jwt.sign({ id: user._id, username: user.Username },
+            const aToken = jwt.sign({ id: user._id, username: user.Username },
               config.secretKey, {
-              expiresIn: "5m"
+              expiresIn: "1m"
             })
             const bToken = jwt.sign({ id: user._id },
               config.secretKey, {
@@ -71,7 +71,7 @@ router.post('/signin', (req, res, next) => {
             return res.status(200).json({
               message: "signin completed",
               data: {
-                aToken: atoken,
+                aToken: aToken,
                 bToken: bToken
               },
             })

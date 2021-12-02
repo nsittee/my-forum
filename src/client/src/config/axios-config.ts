@@ -7,8 +7,7 @@ const myAxios = axios.create({
 })
 
 myAxios.interceptors.request.use(config => {
-  console.log(config.url);
-
+  console.log(config.url)
   return config
 }, (error) => {
   // TODO: Display toast message or popup of internal error
@@ -18,7 +17,13 @@ myAxios.interceptors.request.use(config => {
 myAxios.interceptors.response.use(response => {
   return response
 }, (error) => {
-  console.log("intercepted error resp");
+  console.log("intercepted error resp")
+  if (error.response.status === 401
+    || error.response.status === 403) {
+    localStorage.clear()
+    document.location.href = "/"
+  }
+  return error
 })
 
 export { myAxios }
