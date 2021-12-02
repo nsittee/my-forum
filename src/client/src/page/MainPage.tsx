@@ -51,12 +51,11 @@ const MainPage = (props: any) => {
         .catch(err => console.log(err))
     }
     const fetchUserData = () => {
-      myAxios.get<IResponseEntity<IUser>>(`/api/users/`, {
-        headers: { authorization: authContext.token }
-      }).then(res => {
-        setUser(res.data.data!!)
-        fetchThreadData(res.data.data!!)
-      })
+      myAxios.get<IResponseEntity<IUser>>(`/api/users/`)
+        .then(res => {
+          setUser(res.data.data!!)
+          fetchThreadData(res.data.data!!)
+        })
         .catch(err => console.log(err))
     }
     if (authContext.authenticated) fetchUserData()

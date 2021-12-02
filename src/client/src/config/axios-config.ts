@@ -8,6 +8,8 @@ const myAxios = axios.create({
 
 myAxios.interceptors.request.use(config => {
   console.log(config.url)
+  const token = localStorage.getItem("a-token")
+  config.headers["Authorization"] = `Bearer ${token}`
   return config
 }, (error) => {
   // TODO: Display toast message or popup of internal error

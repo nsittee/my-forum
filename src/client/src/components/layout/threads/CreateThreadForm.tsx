@@ -19,13 +19,12 @@ const CreateThreadForm = () => {
 
   useEffect(() => {
     const fetchData = () => {
-      myAxios.get<IResponseEntity<IUser>>(`/api/users/`, {
-        headers: { authorization: authContext.token }
-      }).then(res => {
-        setUserSub(res.data.data.UserSub!!)
-      }).catch(err => {
-        console.log(err)
-      })
+      myAxios.get<IResponseEntity<IUser>>(`/api/users/`)
+        .then(res => {
+          setUserSub(res.data.data.UserSub!!)
+        }).catch(err => {
+          console.log(err)
+        })
     }
     fetchData()
   }, [authContext])
@@ -37,13 +36,12 @@ const CreateThreadForm = () => {
       Author: { _id: formData.userId },
       SubParent: { _id: formData.subId },
     }
-    myAxios.post<IResponseEntity<IThread>>(`/api/threads/`, { Thread: thread }, {
-      headers: { authorization: authContext.token }
-    }).then(res => {
-      console.log("Added New Thread" + res)
-    }).catch(err => {
-      console.log("ERROR " + err)
-    })
+    myAxios.post<IResponseEntity<IThread>>(`/api/threads/`, { Thread: thread })
+      .then(res => {
+        console.log("Added New Thread" + res)
+      }).catch(err => {
+        console.log("ERROR " + err)
+      })
     history.push('/')
   }
 
