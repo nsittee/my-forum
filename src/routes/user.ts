@@ -1,8 +1,8 @@
 import express from 'express'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import { config } from '../configs/config'
 
+import { config } from '../configs/config'
 import User from '../models/user'
 import { authenticate } from '../middleware/authenticate'
 
@@ -62,11 +62,11 @@ router.post('/signin', (req, res, next) => {
           if (hashResult) {
             const aToken = jwt.sign({ id: user._id, username: user.Username },
               config.secretKey, {
-              expiresIn: "1m"
+              expiresIn: config.accessTokenDuration
             })
             const bToken = jwt.sign({ id: user._id },
               config.secretKey, {
-              expiresIn: "1h"
+              expiresIn: config.refreshTokenDuration
             })
             return res.status(200).json({
               message: "signin completed",
