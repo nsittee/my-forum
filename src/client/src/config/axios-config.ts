@@ -9,23 +9,29 @@ const myAxios = axios.create({
 myAxios.interceptors.request.use(config => {
   console.log(config.url)
   const token = localStorage.getItem("a-token")
+  const refreshToken = localStorage.getItem("b-token")
   config.headers["Authorization"] = `Bearer ${token}`
+  config.headers["AuthorizationX"] = `${refreshToken}`
   return config
 }, (error) => {
-  // TODO: Display toast message or popup of internal error
-  console.log("intercepted error req");
+  console.log("intercepted error req")
 })
 
 myAxios.interceptors.response.use(response => {
+  // TODO: If response contain new access token, replace it in local storage
+  const newToken = response.headers["Authorization"]
+  if (newToken) {
+    alert(newToken)
+    localStorage.setItem("a-token", newToken)
+  }
   return response
 }, (error) => {
   console.log("intercepted error resp")
-  if (error.response.status === 401
-    || error.response.status === 403) {
+  if (error.response.status === 401 || error.response.status === 403) {
     localStorage.clear()
     document.location.href = "/"
   }
-  return error
+  return Promise.reject(error)
 })
 
 export { myAxios }

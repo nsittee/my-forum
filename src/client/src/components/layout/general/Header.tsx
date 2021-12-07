@@ -9,6 +9,7 @@ import SignUpDialog from './SignUpDialog'
 import UiContext from '../../../context/ui-context'
 import { useHistory } from 'react-router-dom'
 import { MyButton } from '../../common/MyButton'
+import { myAxios } from '../../../config/axios-config'
 
 const Header = () => {
   const authContext = useContext(AuthContext)
@@ -26,7 +27,14 @@ const Header = () => {
         <a href="/"><img src="/logo.png" alt='reddit' height='40' /> </a>
         <TextField variant="outlined" size="small"></TextField>
 
-        <MyButton variant="contained" color="primary">Search</MyButton>
+        <MyButton
+          variant="contained"
+          color="primary"
+          onClick={async () => {
+            alert('search')
+            const res = await myAxios.post('/api/users/refresh-token', { data: "important data" })
+          }}
+        >Search</MyButton>
         {!authContext.authenticated ?
           <>
             <MyButton key="sign-in" onClick={() => setSignIn(true)}>Sign In </MyButton>
