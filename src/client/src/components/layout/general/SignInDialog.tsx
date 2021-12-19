@@ -2,7 +2,6 @@ import React, { useContext, useState } from 'react'
 import { Dialog, Card, CardContent } from '@material-ui/core'
 
 import UiContext from '../../../context/ui-context'
-import { useCookies } from 'react-cookie'
 import { useHistory } from 'react-router-dom'
 import { MyButton } from '../../common/MyButton'
 import { MyTextField } from '../../common/MyTextField'
@@ -11,28 +10,22 @@ import { myAxios } from '../../../config/axios-config'
 const SignInDialog = (props: any) => {
   const [username, setUsername] = useState('test-user-0.07546525770485024')
   const [password, setPassword] = useState('passwordXD')
-
   const { signIn, setSignIn } = useContext(UiContext)
-
-  const setCookie = useCookies(['my-cookie'])[1]
   const history = useHistory()
 
   const submitSignIn = (event: any) => {
-    console.log(`Submit info is ${username} with ${password}`)
     const data = {
       username: username,
       password: password
     }
     const url = `/api/users/signin`
     myAxios.post(url, data).then(res => {
-      const token = res.data.data.token
-      setCookie('tokenbon', token, {
-        path: '/',
-        maxAge: 6000, // in second
-        // httpOnly: true,
-        sameSite: true
-      })
-      console.log(token)
+      const aToken = res.data.data.aToken
+      const bToken = res.data.data.bToken
+
+      localStorage.setItem('a-token', aToken)
+      localStorage.setItem('b-token', bToken)
+
       history.go(0)
     }).catch(err => {
       console.log(err)
