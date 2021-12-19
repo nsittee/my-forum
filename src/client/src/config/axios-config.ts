@@ -19,9 +19,8 @@ myAxios.interceptors.request.use(config => {
 
 myAxios.interceptors.response.use(response => {
   // TODO: If response contain new access token, replace it in local storage
-  const newToken = response.headers["Authorization"]
+  const newToken = response.headers["authorization"]
   if (newToken) {
-    alert(newToken)
     localStorage.setItem("a-token", newToken)
   }
   return response

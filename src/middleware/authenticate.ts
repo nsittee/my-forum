@@ -24,18 +24,16 @@ export const authenticate = (opt: boolean = false) => async (req, res, next): Pr
   } catch {
     // access token expired, validate refresh token if exists
     if (refreshToken) {
-      console.log('regenerate access token')
       try {
         jwt.verify(refreshToken, config.secretKey)
         const decoded: any = jwt.decode(refreshToken)
+        res.locals.userId = decoded.id
         const userId = decoded.id
         const user = await User.findById({ _id: userId })
         const aToken = jwt.sign({ id: user._id, username: user.Username },
           config.secretKey, {
           expiresIn: config.accessTokenDuration
         })
-        console.log(aToken)
-        // res.set("Authorization", aToken)
         res.header("Authorization", aToken)
       } catch {
         return res.status(401).json({
