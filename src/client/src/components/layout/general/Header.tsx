@@ -2,7 +2,6 @@ import React, { useContext } from 'react'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import { TextField } from '@material-ui/core'
-import { useCookies } from 'react-cookie'
 
 import AuthContext from '../../../context/auth-context'
 import SignInDialog from './SignInDialog'
@@ -10,18 +9,15 @@ import SignUpDialog from './SignUpDialog'
 import UiContext from '../../../context/ui-context'
 import { useHistory } from 'react-router-dom'
 import { MyButton } from '../../common/MyButton'
+import { myAxios } from '../../../config/axios-config'
 
 const Header = () => {
   const authContext = useContext(AuthContext)
   const history = useHistory()
-  const removeCookie = useCookies(['my-cookie'])[2]
   const { setSignIn, setSignUp } = useContext(UiContext)
 
   const SignOutHandler = () => {
-    removeCookie('tokenbon', {
-      // If path is not set, the cookie cannot be removed outside of the root path
-      path: '/'
-    })
+    localStorage.clear()
     history.go(0)
   }
 
@@ -31,7 +27,14 @@ const Header = () => {
         <a href="/"><img src="/logo.png" alt='reddit' height='40' /> </a>
         <TextField variant="outlined" size="small"></TextField>
 
-        <MyButton variant="contained" color="primary">Search</MyButton>
+        <MyButton
+          variant="contained"
+          color="primary"
+          onClick={async () => {
+            alert('search')
+            const res = await myAxios.post('/api/users/refresh-token', { data: "important data" })
+          }}
+        >Search</MyButton>
         {!authContext.authenticated ?
           <>
             <MyButton key="sign-in" onClick={() => setSignIn(true)}>Sign In </MyButton>
