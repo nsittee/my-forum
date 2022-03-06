@@ -19,8 +19,7 @@
     "ci:start": "npm run ci:build && npm start",
     "start": "NODE_ENV=production node dist/server.js",
     "dev": "concurrently \"npm run client:dev\" \"npm run server:dev\"",
-    "install": "npm run ci:install",
-    "postinstall": "npm run ci:build"
+    "postinstall": "npm run server:build && npm run client:install && npm run client:build"
   },
   "author": "",
   "license": "ISC",
