@@ -17,7 +17,8 @@
     "ci:dev": "start http://localhost:8080 && start http://localhost:8080/api/subs && node dist/server.js",
     "ci:start": "npm run ci:build && npm start",
     "start": "NODE_ENV=production node dist/server.js",
-    "dev": "concurrently \"npm run client:dev\" \"npm run server:dev\""
+    "dev": "concurrently \"npm run client:dev\" \"npm run server:dev\"",
+    "install": "npm run ci:build"
   },
   "author": "",
   "license": "ISC",
