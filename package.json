@@ -13,12 +13,14 @@
     "client:dev": "cd src/client/ && npm start",
     "all:install": "npm run server:install && npm run client:install",
     "clean": "rm -rf dist && rm -rf node_modules && rm -rf src/client/node_modules",
-    "ci:build": "npm run clean && npm run server:install && npm run server:build && npm run client:install && npm run client:build",
+    "ci:install": "npm run clean && npm run server:install && npm run client:install",
+    "ci:build": "npm run server:build && npm run client:build",
     "ci:dev": "start http://localhost:8080 && start http://localhost:8080/api/subs && node dist/server.js",
     "ci:start": "npm run ci:build && npm start",
     "start": "NODE_ENV=production node dist/server.js",
     "dev": "concurrently \"npm run client:dev\" \"npm run server:dev\"",
-    "install": "npm run ci:build"
+    "install": "npm run ci:install",
+    "preinstall": "npm run ci:build"
   },
   "author": "",
   "license": "ISC",
