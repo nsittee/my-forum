@@ -22,14 +22,6 @@ const MainPage = (props: any) => {
   const [subName] = useState<string>(props.match.params.sub ? props.match.params.sub : '')
   const [subId, setSubId] = useState<string>('')
 
-  var mainThreads: Array<any> = []
-  mainThreads = threads.map((thread: any) =>
-    <Grid item xs={12} key={thread._id}>
-      <ThreadCard key={thread._id} thread={thread} />
-    </Grid>
-  )
-  var loaded = threads.length > 0
-
   useEffect(() => {
     const fetchThreadData = (u: IUser) => {
       myAxios.get<IResponseEntity<ISub>>(`/api/subs/${subName}`)
@@ -72,19 +64,23 @@ const MainPage = (props: any) => {
           <Grid item xs={12}>
             {/* FIXME: Spacing for the main header */}
             <br />
-            {loaded ? <CreateThreadCard /> : null}
+            {threads.length > 0 ? <CreateThreadCard /> : null}
           </Grid>
 
           <Grid item xs={12}>
-            {loaded ?
+            {threads.length > 0 ?
               <ThreadFilter />
               :
               <Skeleton variant="rect" height={100} />
             }
           </Grid>
 
-          {loaded ?
-            mainThreads
+          {threads.length > 0 ?
+            threads.map((thread: any) =>
+              <Grid item xs={12} key={thread._id}>
+                <ThreadCard key={thread._id} thread={thread} />
+              </Grid>
+            )
             :
             <Grid item xs={12}>
               <Skeleton variant="rect" height={800} />
