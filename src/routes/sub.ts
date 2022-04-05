@@ -47,33 +47,32 @@ router.post('/leave', authenticate(), (req, res) => {
   })
 })
 
-router.get('/:name', (req, res) => {
+router.get('/:name', async (req, res) => {
   const subName = req.params.name;
-  SubModel.findOne()
+  const subId = await SubModel
+    .findOne()
     .where({ SubLongName: subName })
-    .populate({
-      path: 'SubThread',
-      populate: [{
-        path: 'Author',
-        select: 'Username'
-      }, {
-        path: 'SubParent',
-        select: ['SubLongName', 'SubShortName']
-      }]
-    })
+    .exec();
+
+  ThreadModel.find()
+    .populate('Author', 'Username')
+    .populate('SubParent', ['SubLongName', 'SubShortName'])
+    .where({ SubParent: subId })
+    .sort({ CreatedDate: -1 })
     .exec()
-    .then(sub => {
-      res.status(200).send({
-        message: 'get thread for sub completed',
-        data: sub
-      });
-    });
+    .then(threads => res.status(200).json({
+      message: `get thread for ${subName}: ${subId} completed`,
+      data: {
+        SubThread: threads
+      }
+    }));
 });
 
 router.get('/', (req, res, next) => {
   ThreadModel.find()
     .populate('Author', 'Username')
     .populate('SubParent', ['SubLongName', 'SubShortName'])
+    .sort({ CreatedDate: -1 })
     .exec()
     .then(threads => res.status(200).json({
       message: "get all thread",
