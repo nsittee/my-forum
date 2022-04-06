@@ -62,7 +62,6 @@ router.post('/signin', (req, res, next) => {
       if (userList.length == 1) {
         const user = userList[0]
         bcrypt.compare(req.body.password, user.Password, (err, hashResult) => {
-          if (err) return res.status(401).json({ message: "auth failed" })
           if (hashResult) {
             const aToken = jwt.sign({ id: user._id, username: user.Username },
               config.secretKey, {
@@ -79,9 +78,13 @@ router.post('/signin', (req, res, next) => {
                 bToken: bToken
               },
             })
+          } else {
+            return res.status(401).json({ message: "username or password incorrect" })
           }
         })
-      } else res.status(409).send({ message: "username or password incorrect" });
+      } else {
+        return res.status(401).send({ message: "username or password incorrect" })
+      }
     })
 })
 
