@@ -9,7 +9,7 @@ import { authenticate } from '../middleware/authenticate'
 const router = express.Router()
 
 router.post('/refresh-token', authenticate(), (req, res, next) => {
-  res.status(200).json({ message: "ok" })
+  res.status(200).json({ message: "ok", newToken: "newToken" })
 })
 
 router.get('/', authenticate(), (req, res, next) => {

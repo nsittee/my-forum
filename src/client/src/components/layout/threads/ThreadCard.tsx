@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { useHistory } from 'react-router'
 import { Card, Typography, Grid, IconButton } from '@material-ui/core'
 import { KeyboardArrowUp, KeyboardArrowDown } from '@material-ui/icons'
@@ -15,14 +15,18 @@ const ThreadCard = (props: any) => {
 	const vote = thread.vote
 
 	const voteHandler = async (e: any, vote: string) => {
-		const resp = await myAxios.get<IThread>(`/api/threads/vote/${thread._id}/${vote}`)
-		const respThread = resp.data
-		setThread({
-			...thread,
-			Upvote: respThread.Upvote,
-			Downvote: respThread.Downvote,
-			vote: thread.vote === vote ? '' : vote
-		})
+		try {
+			const resp = await myAxios.get<IThread>(`/api/threads/vote/${thread._id}/${vote}`)
+			const respThread = resp.data
+			setThread({
+				...thread,
+				Upvote: respThread.Upvote,
+				Downvote: respThread.Downvote,
+				vote: thread.vote === vote ? '' : vote
+			})
+		} catch (err) {
+			console.log('error voting')
+		}
 	}
 	return (
 		<Card onClick={() => history.push(`/r/${subParent}/${thread._id}`)}>

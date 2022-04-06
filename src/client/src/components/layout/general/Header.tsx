@@ -33,6 +33,7 @@ const Header = () => {
           onClick={async () => {
             alert('search')
             const res = await myAxios.post('/api/users/refresh-token', { data: "important data" })
+            console.log(res)
           }}
         >Search</MyButton>
         {!authContext.authenticated ?
