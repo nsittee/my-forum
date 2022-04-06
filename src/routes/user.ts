@@ -8,8 +8,28 @@ import { authenticate } from '../middleware/authenticate'
 
 const router = express.Router()
 
-router.post('/refresh-token', authenticate(), (req, res, next) => {
-  res.status(200).json({ message: "ok", newToken: "newToken" })
+router.post('/refresh-token', async (req, res, next) => {
+  try {
+    const refreshToken = req.body.refreshToken
+    jwt.verify(refreshToken, config.secretKey)
+
+    const decoded: any = jwt.decode(refreshToken)
+    const userId = decoded.id
+    const user = await User.findById(userId)
+    const newAccessToken = jwt.sign({ id: user._id, username: user.Username },
+      config.secretKey, {
+      expiresIn: config.accessTokenDuration
+    })
+    return res.status(200).json({
+      message: "ok",
+      data: newAccessToken,
+    })
+  } catch (err) {
+    return res.status(401).json({
+      message: "not ok",
+      data: "refresh expired",
+    })
+  }
 })
 
 router.get('/', authenticate(), (req, res, next) => {

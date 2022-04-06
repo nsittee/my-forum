@@ -1,11 +1,15 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useHistory } from 'react-router'
 import { Card, Typography, Grid, IconButton } from '@material-ui/core'
 import { KeyboardArrowUp, KeyboardArrowDown } from '@material-ui/icons'
 import { myAxios } from '../../../config/axios-config'
 import { IThread } from '../../../shared/model/thread.model'
+import AuthContext from '../../../context/auth-context'
+import UiContext from '../../../context/ui-context'
 
 const ThreadCard = (props: any) => {
+	const authContext = useContext(AuthContext)
+	const { setSignIn } = useContext(UiContext)
 	const [thread, setThread] = useState<IThread>(props.thread)
 	const history = useHistory()
 
@@ -14,19 +18,22 @@ const ThreadCard = (props: any) => {
 	const subParent = thread.SubParent ? thread.SubParent.SubLongName : 'null'
 	const vote = thread.vote
 
-	const voteHandler = async (e: any, vote: string) => {
-		try {
-			const resp = await myAxios.get<IThread>(`/api/threads/vote/${thread._id}/${vote}`)
-			const respThread = resp.data
-			setThread({
-				...thread,
-				Upvote: respThread.Upvote,
-				Downvote: respThread.Downvote,
-				vote: thread.vote === vote ? '' : vote
-			})
-		} catch (err) {
-			console.log('error voting')
+	const voteHandler = (e: any, vote: string) => {
+		if (!authContext.authenticated) {
+			setSignIn(true)
+			return
 		}
+		myAxios.get<IThread>(`/api/threads/vote/${thread._id}/${vote}`)
+			.then(resp => {
+				const respThread = resp.data
+				setThread({
+					...thread,
+					Upvote: respThread.Upvote,
+					Downvote: respThread.Downvote,
+					vote: thread.vote === vote ? '' : vote
+				})
+			})
+			.catch(err => console.log('vote error'))
 	}
 	return (
 		<Card onClick={() => history.push(`/r/${subParent}/${thread._id}`)}>

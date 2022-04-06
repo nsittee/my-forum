@@ -47,7 +47,7 @@ const Header = () => {
             <MyButton key="sign-out" onClick={SignOutHandler}>Sign Out</MyButton>
             <MyButton key="chat" href="/chat">Chat</MyButton>
             <MyButton key="expire" onClick={() => {
-              localStorage.setItem("a-token", "expire and invalid token")
+              localStorage.setItem("a-token", "expire_and_invalid_token")
             }}>Expire</MyButton>
             <MyButton key="changelog" href="/changelog">Changelog</MyButton>
           </>
