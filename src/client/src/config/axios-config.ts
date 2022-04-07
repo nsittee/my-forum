@@ -39,11 +39,10 @@ myAxios.interceptors.response.use(
           localStorage.setItem("a-token", newAccessToken)
           return myAxios(originalConfig)
         } catch (_err) {
+          localStorage.clear()
+          document.location.href = "/"
           return Promise.reject(_err)
         }
-      } else {
-        localStorage.clear()
-        document.location.href = "/"
       }
     }
     return Promise.reject(err)
