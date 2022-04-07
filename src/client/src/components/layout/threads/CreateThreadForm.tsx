@@ -45,25 +45,42 @@ const CreateThreadForm = () => {
     history.push('/')
   }
 
+  const validate = (values: FormData) => {
+    if (!values["subId"] || values["subId"] !== "5f9b7ffd8578b129f4c9ed10")
+      return { subId: "only sub 795 is allowed" }
+    if (!values["title"] || values["title"].length <= 8)
+      return { title: "title should be longer than 8 characters" }
+    if (!values["content"] || values["content"] !== "")
+      return { content: "content cannot be empty" }
+
+    return
+  }
+
   return (
     <Card>
       <CardContent>
         <Form
           onSubmit={onSubmit}
+          validate={validate}
+          initialValues={{
+            subId: null,
+            title: "",
+            content: "",
+          }}
           render={props => (
-            // TODO: Use material UI form component
             <form onSubmit={(event) => props.handleSubmit(event)}>
-
               <Field name="userId" defaultValue={authContext.id} type="hidden" component="input" />
               <div>
                 <Typography>Community</Typography>
                 <Select name="subId" placeholder="xx">
                   <MenuItem key="default" disabled value="Select Community">Select Community</MenuItem>
-                  {
-                    userSub.map((sub: any, i: number) => {
-                      return <MenuItem key={sub._id + "" + i} value={sub._id}>{sub.SubLongName}</MenuItem>
-                    })
-                  }
+                  {userSub.map((sub: any, i: number) => {
+                    return <MenuItem
+                      key={sub._id + "" + i}
+                      value={sub._id}>
+                      {sub.SubLongName}
+                    </MenuItem>
+                  })}
                 </Select>
               </div>
 
@@ -78,6 +95,10 @@ const CreateThreadForm = () => {
               </div>
               <br />
               <MyButton type="submit" color="primary">Submit</MyButton>
+              &nbsp;
+              <MyButton color="primary" onClick={() => props.form.reset()}>
+                Clear
+              </MyButton>
             </form>
           )}
         />
