@@ -4,7 +4,6 @@ const authContext = React.createContext({
   id: '',
   username: '',
   authenticated: false,
-  token: ''
 });
 
 export default authContext;

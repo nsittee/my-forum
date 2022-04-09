@@ -21,17 +21,16 @@ const MyForum = () => {
     id: '',
     username: '',
     authenticated: false,
-    token: ''
   }
 
   if (localStorage.getItem('a-token') && localStorage.getItem('b-token')) {
     try {
+      // TODO: verify if jwt is still valid before continue
       const aToken = localStorage.getItem('a-token')!!
       const userData: any = jwt(aToken)
       authContextValue.id = userData.id
       authContextValue.username = userData.username
       authContextValue.authenticated = true
-      authContextValue.token = `Bearer ${aToken}`
     } catch (err) {
       localStorage.clear()
     }
@@ -64,7 +63,5 @@ const MyForum = () => {
     </div>
   )
 }
-
-
 
 export default MyForum
