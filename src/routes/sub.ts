@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import { config } from '../configs/config';
 
 import SubModel from '../models/sub';
-import ThreadModel from '../models/thread';
+import ThreadModel, { IxThread } from '../models/thread';
 import UserModel from '../models/user';
 
 import { authenticate } from '../middleware/authenticate';
@@ -47,39 +47,51 @@ router.post('/leave', authenticate(), (req, res) => {
   })
 })
 
-router.get('/:name', async (req, res) => {
+router.get('/:name?', authenticate(true), async (req, res) => {
+  let threadList = [] as IxThread[];
+  const userId = res.locals.userId;
   const subName = req.params.name;
-  const subId = await SubModel
-    .findOne()
-    .where({ SubLongName: subName })
-    .exec();
 
-  ThreadModel.find()
-    .populate('Author', 'Username')
-    .populate('SubParent', ['SubLongName', 'SubShortName'])
-    .where({ SubParent: subId })
-    .sort({ CreatedDate: -1 })
-    .exec()
-    .then(threads => res.status(200).json({
-      message: `get thread for ${subName}: ${subId} completed`,
-      data: {
-        SubThread: threads
-      }
-    }));
-});
+  try {
+    const subId = await SubModel
+      .findOne()
+      .where({ SubLongName: subName })
+      .exec();
 
-router.get('/', (req, res, next) => {
-  ThreadModel.find()
-    .populate('Author', 'Username')
-    .populate('SubParent', ['SubLongName', 'SubShortName'])
-    .sort({ CreatedDate: -1 })
-    .exec()
-    .then(threads => res.status(200).json({
-      message: "get all thread",
+    if (subName) {
+      threadList = await ThreadModel.find()
+        .populate('Author', 'Username')
+        .populate('SubParent', ['SubLongName', 'SubShortName'])
+        .where({ SubParent: subId })
+        .sort({ CreatedDate: -1 })
+        .exec()
+    } else {
+      threadList = await ThreadModel.find()
+        .populate('Author', 'Username')
+        .populate('SubParent', ['SubLongName', 'SubShortName'])
+        .sort({ CreatedDate: -1 })
+        .exec()
+    }
+    // TODO: stamp the vote status if user is signed in
+    if (userId) {
+
+    }
+
+  } catch (err) {
+    return res.status(500).json({
+      message: `failed: get all thread for: ${subName ? subName : "all"}`,
       data: {
-        SubThread: threads
+        SubThread: [],
       }
-    }));
+    });
+  } finally {
+    return res.status(200).json({
+      message: `successfully: get all thread for: ${subName ? subName : "all"}`,
+      data: {
+        SubThread: threadList,
+      }
+    });
+  }
 });
 
 export default router
