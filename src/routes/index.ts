@@ -5,11 +5,13 @@ import thread from './thread'
 import sub from './sub'
 import user from './user'
 import util from './util'
+import auth from './auth'
 
 const router = express.Router()
 
-router.use('/threads', thread)
+router.use('/auth', auth)
 router.use('/users', user)
+router.use('/threads', thread)
 router.use('/subs', sub)
 router.use('/util', util)
 

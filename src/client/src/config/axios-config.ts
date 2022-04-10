@@ -33,7 +33,7 @@ myAxios.interceptors.response.use(
         originalConfig._retry = true;
         try {
           const refreshToken = localStorage.getItem("b-token")
-          const resp = await refreshAxios.post<IResponseEntity<string>>('/api/users/refresh-token', { refreshToken })
+          const resp = await refreshAxios.post<IResponseEntity<string>>('/api/auth/refresh-token', { refreshToken })
           const newAccessToken = resp.data.data
 
           localStorage.setItem("a-token", newAccessToken)

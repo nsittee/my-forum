@@ -18,7 +18,7 @@ const SignInDialog = (props: any) => {
       username: username,
       password: password
     }
-    const url = `/api/users/signin`
+    const url = `/api/auth/signin`
     myAxios.post(url, data).then(res => {
       const aToken = res.data.data.aToken
       const bToken = res.data.data.bToken
