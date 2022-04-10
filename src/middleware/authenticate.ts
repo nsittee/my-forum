@@ -11,7 +11,7 @@ interface JwtData {
 }
 
 export const authenticate = (opt: boolean = false) => async (req, res, next): Promise<RequestHandler> => {
-  const accessToken = req.headers.authorization
+  const accessToken = req.headers.authorization as string
   try {
     const token = accessToken.substring(7)
     jwt.verify(token, config.secretKey)

@@ -1,3 +1,4 @@
+import { IxUser } from './../models/user';
 import express from 'express'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
@@ -8,17 +9,11 @@ import { authenticate } from '../middleware/authenticate'
 const router = express.Router()
 
 router.get('/', authenticate(), (req, res, next) => {
-  const userId = res.locals.userId
-  User.findById(userId)
-    .populate('UserSub', 'SubLongName')
-    .exec().then(user => {
-      res.status(200).json({
-        message: 'get user success',
-        data: user
-      });
-    }).catch(err => {
-      res.status(400).json(err);
-    });
+  const user = res.locals.currentUser as IxUser;
+  res.status(200).json({
+    message: 'success: get user data',
+    data: user,
+  })
 })
 
 router.post('/signup', (req, res, next) => {
