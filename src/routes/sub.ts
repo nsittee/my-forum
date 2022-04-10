@@ -1,3 +1,4 @@
+import { IxUser } from './../models/user';
 import express from 'express';
 import jwt from 'jsonwebtoken';
 import { config } from '../configs/config';
@@ -7,6 +8,7 @@ import ThreadModel, { IxThread } from '../models/thread';
 import UserModel from '../models/user';
 
 import { authenticate } from '../middleware/authenticate';
+import { LeanDocument } from 'mongoose';
 
 const router = express.Router()
 
@@ -47,12 +49,15 @@ router.post('/leave', authenticate(), (req, res) => {
   })
 })
 
+// Mongoose query result is Mongoose Document Object, which is a readonly data
+// calling `lean()` will turn it into JSON object will be editable
+// https://stackoverflow.com/questions/14504385/why-cant-you-modify-the-data-returned-by-a-mongoose-query-ex-findbyid
 router.get('/:name?', authenticate(true), async (req, res) => {
-  let threadList = [] as IxThread[];
-  const userId = res.locals.userId;
+  let threadList = [] as LeanDocument<IxThread[]>;
   const subName = req.params.name;
 
   try {
+    const user = res.locals.currentUser as IxUser;
     const subId = await SubModel
       .findOne()
       .where({ SubLongName: subName })
@@ -64,17 +69,22 @@ router.get('/:name?', authenticate(true), async (req, res) => {
         .populate('SubParent', ['SubLongName', 'SubShortName'])
         .where({ SubParent: subId })
         .sort({ CreatedDate: -1 })
+        .lean()
         .exec()
     } else {
       threadList = await ThreadModel.find()
         .populate('Author', 'Username')
         .populate('SubParent', ['SubLongName', 'SubShortName'])
         .sort({ CreatedDate: -1 })
+        .lean()
         .exec()
     }
-    // TODO: stamp the vote status if user is signed in
-    if (userId) {
 
+    if (user) {
+      threadList.forEach(thread => {
+        if (user.UpvoteThread.map(_id => _id.toString()).includes(thread._id.toString())) thread.vote = 'up'
+        else if (user.DownvoteThread.map(_id => _id.toString()).includes(thread._id.toString())) thread.vote = 'down'
+      })
     }
 
   } catch (err) {

@@ -11,6 +11,8 @@ export interface IxThread extends Mongoose.Document {
   Author: any,
   ThreadComment: any,
   SubParent: any,
+
+  vote: string,
 }
 var threadSchema = new Mongoose.Schema({
   // _id: mongoose.Schema.Types.ObjectId,

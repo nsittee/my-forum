@@ -27,18 +27,7 @@ const MainPage = (props: any) => {
       myAxios.get<IResponseEntity<ISub>>(`/api/subs/${subName}`)
         .then(res => {
           if (subName) setSubId(res.data.data._id!!) // SubId is use to check if user is a member or not
-          if (u._id && u._id!! !== '') {
-            const resThread: IThread[] = res.data.data.SubThread!!.map(t => {
-              var upList = u.UpvoteThread!! as string[]
-              var downList = u.DownvoteThread!! as string[]
-
-              if (upList?.includes(t._id!!)) t.vote = 'up'
-              else if (downList?.includes(t._id!!)) t.vote = 'down'
-              return t
-            })
-            setThreads(resThread)
-          }
-          else setThreads(res.data.data.SubThread!!)
+          setThreads(res.data.data.SubThread!!)
         })
         .catch(err => console.log(err))
     }

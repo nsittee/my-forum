@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { RequestHandler } from 'express'
 import { config } from '../configs/config';
+import User from '../models/user'
 
 interface JwtData {
   id: string,
@@ -15,8 +16,15 @@ export const authenticate = (opt: boolean = false) => async (req, res, next): Pr
     const token = accessToken.substring(7)
     jwt.verify(token, config.secretKey)
     const decoded: any = jwt.decode(token)
-    res.locals.userId = decoded.id
-    // TODO: check if the user exists in database
+    const userId = decoded.id
+
+    const currentUser = await User.findById(userId)
+      .populate('UserSub', 'SubLongName')
+      .lean()
+      .exec()
+
+    res.locals.userId = currentUser._id
+    res.locals.currentUser = currentUser
   } catch {
     if (!opt) {
       return res.status(401).json({
