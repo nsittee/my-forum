@@ -24,7 +24,7 @@ const MainPage = (props: any) => {
 
   useEffect(() => {
     const fetchThreadData = (u: IUser) => {
-      myAxios.get<IResponseEntity<ISub>>(`/api/threads/${subName}`)
+      myAxios.get<IResponseEntity<ISub>>(`/api/threads/from-sub/${subName}`)
         .then(res => {
           if (subName) setSubId(res.data.data._id!!) // SubId is use to check if user is a member or not
           setThreads(res.data.data.SubThread!!)

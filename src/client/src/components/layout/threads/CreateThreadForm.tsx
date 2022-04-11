@@ -46,11 +46,12 @@ const CreateThreadForm = () => {
   }
 
   const validate = (values: FormData) => {
+    console.log(values)
     if (!values["subId"] || values["subId"] !== "5f9b7ffd8578b129f4c9ed10")
       return { subId: "only sub 795 is allowed" }
     if (!values["title"] || values["title"].length <= 8)
       return { title: "title should be longer than 8 characters" }
-    if (!values["content"] || values["content"] !== "")
+    if (!values["content"] || values["content"] === "")
       return { content: "content cannot be empty" }
 
     return

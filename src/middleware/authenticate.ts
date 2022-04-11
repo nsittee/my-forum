@@ -23,7 +23,6 @@ export const authenticate = (opt: boolean = false) => async (req, res, next): Pr
       .lean()
       .exec()
 
-    res.locals.userId = currentUser._id
     res.locals.currentUser = currentUser
   } catch {
     if (!opt) {

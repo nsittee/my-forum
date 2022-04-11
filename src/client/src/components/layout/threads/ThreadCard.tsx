@@ -6,6 +6,7 @@ import { myAxios } from '../../../config/axios-config'
 import { IThread } from '../../../shared/model/thread.model'
 import AuthContext from '../../../context/auth-context'
 import UiContext from '../../../context/ui-context'
+import { IResponseEntity } from '../../../shared/response.model'
 
 const ThreadCard = (props: any) => {
 	const authContext = useContext(AuthContext)
@@ -23,9 +24,9 @@ const ThreadCard = (props: any) => {
 			setSignIn(true)
 			return
 		}
-		myAxios.put<IThread>(`/api/threads/vote/${thread._id}/${vote}`)
+		myAxios.put<IResponseEntity<IThread>>(`/api/threads/vote/${thread._id}/${vote}`)
 			.then(resp => {
-				const respThread = resp.data
+				const respThread = resp.data.data
 				setThread({
 					...thread,
 					Upvote: respThread.Upvote,
