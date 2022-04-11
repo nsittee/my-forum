@@ -1,4 +1,4 @@
-import { config } from './config'
+import { config } from './constant-config'
 import mongoose from 'mongoose'
 
 // mongoose.Promise = global.Promise;

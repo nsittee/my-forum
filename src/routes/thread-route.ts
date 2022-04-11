@@ -1,9 +1,9 @@
 import express from 'express'
 import mongoose from 'mongoose'
 
-import Thread from '../models/thread'
-import User from '../models/user'
-import Sub from '../models/sub'
+import Thread from '../entity/thread-entity'
+import User from '../entity/user-entity'
+import Sub from '../entity/sub-entity'
 
 import { authenticate } from '../middleware/authenticate'
 import _ from 'lodash'

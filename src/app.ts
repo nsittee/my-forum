@@ -1,6 +1,6 @@
 import express from 'express'
 import path from 'path'
-import './configs/database'
+import './configs/database-config'
 import routes from './routes'
 import { initMiddleware } from './middleware'
 

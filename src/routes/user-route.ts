@@ -1,9 +1,9 @@
-import { IxUser } from './../models/user';
+import { IxUser } from '../entity/user-entity';
 import express from 'express'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 
-import User from '../models/user'
+import User from '../entity/user-entity'
 import { authenticate } from '../middleware/authenticate'
 
 const router = express.Router()

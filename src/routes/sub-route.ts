@@ -1,11 +1,11 @@
-import { IxUser } from './../models/user';
+import { IxUser } from '../entity/user-entity';
 import express from 'express';
 import jwt from 'jsonwebtoken';
-import { config } from '../configs/config';
+import { config } from '../configs/constant-config';
 
-import SubModel from '../models/sub';
-import ThreadModel, { IxThread } from '../models/thread';
-import UserModel from '../models/user';
+import SubModel from '../entity/sub-entity';
+import ThreadModel, { IxThread } from '../entity/thread-entity';
+import UserModel from '../entity/user-entity';
 
 import { authenticate } from '../middleware/authenticate';
 import { LeanDocument } from 'mongoose';

@@ -1,9 +1,9 @@
 import express from 'express'
 import bcrypt from 'bcryptjs'
 
-import ThreadModel from '../models/thread'
-import UserModel from '../models/user'
-import SubModel from '../models/sub'
+import ThreadModel from '../entity/thread-entity'
+import UserModel from '../entity/user-entity'
+import SubModel from '../entity/sub-entity'
 
 const router = express.Router();
 router.get('/populate', (req, res) => {
