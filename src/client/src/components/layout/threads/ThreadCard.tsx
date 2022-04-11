@@ -23,7 +23,7 @@ const ThreadCard = (props: any) => {
 			setSignIn(true)
 			return
 		}
-		myAxios.get<IThread>(`/api/threads/vote/${thread._id}/${vote}`)
+		myAxios.put<IThread>(`/api/threads/vote/${thread._id}/${vote}`)
 			.then(resp => {
 				const respThread = resp.data
 				setThread({

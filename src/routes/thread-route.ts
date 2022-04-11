@@ -1,15 +1,72 @@
 import express from 'express'
-import mongoose from 'mongoose'
+import mongoose, { LeanDocument } from 'mongoose'
 
-import Thread from '../entity/thread-entity'
-import User from '../entity/user-entity'
+import Thread, { IxThread } from '../entity/thread-entity'
+import User, { IxUser } from '../entity/user-entity'
 import Sub from '../entity/sub-entity'
+import SubModel from '../entity/sub-entity';
 
 import { authenticate } from '../middleware/authenticate'
 import _ from 'lodash'
 
 const router = express.Router();
 
+// Mongoose query result is Mongoose Document Object, which is a readonly data
+// calling `lean()` will turn it into JSON object will be editable
+// https://stackoverflow.com/questions/14504385/why-cant-you-modify-the-data-returned-by-a-mongoose-query-ex-findbyid
+router.get('/:name?', authenticate(true), async (req, res) => {
+  let threadList = [] as LeanDocument<IxThread[]>;
+  const subName = req.params.name;
+
+  try {
+    const user = res.locals.currentUser as IxUser;
+    const subId = await SubModel
+      .findOne()
+      .where({ SubLongName: subName })
+      .exec();
+
+    if (subName) {
+      threadList = await Thread.find()
+        .populate('Author', 'Username')
+        .populate('SubParent', ['SubLongName', 'SubShortName'])
+        .where({ SubParent: subId })
+        .sort({ CreatedDate: -1 })
+        .lean()
+        .exec()
+    } else {
+      threadList = await Thread.find()
+        .populate('Author', 'Username')
+        .populate('SubParent', ['SubLongName', 'SubShortName'])
+        .sort({ CreatedDate: -1 })
+        .lean()
+        .exec()
+    }
+
+    if (user) {
+      threadList.forEach(thread => {
+        if (user.UpvoteThread.map(_id => _id.toString()).includes(thread._id.toString())) thread.vote = 'up'
+        else if (user.DownvoteThread.map(_id => _id.toString()).includes(thread._id.toString())) thread.vote = 'down'
+      })
+    }
+
+  } catch (err) {
+    return res.status(500).json({
+      message: `failed: get all thread for: ${subName ? subName : "all"}`,
+      data: {
+        SubThread: [],
+      }
+    });
+  } finally {
+    return res.status(200).json({
+      message: `successfully: get all thread for: ${subName ? subName : "all"}`,
+      data: {
+        SubThread: threadList,
+      }
+    });
+  }
+});
+
+// Get detail for one thread
 router.get('/:id', (req, res, next) => {
   const id = req.params.id;
   Thread.findOne()
@@ -23,6 +80,7 @@ router.get('/:id', (req, res, next) => {
     }));
 });
 
+// New thread
 router.post('/', authenticate(), (req, res, next) => {
   const reqThread = req.body.Thread;
   if (!reqThread)
@@ -55,7 +113,8 @@ router.post('/', authenticate(), (req, res, next) => {
   });
 });
 
-router.get('/vote/:id/:vote', authenticate(), async (req, res) => {
+// User vote on thread
+router.put('/vote/:id/:vote', authenticate(), async (req, res) => {
   const userId = res.locals.userId
   const threadId = req.params.id
   const userVote = req.params.vote
