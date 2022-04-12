@@ -2,7 +2,7 @@ import Thread, { IxThread } from '../entity/thread-entity'
 import User, { IxUser } from '../entity/user-entity'
 import Sub from '../entity/sub-entity'
 import SubModel from '../entity/sub-entity'
-import { LeanDocument } from "mongoose"
+import mongoose, { LeanDocument } from "mongoose"
 import _ from 'lodash'
 
 export const getAllThread = async (subName?: string): Promise<LeanDocument<IxThread>[]> => {
@@ -50,7 +50,13 @@ export const getOneThread = async (threadId: string): Promise<IxThread> => {
   return Promise.resolve(thread)
 }
 
-export const createNewThread = async (thread: IxThread): Promise<IxThread> => {
+export const createNewThread = async (reqThread: any): Promise<IxThread> => {
+  const thread = new Thread({
+    Title: reqThread.Title,
+    Author: mongoose.Types.ObjectId(reqThread.Author._id),
+    SubParent: mongoose.Types.ObjectId(reqThread.SubParent._id),
+    Content: reqThread.Content
+  })
   const user = await User.findOne({ _id: thread.Author }).exec()
   const sub = await Sub.findOne({ _id: thread.SubParent }).exec()
 
@@ -63,7 +69,10 @@ export const createNewThread = async (thread: IxThread): Promise<IxThread> => {
   return newThread
 }
 
-export const voteThread = async (user: IxUser, thread: IxThread, vote: string): Promise<IxThread> => {
+export const voteThread = async (userId: string, threadId: string, vote: string): Promise<IxThread> => {
+  const user = await User.findById(userId).exec()
+  const thread = await Thread.findById(threadId).exec()
+
   if (vote === 'up') {
     if ((user.UpvoteThread).includes(thread._id)) {
       // console.log('1 > 0')
