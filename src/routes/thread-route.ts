@@ -20,7 +20,7 @@ router.get('/from-sub/:name?', authenticate(true), async (req, res) => {
   let sub: IxSub
 
   try {
-    sub = await getSubFromId(subName)
+    if (subName) sub = await getSubFromId(subName)
     threadList = await getAllThread(sub)
     if (user) {
       applyVoteStatus(threadList, user)
@@ -38,7 +38,7 @@ router.get('/from-sub/:name?', authenticate(true), async (req, res) => {
   return res.status(200).json({
     message: `OK: get all thread for: ${subName ? subName : "all"}`,
     data: {
-      _id: sub._id,
+      _id: sub ? sub._id : null,
       SubThread: threadList,
     }
   })
