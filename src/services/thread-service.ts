@@ -69,7 +69,7 @@ export const createNewThread = async (reqThread: any): Promise<IxThread> => {
   return newThread
 }
 
-export const voteThread = async (userId: string, threadId: string, vote: string): Promise<IxThread> => {
+export const voteThread = async (userId: IxUser, threadId: string, vote: string): Promise<IxThread> => {
   const user = await User.findById(userId).exec()
   const thread = await Thread.findById(threadId).exec()
 

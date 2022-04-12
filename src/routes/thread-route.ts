@@ -83,7 +83,7 @@ router.post('/', authenticate(), async (req, res, next) => {
 
 // User vote on thread
 router.put('/vote/:id/:vote', authenticate(), async (req, res) => {
-  const userId = res.locals.currentUser._id
+  const user = res.locals.currentUser as IxUser
   const threadId = req.params.id
   const vote = req.params.vote
   if (vote !== 'up' && vote !== 'down') return res.send('invalid')
@@ -91,7 +91,7 @@ router.put('/vote/:id/:vote', authenticate(), async (req, res) => {
   let updatedThread: IxThread
 
   try {
-    updatedThread = await voteThread(userId, threadId, vote)
+    updatedThread = await voteThread(user, threadId, vote)
   } catch (err) {
     return res.status(500).json({
       message: "FAILED: vote process failed",
