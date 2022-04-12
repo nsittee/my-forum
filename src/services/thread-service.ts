@@ -77,14 +77,14 @@ export const voteThread = async (userId: string, threadId: string, vote: string)
     if ((user.UpvoteThread).includes(thread._id)) {
       // console.log('1 > 0')
       thread.Upvote = thread.Upvote - 1
-      user.UpvoteThread = _.remove(user.UpvoteThread, (id: string) => id === thread._id)
+      user.UpvoteThread = user.UpvoteThread.filter(id => id.toString() !== thread._id.toString())
     }
     else if (user.DownvoteThread.includes(thread._id)) {
       // console.log('-1 > 1')
       thread.Downvote = thread.Downvote - 1
       thread.Upvote = thread.Upvote + 1
       user.UpvoteThread = user.UpvoteThread.concat([thread._id])
-      user.DownvoteThread = _.remove(user.DownvoteThread, (id: string) => id === thread._id)
+      user.DownvoteThread = user.DownvoteThread.filter(id => id.toString() !== thread._id.toString())
     }
     else {
       // console.log('0 > 1')
@@ -96,14 +96,14 @@ export const voteThread = async (userId: string, threadId: string, vote: string)
     if (user.DownvoteThread.includes(thread._id)) {
       // console.log('-1 > 0')
       thread.Downvote = thread.Downvote - 1
-      user.DownvoteThread = _.remove(user.DownvoteThread, (id: string) => id === thread._id)
+      user.DownvoteThread = user.DownvoteThread.filter(id => id.toString() !== thread._id.toString())
     }
     else if (user.UpvoteThread.includes(thread._id)) {
       // console.log('1 > -1')
       thread.Downvote = thread.Downvote + 1
       thread.Upvote = thread.Upvote - 1
       user.DownvoteThread = user.DownvoteThread.concat([thread._id])
-      user.UpvoteThread = _.remove(user.UpvoteThread, (id: string) => id === thread._id)
+      user.UpvoteThread = user.UpvoteThread.filter(id => id.toString() !== thread._id.toString())
     }
     else {
       // console.log('0 > -1')
@@ -111,6 +111,12 @@ export const voteThread = async (userId: string, threadId: string, vote: string)
       user.DownvoteThread = user.DownvoteThread.concat([thread._id])
     }
   }
+
+  const upList = user.UpvoteThread
+  const downList = user.DownvoteThread
+  console.log(vote)
+  console.log(upList)
+  console.log(downList)
 
   user.save()
   thread.save()
