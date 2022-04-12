@@ -19,6 +19,7 @@ const SubBanner = (props: any) => {
 
 
   const joinButtonHandler = () => {
+    console.log(props.subId + " " + authContext.authenticated)
     if (!props.subId || !authContext.authenticated) {
       console.log('sign in && go to sub page first')
       return
@@ -30,7 +31,7 @@ const SubBanner = (props: any) => {
 
     var action = joined ? 'leave' : 'join'
     var url = `/api/subs/${action}?subId=${props.subId}`
-    myAxios.post(url).then(res => {
+    myAxios.put(url).then(res => {
       if (joined) {
         console.log('leave success')
         setJoined(false)
@@ -41,6 +42,13 @@ const SubBanner = (props: any) => {
     }).catch(err => {
       console.log(err)
     })
+  }
+
+  const onJoin = () => {
+
+  }
+  const onLeave = () => {
+
   }
 
   return (

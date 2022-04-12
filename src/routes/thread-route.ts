@@ -1,4 +1,5 @@
-import { getAllThread, applyVoteStatus, getOneThread, createNewThread, voteThread } from './../services/thread-service';
+import { IxSub } from './../entity/sub-entity';
+import { getAllThread, applyVoteStatus, getOneThread, createNewThread, voteThread, getSubFromId } from './../services/thread-service';
 import express from 'express'
 import { LeanDocument } from 'mongoose'
 
@@ -6,7 +7,6 @@ import { IxThread } from '../entity/thread-entity'
 import { IxUser } from '../entity/user-entity'
 
 import { authenticate } from '../middleware/authenticate'
-import _ from 'lodash'
 
 const router = express.Router()
 
@@ -15,11 +15,13 @@ const router = express.Router()
 // https://stackoverflow.com/questions/14504385/why-cant-you-modify-the-data-returned-by-a-mongoose-query-ex-findbyid
 router.get('/from-sub/:name?', authenticate(true), async (req, res) => {
   const subName = req.params.name
-  const user = res.locals.currentUser as IxUser
-  let threadList = [] as LeanDocument<IxThread>[]
+  const user: IxUser = res.locals.currentUser
+  let threadList: LeanDocument<IxThread>[] = []
+  let sub: IxSub
 
   try {
-    threadList = await getAllThread(subName)
+    sub = await getSubFromId(subName)
+    threadList = await getAllThread(sub)
     if (user) {
       applyVoteStatus(threadList, user)
     }
@@ -36,6 +38,7 @@ router.get('/from-sub/:name?', authenticate(true), async (req, res) => {
   return res.status(200).json({
     message: `OK: get all thread for: ${subName ? subName : "all"}`,
     data: {
+      _id: sub._id,
       SubThread: threadList,
     }
   })

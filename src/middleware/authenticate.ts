@@ -1,6 +1,6 @@
-import jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken'
 import { RequestHandler } from 'express'
-import { config } from '../configs/constant-config';
+import { config } from '../configs/constant-config'
 import User from '../entity/user-entity'
 
 interface JwtData {
@@ -20,7 +20,6 @@ export const authenticate = (opt: boolean = false) => async (req, res, next): Pr
 
     const currentUser = await User.findById(userId)
       .populate('UserSub', 'SubLongName')
-      .lean()
       .exec()
 
     res.locals.currentUser = currentUser
@@ -31,5 +30,5 @@ export const authenticate = (opt: boolean = false) => async (req, res, next): Pr
       })
     }
   }
-  next();
+  next()
 }

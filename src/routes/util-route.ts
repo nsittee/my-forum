@@ -1,19 +1,23 @@
 import express from 'express'
 import bcrypt from 'bcryptjs'
 
-import ThreadModel from '../entity/thread-entity'
-import UserModel from '../entity/user-entity'
-import SubModel from '../entity/sub-entity'
+import Thread from '../entity/thread-entity'
+import User from '../entity/user-entity'
+import Sub from '../entity/sub-entity'
 
 const router = express.Router();
+
+// To generate user, sub and thread data
+// early return to not accidentally call the api
 router.get('/populate', (req, res) => {
+  return
   var response: any = {
     message: "populate",
   }
 
   // Create Sub Reddit
   const subNumber = Math.floor(Math.random() * 1000) + 1
-  const sub = new SubModel({
+  const sub = new Sub({
     SubLongName: `sub-reddit-${subNumber}`,
     SubShortName: `${subNumber}`,
     SubUser: [],
@@ -22,7 +26,7 @@ router.get('/populate', (req, res) => {
 
   // Create User in this sub
   const userNumberRand = Math.random();
-  const user = new UserModel({
+  const user = new User({
     Username: `test-user-${userNumberRand}`,
     Password: bcrypt.hashSync('passwordXD', 10),
     UserThread: [],
@@ -36,7 +40,7 @@ router.get('/populate', (req, res) => {
   const threadCount = num % 10;
   const threads = [];
   for (var i = 0; i < threadCount; i++) {
-    const thread = new ThreadModel({
+    const thread = new Thread({
       Title: `The story of ${user.Username}: Part ${i + 1}/${threadCount}`,
       Content: `Content ${num}`,
       Upvote: Math.floor(Math.random() * 1000) + 1,

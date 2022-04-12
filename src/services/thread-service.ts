@@ -1,23 +1,16 @@
 import Thread, { IxThread } from '../entity/thread-entity'
 import User, { IxUser } from '../entity/user-entity'
-import Sub from '../entity/sub-entity'
-import SubModel from '../entity/sub-entity'
+import Sub, { IxSub } from '../entity/sub-entity'
 import mongoose, { LeanDocument } from "mongoose"
-import _ from 'lodash'
 
-export const getAllThread = async (subName?: string): Promise<LeanDocument<IxThread>[]> => {
+export const getAllThread = async (sub?: IxSub): Promise<LeanDocument<IxThread>[]> => {
   let threadList = [] as LeanDocument<IxThread>[]
 
-  if (subName) {
-    const subId = await SubModel
-      .findOne()
-      .where({ SubLongName: subName })
-      .exec();
-
+  if (sub) {
     threadList = await Thread.find()
       .populate('Author', 'Username')
       .populate('SubParent', ['SubLongName', 'SubShortName'])
-      .where({ SubParent: subId })
+      .where({ SubParent: sub._id })
       .sort({ CreatedDate: -1 })
       .lean()
       .exec()
@@ -31,6 +24,15 @@ export const getAllThread = async (subName?: string): Promise<LeanDocument<IxThr
   }
 
   return Promise.resolve(threadList)
+}
+
+export const getSubFromId = async (subName?: string): Promise<IxSub> => {
+  const sub = await Sub
+    .findOne()
+    .where({ SubLongName: subName })
+    .exec()
+
+  return sub
 }
 
 export const applyVoteStatus = (threadList: LeanDocument<IxThread>[], user: IxUser) => {

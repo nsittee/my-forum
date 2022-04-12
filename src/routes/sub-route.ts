@@ -1,51 +1,40 @@
-import express from 'express';
-import jwt from 'jsonwebtoken';
-import { config } from '../configs/constant-config';
+import express from 'express'
 
-import SubModel from '../entity/sub-entity';
-import UserModel from '../entity/user-entity';
+import Sub from '../entity/sub-entity'
+import { IxUser } from '../entity/user-entity'
 
-import { authenticate } from '../middleware/authenticate';
+import { authenticate } from '../middleware/authenticate'
 
 const router = express.Router()
 
 // User join sub
-router.post('/join', authenticate(), (req, res) => {
+router.put('/join', authenticate(), async (req, res) => {
   // FIXME: User can join the same sub again, so the Sub ID will duplicate
-  const joinedSubId = req.query.subId
-  if (!joinedSubId) {
-    res.status(400).json({ message: 'bad request' })
-    return
-  }
+  const subId = req.query.subId
+  const user = res.locals.currentUser as IxUser
+  if (!subId) return res.status(400).json({ message: 'bad request' })
 
-  console.log(`joining sub ${joinedSubId}`)
-  const decode: any = jwt.verify(req.headers.authorization, config.secretKey)
-  const joiningUserId = decode.id
-  UserModel.findById(joiningUserId).exec().then(joiningUser => {
-    joiningUser.UserSub.push(joinedSubId)
-    SubModel.findById(joinedSubId).exec().then(joinedSub => {
-      joinedSub.SubUser.push(joiningUser._id)
-      joinedSub.save()
-      joiningUser.save()
-      res.status(200).json({
-        message: "joining sub completed",
-        data: {}
-      })
-    })
-  }).catch(err => {
-    res.status(500).json({
+  try {
+    const sub = await Sub.findById(subId).exec()
+    user.UserSub.push(subId)
+    sub.SubUser.push(user._id)
+    sub.save()
+    user.save()
+  } catch (err) {
+    return res.status(500).json({
       message: "joining failed",
     })
-    console.log(err)
-    return
+  }
+  return res.status(200).json({
+    message: "joining sub completed",
   })
 })
 
 // User leave sub
-router.post('/leave', authenticate(), (req, res) => {
+router.put('/leave', authenticate(), (req, res) => {
   return res.status(500).json({
     message: "not implemented",
-  });
+  })
 })
 
 export default router
