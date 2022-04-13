@@ -76,5 +76,17 @@ router.get('/populate', (req, res) => {
   return res.status(200).json(response);
 });
 
+router.get('/debug', async (req, res) => {
+  const userList = await User.find().exec()
+
+  userList.forEach(u => {
+    console.log((u.UpvoteThread as string[]))
+  })
+
+  res.status(200).json({
+    userList: userList.map(u => u)
+  })
+})
+
 module.exports = router;
 export default router
