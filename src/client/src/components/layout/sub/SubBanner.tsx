@@ -43,11 +43,33 @@ const SubBanner = (props: any) => {
     })
   }
 
-  const onJoin = () => {
+  const onJoin = async () => {
+    if (!props.subId || !authContext.authenticated) {
+      console.log('sign in && go to sub page first')
+      return
+    }
 
+    var url = `/api/subs/join?subId=${props.subId}`
+    myAxios.put(url).then(res => {
+      console.log('join success')
+      setJoined(true)
+    }).catch(err => {
+      console.log(err)
+    })
   }
   const onLeave = () => {
+    if (!props.subId || !authContext.authenticated) {
+      console.log('sign in && go to sub page first')
+      return
+    }
 
+    var url = `/api/subs/leave?subId=${props.subId}`
+    myAxios.put(url).then(res => {
+      console.log('leave success')
+      setJoined(false)
+    }).catch(err => {
+      console.log(err)
+    })
   }
 
   return (
@@ -70,12 +92,23 @@ const SubBanner = (props: any) => {
           <Grid container>
             Sub name goes here <br />
             {props.subName}
-            <Button
-              onClick={joinButtonHandler}
-              color='secondary'
-              variant='contained'
-              style={{ marginLeft: 100 }}>
-              {joined ? 'Joined' : `Join now`} </Button>
+            {joined ?
+              <Button
+                onClick={onLeave}
+                color='secondary'
+                variant='contained'
+                style={{ marginLeft: 100 }}>
+                Joined
+              </Button>
+              :
+              <Button
+                onClick={onJoin}
+                color='secondary'
+                variant='contained'
+                style={{ marginLeft: 100 }}>
+                Join now
+              </Button>
+            }
           </Grid>
         </CardContent>
       </Container>
