@@ -12,8 +12,7 @@ const SubBanner = (props: any) => {
   const [joined, setJoined] = useState(false)
 
   useEffect(() => {
-    const subList = props.user.UserSub as ISub[]
-    const currentSub = subList.find(sub => sub._id === props.subId)
+    const currentSub = (props.user.UserSub as ISub[]).find(subId => subId === props.subId)
     if (currentSub) setJoined(true)
   }, [props])
 
