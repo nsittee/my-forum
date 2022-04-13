@@ -1,3 +1,4 @@
+import { ErrorStatus } from './../error/index';
 import express from 'express'
 import bcrypt from 'bcryptjs'
 
@@ -76,7 +77,7 @@ router.get('/populate', (req, res) => {
   return res.status(200).json(response);
 });
 
-router.get('/debug', async (req, res) => {
+router.get('/debug', async (req, res, next) => {
   const userList = await User.find().exec()
 
   userList.forEach(u => {
@@ -86,6 +87,14 @@ router.get('/debug', async (req, res) => {
   res.status(200).json({
     userList: userList.map(u => u)
   })
+})
+
+router.get('/error', async (req, res, next) => {
+  const errorStatus: ErrorStatus = {
+    message: 'debug error',
+    status: 500,
+  }
+  return next(errorStatus)
 })
 
 module.exports = router;
