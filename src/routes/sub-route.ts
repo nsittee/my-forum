@@ -9,13 +9,17 @@ const router = express.Router()
 
 // User join sub
 router.put('/join', authenticate(), async (req, res) => {
-  // FIXME: User can join the same sub again, so the Sub ID will duplicate
-  const subId = req.query.subId
+  const subId = req.query.subId as string
   const user = res.locals.currentUser as IxUser
   if (!subId) return res.status(400).json({ message: 'bad request' })
 
   try {
     const sub = await Sub.findById(subId).exec()
+
+    if ((user.UserSub as string[]).includes(subId) // validate users joing the same sub
+      || (sub.SubUser as string[]).includes(user._id)) {
+      throw -1
+    }
     user.UserSub.push(subId)
     sub.SubUser.push(user._id)
     sub.save()
