@@ -1,9 +1,8 @@
 import express from 'express'
 
-import Sub from '../entity/sub-entity'
-import { IxUser } from '../entity/user-entity'
-
 import { authenticate } from '../middleware/authenticate'
+import { userJoinSub, userLeaveSub } from './../services/sub-service'
+import { IxUser } from '../entity/user-entity'
 
 const router = express.Router()
 
@@ -14,19 +13,10 @@ router.put('/join', authenticate(), async (req, res) => {
   if (!subId) return res.status(400).json({ message: 'bad request' })
 
   try {
-    const sub = await Sub.findById(subId).exec()
-    if ((user.UserSub as string[]).includes(subId) // validate users joing the same sub
-      && (sub.SubUser as string[]).includes(user._id)) {
-      throw -1
-    }
-
-    user.UserSub.push(subId)
-    sub.SubUser.push(user._id)
-    sub.save()
-    user.save()
+    await userJoinSub(subId, user)
   } catch (err) {
     return res.status(500).json({
-      message: "joining failed",
+      message: "joining sub failed",
     })
   }
   return res.status(200).json({
@@ -41,19 +31,10 @@ router.put('/leave', authenticate(), async (req, res) => {
   if (!subId) return res.status(400).json({ message: 'bad request' })
 
   try {
-    const sub = await Sub.findById(subId).exec()
-    if (!(user.UserSub as string[]).includes(subId)
-      && !(sub.SubUser as string[]).includes(user._id)) {
-      throw -1
-    }
-
-    user.UserSub = (user.UserSub as string[]).filter(userSubId => userSubId.toString() !== subId)
-    sub.SubUser = (sub.SubUser as string[]).filter(subUserId => subUserId.toString() !== user._id.toString())
-    sub.save()
-    user.save()
+    await userLeaveSub(subId, user)
   } catch (err) {
     return res.status(500).json({
-      message: "leaving failed",
+      message: "leaving sub failed",
     })
   }
   return res.status(200).json({
