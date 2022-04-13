@@ -19,7 +19,7 @@ const CreateThreadForm = () => {
 
   useEffect(() => {
     const fetchData = () => {
-      myAxios.get<IResponseEntity<IUser>>(`/api/users/`)
+      myAxios.get<IResponseEntity<IUser>>(`/api/users/joined-sub`)
         .then(res => {
           setUserSub(res.data.data.UserSub!!)
         }).catch(err => {

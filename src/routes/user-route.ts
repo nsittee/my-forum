@@ -45,11 +45,18 @@ router.post('/signup', (req, res, next) => {
   });
 })
 
-router.post('/sub-list', (req, res, next) => {
-  const userId: any = jwt.decode(req.headers.authorization)
-  User.findById(userId.id).exec().then(user => {
-    console.log(user)
-    res.status(200).json(user)
+router.get('/joined-sub', authenticate(), async (req, res, next) => {
+  const userId = (res.locals.currentUser as IxUser)._id
+  const user = await User
+    .findById(userId)
+    .populate('UserSub', 'SubLongName')
+    .exec()
+
+  return res.status(200).json({
+    message: 'success: get user data',
+    data: {
+      UserSub: user.UserSub
+    },
   })
 })
 
