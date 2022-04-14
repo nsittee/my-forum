@@ -1,5 +1,5 @@
 import { Button, CardContent, Container, Grid } from '@material-ui/core'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import randomColor from 'randomcolor'
 

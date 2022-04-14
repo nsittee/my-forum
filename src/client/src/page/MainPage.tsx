@@ -22,7 +22,7 @@ const MainPage = (props: any) => {
   const [threads, setThreads] = useState<IThread[]>([])
   const [user, setUser] = useState<IUser>(defaultUser)
   const [subId, setSubId] = useState<string>('')
-  const [subName, setSubName] = useState<string>(props.match.params.sub ? props.match.params.sub : '')
+  const [subName] = useState<string>(props.match.params.sub ? props.match.params.sub : '')
   const [joined, setJoined] = useState(false)
 
   const joinHandler = () => {
@@ -68,14 +68,14 @@ const MainPage = (props: any) => {
       fetchUserData()
     }
     fetchThreadData()
-  }, [])
+  }, [subName, authContext])
 
   useEffect(() => {
     if (subName === '' || subId === '') return
     if (!authContext.authenticated) return
     const currentSub = (user.UserSub as ISub[]).find(_subId => _subId === subId)
     if (currentSub) setJoined(true)
-  }, [subId, user])
+  }, [subId, user, subName, authContext])
 
   return (
     <div>
@@ -106,9 +106,9 @@ const MainPage = (props: any) => {
           </Grid>
 
           {threads.length > 0 ?
-            threads.map((thread: any) =>
-              <Grid item xs={12} key={thread._id}>
-                <ThreadCard key={thread._id} thread={thread} />
+            threads.map((thread: any, i) =>
+              <Grid item xs={12} key={'thread-' + i}>
+                <ThreadCard thread={thread} />
               </Grid>
             )
             :
