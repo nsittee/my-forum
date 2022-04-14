@@ -38,7 +38,7 @@ router.get('/from-sub/:name?', authenticate(true), async (req, res) => {
   return res.status(200).json({
     message: `OK: get all thread for: ${subName ? subName : "all"}`,
     data: {
-      _id: sub ? sub._id : null,
+      _id: sub ? sub._id : '',
       SubThread: threadList,
     }
   })

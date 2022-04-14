@@ -60,7 +60,7 @@ const MainPage = (props: any) => {
     }
     const fetchThreadData = async () => {
       const resp = await myAxios.get<IResponseEntity<ISub>>(`/api/threads/from-sub/${subName}`)
-      if (subName) setSubId(resp.data.data!!._id!!)
+      setSubId(resp.data.data!!._id!!)
       setThreads(resp.data.data.SubThread!!)
     }
 
