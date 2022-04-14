@@ -23,11 +23,8 @@ router.post('/signup', async (req, res, next) => {
 
   try {
     const existingUser = await User.findOne().where({ Username: username }).exec()
-    if (existingUser) {
-      console.log(username)
-      console.log(existingUser)
+    if (existingUser)
       return res.status(400).json({ message: "duplicate username" })
-    }
 
     resultUser = await signUpNewUser(username, password)
   } catch (err) {
