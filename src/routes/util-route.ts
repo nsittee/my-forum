@@ -1,4 +1,4 @@
-import { ErrorStatus } from './../error/index';
+import { ErrorStatus } from './../middleware/error-handler'
 import express from 'express'
 import bcrypt from 'bcryptjs'
 

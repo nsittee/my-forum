@@ -1,4 +1,8 @@
-import { ErrorStatus } from './../error/index'
+export interface ErrorStatus {
+  message: string
+  status: number
+  data?: any
+}
 
 export const initErrorHandler = (app) => {
   // Handle endpoint incorrect, 404
@@ -12,7 +16,7 @@ export const initErrorHandler = (app) => {
 
   // Handle and ErrorStatus
   app.use((error: ErrorStatus, req, res, next) => {
-    res.status(error.status || 500);
+    res.status(error.status || 500)
     res.json({
       error: {
         msg: error.message
