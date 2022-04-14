@@ -78,14 +78,15 @@ router.get('/populate', (req, res) => {
 });
 
 router.get('/debug', async (req, res, next) => {
+  const username = 'test-user-0.07546525770485024'
+  const user = await User.findOne().where({ Username: username }).exec()
   const userList = await User.find().exec()
 
-  userList.forEach(u => {
-    console.log((u.UpvoteThread as string[]))
-  })
+  console.log(user)
 
   res.status(200).json({
-    userList: userList.map(u => u)
+    user: user,
+    userList: userList,
   })
 })
 

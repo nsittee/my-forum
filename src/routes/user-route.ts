@@ -1,9 +1,8 @@
-import { IxUser } from '../model/user-model';
 import express from 'express'
-import bcrypt from 'bcryptjs'
 
-import { User } from '../model/user-model'
 import { authenticate } from '../middleware/authenticate'
+import { signUpNewUser } from './../services/user-service'
+import { User, IxUser } from '../model/user-model'
 
 const router = express.Router()
 
@@ -15,33 +14,35 @@ router.get('/', authenticate(), (req, res, next) => {
   })
 })
 
-router.post('/signup', (req, res, next) => {
-  if (req.body.username == null || req.body.password == null) {
-    res.status(400).json({ message: "invalid body" });
-    return;
-  }
-  User.find({ Username: req.body.username }).exec().then(userList => {
-    if (userList.length == 0) {
-      bcrypt.hash(req.body.password, 10, (err, hash) => {
-        if (err) {
-          res.status(500).send({ message: "error with bcrypt" });
-        } else {
-          var user = new User({
-            Username: req.body.username,
-            Password: hash,
-          });
-          user.save().then(newUser => {
-            res.status(200).json({
-              message: "signup completed",
-              data: newUser,
-            });
-          });
-        }
-      });
-    } else {
-      res.status(409).send({ message: "duplicate username" });
+router.post('/signup', async (req, res, next) => {
+  let resultUser: IxUser
+  const username = req.body.username
+  const password = req.body.password
+  if (username == null || password == null)
+    return res.status(400).json({ message: "invalid request" })
+
+  try {
+    const existingUser = await User.findOne().where({ Username: username }).exec()
+    if (existingUser) {
+      console.log(username)
+      console.log(existingUser)
+      return res.status(400).json({ message: "duplicate username" })
     }
-  });
+
+    resultUser = await signUpNewUser(username, password)
+  } catch (err) {
+    return res.status(500).json({
+      message: "internal error during sign up"
+    })
+  }
+
+  return res.status(200).json({
+    message: "signup completed",
+    data: {
+      _id: resultUser._id,
+      Username: resultUser.Username,
+    }
+  })
 })
 
 router.get('/joined-sub', authenticate(), async (req, res, next) => {
