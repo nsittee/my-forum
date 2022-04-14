@@ -6,6 +6,7 @@ import sub from './sub-route'
 import user from './user-route'
 import util from './util-route'
 import auth from './auth-route'
+import { initGraphql } from './graphql-route'
 
 const router = express.Router()
 
@@ -15,6 +16,7 @@ router.use('/threads', thread)
 router.use('/subs', sub)
 router.use('/util', util)
 
+initGraphql(router)
 initErrorHandler(router)
 
 export default router
