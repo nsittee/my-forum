@@ -10,7 +10,8 @@ export interface IxUser extends Mongoose.Document {
   UserThread: any,
   UserSub: any,
 }
-var userSchema = new Mongoose.Schema({
+
+const userSchema = new Mongoose.Schema({
   // _id: mongoose.Schema.Types.ObjectId,
   Username: { type: String, required: true, unique: true },
   Password: { type: String, required: true },
@@ -31,6 +32,6 @@ var userSchema = new Mongoose.Schema({
     type: Mongoose.Schema.Types.ObjectId,
     ref: tableConstant.sub
   }]
-});
+})
 
-export default Mongoose.model<IxUser>(tableConstant.user, userSchema)
+export const User = Mongoose.model<IxUser>(tableConstant.user, userSchema)

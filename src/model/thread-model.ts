@@ -14,7 +14,8 @@ export interface IxThread extends Mongoose.Document {
 
   vote: string,
 }
-var threadSchema = new Mongoose.Schema({
+
+const threadSchema = new Mongoose.Schema({
   // _id: mongoose.Schema.Types.ObjectId,
   Title: String,
   Content: String,
@@ -36,4 +37,4 @@ var threadSchema = new Mongoose.Schema({
   }
 })
 
-export default Mongoose.model<IxThread>(tableConstant.thread, threadSchema);
+export const Thread = Mongoose.model<IxThread>(tableConstant.thread, threadSchema)

@@ -1,5 +1,5 @@
-import { IxUser } from './../entity/user-entity'
-import Sub from '../entity/sub-entity'
+import { IxUser } from '../model/user-model'
+import { Sub } from '../model/sub-model'
 
 export const userJoinSub = async (subId: string, user: IxUser) => {
   const sub = await Sub.findById(subId).exec()

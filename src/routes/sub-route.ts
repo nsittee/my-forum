@@ -2,7 +2,7 @@ import express from 'express'
 
 import { authenticate } from '../middleware/authenticate'
 import { userJoinSub, userLeaveSub } from './../services/sub-service'
-import { IxUser } from '../entity/user-entity'
+import { IxUser } from '../model/user-model'
 
 const router = express.Router()
 

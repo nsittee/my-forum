@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 import { RequestHandler } from 'express'
 import { config } from '../configs/constant-config'
-import User from '../entity/user-entity'
+import { User } from '../model/user-model'
 
 interface JwtData {
   id: string,

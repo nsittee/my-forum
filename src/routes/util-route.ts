@@ -2,9 +2,9 @@ import { ErrorStatus } from './../middleware/error-handler'
 import express from 'express'
 import bcrypt from 'bcryptjs'
 
-import Thread from '../entity/thread-entity'
-import User from '../entity/user-entity'
-import Sub from '../entity/sub-entity'
+import { Thread } from '../model/thread-model'
+import { User } from '../model/user-model'
+import { Sub } from '../model/sub-model'
 
 const router = express.Router();
 

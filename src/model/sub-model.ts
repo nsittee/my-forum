@@ -8,7 +8,8 @@ export interface IxSub extends Mongoose.Document {
   SubUser: any,
   SubThread: any,
 }
-var subSchema = new Mongoose.Schema({
+
+const subSchema = new Mongoose.Schema({
   // _id: mongoose.Schema.Types.ObjectId,
   SubLongName: String,
   SubShortName: String,
@@ -22,6 +23,6 @@ var subSchema = new Mongoose.Schema({
     ref: tableConstant.thread
   }]
 
-});
+})
 
-export default Mongoose.model<IxSub>(tableConstant.sub, subSchema);
+export const Sub = Mongoose.model<IxSub>(tableConstant.sub, subSchema)

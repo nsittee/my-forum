@@ -1,10 +1,10 @@
-import { IxSub } from './../entity/sub-entity';
+import { IxSub } from '../model/sub-model';
 import { getAllThread, applyVoteStatus, getOneThread, createNewThread, voteThread, getSubFromId } from './../services/thread-service';
 import express from 'express'
 import { LeanDocument } from 'mongoose'
 
-import { IxThread } from '../entity/thread-entity'
-import { IxUser } from '../entity/user-entity'
+import { IxThread } from '../model/thread-model'
+import { IxUser } from '../model/user-model'
 
 import { authenticate } from '../middleware/authenticate'
 

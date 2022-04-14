@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 
 import { config } from '../configs/constant-config'
-import User from '../entity/user-entity'
+import { User } from '../model/user-model'
 
 const router = express.Router()
 

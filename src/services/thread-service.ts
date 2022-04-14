@@ -1,6 +1,6 @@
-import Thread, { IxThread } from '../entity/thread-entity'
-import User, { IxUser } from '../entity/user-entity'
-import Sub, { IxSub } from '../entity/sub-entity'
+import { Thread, IxThread } from '../model/thread-model'
+import { User, IxUser } from '../model/user-model'
+import { Sub, IxSub } from '../model/sub-model'
 import mongoose, { LeanDocument } from "mongoose"
 
 export const getAllThread = async (sub?: IxSub): Promise<LeanDocument<IxThread>[]> => {
@@ -113,12 +113,6 @@ export const voteThread = async (userId: IxUser, threadId: string, vote: string)
       user.DownvoteThread = user.DownvoteThread.concat([thread._id])
     }
   }
-
-  const upList = user.UpvoteThread
-  const downList = user.DownvoteThread
-  console.log(vote)
-  console.log(upList)
-  console.log(downList)
 
   user.save()
   thread.save()

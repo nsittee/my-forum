@@ -7,13 +7,13 @@ export interface IxComment extends Mongoose.Document {
   Commenter: any,
 }
 
-var commentSchema = new Mongoose.Schema({
+const commentSchema = new Mongoose.Schema({
   // _id: mongoose.Schema.Types.ObjectId,
   Content: String,
   Commenter: {
     type: Mongoose.Schema.Types.ObjectId,
     ref: tableConstant.user
   }
-});
+})
 
-export default Mongoose.model(tableConstant.comment, commentSchema)
+export const Comment = Mongoose.model(tableConstant.comment, commentSchema)
