@@ -1,76 +1,10 @@
 import { Button, CardContent, Container, Grid } from '@material-ui/core'
 import React, { useContext, useEffect, useState } from 'react'
-import AuthContext from '../../../context/auth-context'
 import PropTypes from 'prop-types'
-import { myAxios } from '../../../config/axios-config'
-import { ISub } from '../../../shared/model/sub.model'
 import randomColor from 'randomcolor'
 
 const SubBanner = (props: any) => {
-  const authContext = useContext(AuthContext)
   const [color] = useState(randomColor({ count: 2, luminosity: 'light' }))
-  const [joined, setJoined] = useState(false)
-
-  useEffect(() => {
-    const currentSub = (props.user.UserSub as ISub[]).find(subId => subId === props.subId)
-    if (currentSub) setJoined(true)
-  }, [props])
-
-
-  const joinButtonHandler = () => {
-    console.log(props.subId + " " + authContext.authenticated)
-    if (!props.subId || !authContext.authenticated) {
-      console.log('sign in && go to sub page first')
-      return
-    } else if (joined) {
-      console.log('leaving sub is not implemented')
-      return
-    }
-    console.log(props.subName)
-
-    var action = joined ? 'leave' : 'join'
-    var url = `/api/subs/${action}?subId=${props.subId}`
-    myAxios.put(url).then(res => {
-      if (joined) {
-        console.log('leave success')
-        setJoined(false)
-      } else {
-        console.log('join success')
-        setJoined(true)
-      }
-    }).catch(err => {
-      console.log(err)
-    })
-  }
-
-  const onJoin = async () => {
-    if (!props.subId || !authContext.authenticated) {
-      console.log('sign in && go to sub page first')
-      return
-    }
-
-    var url = `/api/subs/join?subId=${props.subId}`
-    myAxios.put(url).then(res => {
-      console.log('join success')
-      setJoined(true)
-    }).catch(err => {
-      console.log(err)
-    })
-  }
-  const onLeave = () => {
-    if (!props.subId || !authContext.authenticated) {
-      console.log('sign in && go to sub page first')
-      return
-    }
-
-    var url = `/api/subs/leave?subId=${props.subId}`
-    myAxios.put(url).then(res => {
-      console.log('leave success')
-      setJoined(false)
-    }).catch(err => {
-      console.log(err)
-    })
-  }
 
   return (
     <div style={{
@@ -92,9 +26,9 @@ const SubBanner = (props: any) => {
           <Grid container>
             Sub name goes here <br />
             {props.subName}
-            {joined ?
+            {props.joined ?
               <Button
-                onClick={onLeave}
+                onClick={props.leaveHandler}
                 color='secondary'
                 variant='contained'
                 style={{ marginLeft: 100 }}>
@@ -102,7 +36,7 @@ const SubBanner = (props: any) => {
               </Button>
               :
               <Button
-                onClick={onJoin}
+                onClick={props.joinHandler}
                 color='secondary'
                 variant='contained'
                 style={{ marginLeft: 100 }}>
@@ -117,9 +51,10 @@ const SubBanner = (props: any) => {
 }
 
 SubBanner.propTypes = {
-  subId: PropTypes.string,
   subName: PropTypes.string,
-  user: PropTypes.object,
+  joined: PropTypes.bool,
+  joinHandler: PropTypes.func,
+  leaveHandler: PropTypes.func,
 }
 
 export default SubBanner

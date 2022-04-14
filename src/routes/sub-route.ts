@@ -15,7 +15,10 @@ router.put('/join', authenticate(), async (req, res) => {
   try {
     await userJoinSub(subId, user)
   } catch (err) {
-    return res.status(500).json({
+    if (err === -1) return res.status(400).json({
+      message: "already a member",
+    })
+    else return res.status(500).json({
       message: "joining sub failed",
     })
   }
@@ -33,7 +36,10 @@ router.put('/leave', authenticate(), async (req, res) => {
   try {
     await userLeaveSub(subId, user)
   } catch (err) {
-    return res.status(500).json({
+    if (err === -1) return res.status(400).json({
+      message: "already a left",
+    })
+    else return res.status(500).json({
       message: "leaving sub failed",
     })
   }
