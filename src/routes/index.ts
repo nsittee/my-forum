@@ -6,7 +6,7 @@ import sub from './sub-route'
 import user from './user-route'
 import util from './util-route'
 import auth from './auth-route'
-import { initGraphql } from './graphql-route'
+import { initGraphql } from '../graphql'
 
 const router = express.Router()
 
