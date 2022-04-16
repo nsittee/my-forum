@@ -1,4 +1,4 @@
-import { IxThread, Thread } from './../model/thread-model';
+import { IxThread, Thread } from './../model/thread-model'
 
 export const resolvers = {
   threads: async (args) => {
