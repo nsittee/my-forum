@@ -2,27 +2,41 @@ const { buildSchema } = require('graphql');
 
 const schema = buildSchema(`
     type Query {
-        books(limit: Int): [Book]
-        book(id: ID!): Book
+        threads: [Thread]
+        thread(id: String): Thread
     }
-    type Mutation {
-        addBook(title: String!, author: String!, description: String!): BookResponse
-        updateBook(id: ID!, title: String, author: String, description: String): BookResponse
-        deleteBook(id: ID!): BookResponse
+    type User {
+        _id: String
+        Username: String
+        Password: String
+        UpvoteThread: [Thread]
+        DownvoteThread: [Thread]
+        UserThread: [Thread]
+        UserSub: [Sub]
     }
-    type Book {
-        id: ID!
-        title: String!
-        author: String!
-        description: String!
+    type Sub {
+        _id: String,
+        SubLongName: String,
+        SubShortName: String,
+        SubUser: [User],
+        SubThread: [Thread],
     }
-    type Books {
-        books: [Book]
+    type Thread {
+        _id: String,
+        Title: String,
+        Content: String,
+        Upvote: Int,
+        Downvote: Int,
+        CreatedDate: String,
+        Author: User,
+        ThreadComment: [Comment],
+        SubParent: Sub,
+        vote: String,
     }
-    type BookResponse {
-        data: Book
-        error: String
-        ok: Boolean
+    type Comment {
+        _id: String,
+        Content: String,
+        Commenter: User,
     }
 `);
 
