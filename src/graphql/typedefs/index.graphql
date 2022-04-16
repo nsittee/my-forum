@@ -1,0 +1,8 @@
+type Query {
+    threads: [Thread]
+    thread(id: String): Thread
+}
+
+type Mutation {
+    createThread: Int
+}

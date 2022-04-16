@@ -1,0 +1,9 @@
+type User {
+  _id: String
+  Username: String
+  Password: String
+  UpvoteThread: [Thread]
+  DownvoteThread: [Thread]
+  UserThread: [Thread]
+  UserSub: [Sub]
+}

@@ -1,0 +1,12 @@
+type Thread {
+  _id: String,
+  Title: String,
+  Content: String,
+  Upvote: Int,
+  Downvote: Int,
+  CreatedDate: String,
+  Author: User,
+  ThreadComment: [Comment],
+  SubParent: Sub,
+  vote: String,
+}

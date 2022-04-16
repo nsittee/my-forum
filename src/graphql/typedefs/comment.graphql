@@ -1,0 +1,5 @@
+type Comment {
+  _id: String,
+  Content: String,
+  Commenter: User,
+}

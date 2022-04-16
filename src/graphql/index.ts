@@ -1,31 +1,11 @@
-import { IxThread, Thread } from './../model/thread-model';
 import { graphqlHTTP } from "express-graphql";
-import schema from "./schema";
-
-const resolver = {
-  threads: async (args) => {
-    const threads: IxThread[] = await Thread
-      .find()
-      .populate('Author', [])
-      .populate('SubParent', [])
-      .exec()
-    return threads
-  },
-  thread: async ({ id }) => {
-    const thread: IxThread = await Thread
-      .findById(id)
-      .populate('Author', [])
-      .populate('SubParent', [])
-      .exec()
-
-    return thread
-  }
-}
+import { initGraphqlSchema } from "./schema";
+import { resolvers } from './resolver';
 
 export const initGraphql = (app) => {
   app.use('/graphql', graphqlHTTP({
-    schema: schema,
-    rootValue: resolver,
+    schema: initGraphqlSchema(),
+    rootValue: resolvers,
     graphiql: true,
   }));
 }

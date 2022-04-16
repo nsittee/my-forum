@@ -1,0 +1,7 @@
+type Sub {
+  _id: String,
+  SubLongName: String,
+  SubShortName: String,
+  SubUser: [User],
+  SubThread: [Thread],
+}
