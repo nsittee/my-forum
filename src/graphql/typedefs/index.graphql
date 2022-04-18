@@ -1,5 +1,5 @@
 type Query {
-    threads: [Thread]
+    threads(subName: String): Sub
     thread(id: String): Thread
 }
 
