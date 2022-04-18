@@ -1,7 +1,11 @@
 import { IxThread, Thread } from './../model/thread-model'
+import { getUserFromContext } from './util'
 
 export const resolvers = {
-  threads: async (args) => {
+  // If function is defined under root...
+  // (args, context, info) => {}
+  threads: async (args, context, info) => {
+    const user = getUserFromContext(context)
     const threads: IxThread[] = await Thread
       .find()
       .populate('Author', [])
@@ -9,7 +13,7 @@ export const resolvers = {
       .exec()
     return threads
   },
-  thread: async ({ id }) => {
+  thread: async ({ id }, context, info) => {
     const thread: IxThread = await Thread
       .findById(id)
       .populate('Author', [])
