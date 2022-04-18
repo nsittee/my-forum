@@ -1,6 +1,10 @@
 import { IxSub } from './../model/sub-model'
-import { getAllThread, applyVoteStatus, getSubFromId } from './../services/thread-service'
-import { IxThread, Thread } from './../model/thread-model'
+import {
+  getOneThread,
+  getAllThread,
+  applyVoteStatus,
+  getSubFromId
+} from './../services/thread-service'
 import { getUserFromContext } from './util'
 
 export const resolvers = {
@@ -21,12 +25,7 @@ export const resolvers = {
     }
   },
   thread: async ({ id }, context, info) => {
-    const thread: IxThread = await Thread
-      .findById(id)
-      .populate('Author', [])
-      .populate('SubParent', [])
-      .exec()
-
+    const thread = await getOneThread(id)
     return thread
   }
 }
