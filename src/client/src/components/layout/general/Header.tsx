@@ -34,7 +34,7 @@ const Header = () => {
           onClick={async () => {
             try {
               const gql = {
-                query: graphQlQueries.getAllThreads,
+                query: graphQlQueries.getAllThreadsAndUser,
                 variable: {
                   subName: 'sub-reddit-795'
                 }
