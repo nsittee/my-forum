@@ -27,5 +27,11 @@ export const resolvers = {
   thread: async ({ id }, context, info) => {
     const thread = await getOneThread(id)
     return thread
+  },
+  user: async (args, context, info) => {
+    const user = getUserFromContext(context)
+    if (!user) return null
+
+    return user
   }
 }
