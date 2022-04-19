@@ -10,6 +10,7 @@ import UiContext from '../../../context/ui-context'
 import { useHistory } from 'react-router-dom'
 import { MyButton } from '../../common/MyButton'
 import { myAxios } from '../../../config/axios-config'
+import { graphQlQueries } from '../../../graphql'
 
 const Header = () => {
   const authContext = useContext(AuthContext)
@@ -31,9 +32,20 @@ const Header = () => {
           variant="contained"
           color="primary"
           onClick={async () => {
-            alert('search')
-            const res = await myAxios.post('/api/users/refresh-token', { data: "important data" })
-            console.log(res)
+            try {
+              const gql = {
+                query: graphQlQueries.getAllThreads,
+                variable: {
+                  subName: 'sub-reddit-795'
+                }
+              }
+              const response = await myAxios.post(
+                '/api/graphql',
+                gql,
+              )
+            } catch (err) {
+              console.log(err)
+            }
           }}
         >Search</MyButton>
         {!authContext.authenticated ?
