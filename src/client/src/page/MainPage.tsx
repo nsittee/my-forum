@@ -9,7 +9,6 @@ import ThreadFilter from '../components/layout/threads/ThreadFilter'
 import SubBanner from '../components/layout/sub/SubBanner'
 import { Skeleton } from '@material-ui/lab'
 import { myAxios } from '../config/axios-config'
-import { IResponseEntity } from '../shared/response.model'
 import { IThread } from '../shared/model/thread.model'
 import { ISub } from '../shared/model/sub.model'
 import AuthContext from '../context/auth-context'
@@ -55,15 +54,16 @@ const MainPage = (props: any) => {
   }
 
   useEffect(() => {
-    const fetchUserAndThread = async () => {
-      if (authContext.authenticated) {
-        const userResp = await myAxios.get<IResponseEntity<IUser>>(`/api/users/`)
-        setUser(userResp.data.data!!)
-      }
-      const threadResp = await myAxios.get<IResponseEntity<ISub>>(`/api/threads/from-sub/${subName}`)
-      setSubId(threadResp.data.data!!._id!!)
-      setThreads(threadResp.data.data.SubThread!!)
-    }
+    // const fetchUserAndThread = async () => {
+    //   if (authContext.authenticated) {
+    //     const userResp = await myAxios.get<IResponseEntity<IUser>>(`/api/users/`)
+    //     setUser(userResp.data.data!!)
+    //   }
+    //   const threadResp = await myAxios.get<IResponseEntity<ISub>>(`/api/threads/from-sub/${subName}`)
+    //   setSubId(threadResp.data.data!!._id!!)
+    //   setThreads(threadResp.data.data.SubThread!!)
+    // }
+    // fetchUserAndThread()
 
     const fetchUserAndThreadGraphQl = async () => {
       const gql = {
@@ -87,7 +87,6 @@ const MainPage = (props: any) => {
       setSubId(sub._id!!)
     }
 
-    // fetchUserAndThread()
     fetchUserAndThreadGraphQl()
   }, [subName, authContext.authenticated])
 

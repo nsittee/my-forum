@@ -36,10 +36,10 @@ const Header = () => {
               const gql = {
                 query: graphQlQueries.getAllThreadsAndUser,
                 variable: {
-                  subName: 'sub-reddit-795'
+                  subName: null
                 }
               }
-              const response = await myAxios.post(
+              await myAxios.post(
                 '/api/graphql',
                 gql,
               )
