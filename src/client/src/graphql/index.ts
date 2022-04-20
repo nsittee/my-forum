@@ -20,8 +20,8 @@ export const graphQlQueries = {
     }
   `,
   getAllThreads: `
-    query threads ($subName: String) {
-      threads(subName: $subName) {
+    query A ($subName: String) {
+      sub(subName: $subName) {
         _id
         SubThread {
           _id
@@ -43,14 +43,19 @@ export const graphQlQueries = {
     } 
   `,
   getAllThreadsAndUser: `
-    query threads ($subName: String) {
-      threads(subName: $subName) {
+    query B ($subName: String) {
+      sub(subName: $subName) {
         _id
         SubThread {
           _id
           Upvote
           Downvote
           CreatedDate
+          SubParent {
+            _id
+            SubLongName
+            SubLongName
+          }
           ThreadComment {
             _id
           }

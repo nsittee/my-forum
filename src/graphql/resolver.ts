@@ -10,7 +10,7 @@ import { getUserFromContext } from './util'
 export const resolvers = {
   // If function is defined under root...
   // (args, context, info) => {}
-  threads: async ({ subName }, context, info) => {
+  sub: async ({ subName }, context, info) => {
     const user = getUserFromContext(context)
     let sub: IxSub
 

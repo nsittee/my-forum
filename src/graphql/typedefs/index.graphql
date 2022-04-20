@@ -1,6 +1,6 @@
 type Query {
     user: User
-    threads(subName: String): Sub
+    sub(subName: String): Sub
     thread(id: String): Thread
 }
 
