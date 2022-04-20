@@ -15,6 +15,7 @@ import { ISub } from '../shared/model/sub.model'
 import AuthContext from '../context/auth-context'
 import { defaultUser, IUser } from '../shared/model/user.model'
 import UiContext from '../context/ui-context'
+import { graphQlQueries } from '../graphql'
 
 const MainPage = (props: any) => {
   const authContext = useContext(AuthContext)
@@ -64,7 +65,30 @@ const MainPage = (props: any) => {
       setThreads(threadResp.data.data.SubThread!!)
     }
 
-    fetchUserAndThread()
+    const fetchUserAndThreadGraphQl = async () => {
+      const gql = {
+        query: graphQlQueries.getAllThreadsAndUser,
+        variables: {
+          subName: subName === '' ? null : subName
+        }
+      }
+      const resp = await myAxios.post(
+        '/api/graphql',
+        gql,
+      )
+      const user: IUser = resp.data.data.user
+      const sub: ISub = resp.data.data.sub
+      console.log({
+        user,
+        sub
+      })
+      setUser(user)
+      setThreads(sub.SubThread!!)
+      setSubId(sub._id!!)
+    }
+
+    // fetchUserAndThread()
+    fetchUserAndThreadGraphQl()
   }, [subName, authContext.authenticated])
 
   useEffect(() => {
