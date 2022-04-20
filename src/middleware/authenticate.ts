@@ -28,7 +28,7 @@ export const authenticate = (opt: boolean = false) => async (req, res, next): Pr
 
     res.locals.currentUser = currentUser
   } catch {
-    if (!opt) {
+    if (!opt || accessToken) {
       return res.status(401).json({
         message: "auth failed",
       })

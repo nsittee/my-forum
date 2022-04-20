@@ -54,22 +54,17 @@ const MainPage = (props: any) => {
   }
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      console.log('fetch user')
-      const resp = await myAxios.get<IResponseEntity<IUser>>(`/api/users/`)
-      setUser(resp.data.data!!)
-    }
-    const fetchThreadData = async () => {
-      console.log('fetch thread')
-      const resp = await myAxios.get<IResponseEntity<ISub>>(`/api/threads/from-sub/${subName}`)
-      setSubId(resp.data.data!!._id!!)
-      setThreads(resp.data.data.SubThread!!)
+    const fetchUserAndThread = async () => {
+      if (authContext.authenticated) {
+        const userResp = await myAxios.get<IResponseEntity<IUser>>(`/api/users/`)
+        setUser(userResp.data.data!!)
+      }
+      const threadResp = await myAxios.get<IResponseEntity<ISub>>(`/api/threads/from-sub/${subName}`)
+      setSubId(threadResp.data.data!!._id!!)
+      setThreads(threadResp.data.data.SubThread!!)
     }
 
-    if (authContext.authenticated) {
-      fetchUserData()
-    }
-    fetchThreadData()
+    fetchUserAndThread()
   }, [subName, authContext.authenticated])
 
   useEffect(() => {
