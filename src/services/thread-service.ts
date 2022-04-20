@@ -37,8 +37,8 @@ export const getSubFromId = async (subName?: string): Promise<IxSub> => {
 
 export const applyVoteStatus = (threadList: LeanDocument<IxThread>[], user: IxUser) => {
   threadList.forEach(thread => {
-    if (user.UpvoteThread.map(_id => _id.toString()).includes(thread._id.toString())) thread.vote = 'up'
-    else if (user.DownvoteThread.map(_id => _id.toString()).includes(thread._id.toString())) thread.vote = 'down'
+    if (user.UpvoteThread.map((t: IxThread) => t._id.toString()).includes(thread._id.toString())) thread.vote = 'up'
+    else if (user.DownvoteThread.map((t: IxThread) => t._id.toString()).includes(thread._id.toString())) thread.vote = 'down'
   })
 }
 

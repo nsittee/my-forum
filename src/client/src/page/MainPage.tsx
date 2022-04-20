@@ -75,7 +75,7 @@ const MainPage = (props: any) => {
   useEffect(() => {
     if (subName === '' || subId === '') return
     if (!authContext.authenticated) return
-    const currentSub = (user.UserSub as ISub[]).find(_subId => _subId === subId)
+    const currentSub = (user.UserSub as ISub[]).find(_subId => _subId._id === subId)
     if (currentSub) setJoined(true)
   }, [subId, user, subName, authContext])
 

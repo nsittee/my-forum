@@ -18,7 +18,13 @@ export const authenticate = (opt: boolean = false) => async (req, res, next): Pr
     const decoded: any = jwt.decode(token)
     const userId = decoded.id
 
-    const currentUser = await User.findById(userId).exec()
+    const currentUser = await User
+      .findById(userId)
+      .populate('UpvoteThread', '_id')
+      .populate('DownvoteThread', '_id')
+      .populate('UserSub', '_id')
+      .populate('UserThread', '_id')
+      .exec()
 
     res.locals.currentUser = currentUser
   } catch {

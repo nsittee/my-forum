@@ -1,9 +1,3 @@
-export const getAllThreadQuery =
-  `query RollDice($dice: Int!, $sides: Int) {
-  rollDice(numDice: $dice, numSides: $sides)
-}`
-
-
 export const graphQlQueries = {
   getUser: `
     query {
