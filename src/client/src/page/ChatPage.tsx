@@ -3,9 +3,9 @@ import { Container, Paper } from '@material-ui/core'
 import { MyCard } from '../components/common/MyCard'
 
 import { io, Socket } from 'socket.io-client'
+import { DefaultEventsMap } from 'socket.io/dist/typed-events'
 import { MyButton } from '../components/common/MyButton'
 import { MyTextField } from '../components/common/MyTextField'
-import { DefaultEventsMap } from 'socket.io-client/build/typed-events'
 import AuthContext from '../context/auth-context'
 import appConstant from '../constant/app-constant'
 
@@ -19,6 +19,7 @@ const ChatPage = () => {
   const [typingList, setTypingList] = useState<string[]>([])
 
   useEffect(() => {
+    socket = io("https://server-domain.com");
     socket = io(appConstant.URL!)
     socket.connect()
     socket.on(eventName, (username, type, newMessage) => {

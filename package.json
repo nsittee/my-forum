@@ -19,7 +19,7 @@
     "ci:start": "npm run ci:build && npm start",
     "start": "NODE_ENV=production node dist/server.js",
     "dev": "concurrently \"npm run client:dev\" \"npm run server:dev\"",
-    "postinstall": "npm run server:build && npm run client:install && npm run client:build"
+    "_postinstall_": "npm run server:build && npm run client:install && npm run client:build"
   },
   "author": "",
   "license": "ISC",
@@ -38,7 +38,7 @@
     "mongoose": "^5.11.0",
     "morgan": "^1.10.0",
     "mui-rff": "^3.0.10",
-    "socket.io": "^4.2.0",
+    "socket.io": "^4.5.4",
     "typescript": "^4.3.5"
   },
   "devDependencies": {
