@@ -9,4 +9,5 @@ else {
   console.log(`invalid NODE_ENV: ${env} value, default back to 'env/.env.local'`);
   envFile = 'env/.env.local';
 }
-require('dotenv').config({ path: path.resolve(process.cwd(), envFile) });
+import * as dotenv from 'dotenv' // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
+dotenv.config({ path: path.resolve(process.cwd(), envFile) })
