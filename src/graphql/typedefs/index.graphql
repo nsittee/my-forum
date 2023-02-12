@@ -1,9 +1,16 @@
 type Query {
-    user: User
-    sub(subName: String): Sub
-    thread(id: String): Thread
+  user: User
+  sub(subName: String): Sub
+  thread(id: String): Thread
 }
 
 type Mutation {
-    createThread: Int
+  createThread(input: CreateThreadInput): String
+}
+
+input CreateThreadInput {
+  title: String
+  content: String
+  authorId: String
+  subId: String
 }
