@@ -28,6 +28,7 @@ myAxios.interceptors.response.use(
   response => response
   , async (err) => {
     const originalConfig = err.config // as AxiosRequestConfig
+    console.log(`Something's wrong: ${err}`)
     if (err.response && originalConfig.url !== SIGNIN_API) {
       if (err.response.status === 401 && !originalConfig._retry) {
         originalConfig._retry = true;
@@ -46,6 +47,7 @@ myAxios.interceptors.response.use(
       }
     }
     return Promise.reject(err)
-  })
+  }
+)
 
 export { myAxios }
