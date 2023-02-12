@@ -73,6 +73,7 @@ router.post('/', authenticate(), async (req, res, next) => {
   try {
     newThread = await createNewThread(reqThread)
   } catch (err) {
+    console.log(err)
     return res.status(500).json({
       message: "FAILED: saving thread error",
       data: null,

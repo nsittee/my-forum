@@ -30,11 +30,11 @@ const CreateThreadForm = () => {
   }, [authContext])
 
   const onSubmit = (formData: any) => {
-    const thread: IThread = {
-      Title: formData.title,
-      Content: formData.content,
-      Author: { _id: formData.userId },
-      SubParent: { _id: formData.subId },
+    const thread = {
+      title: formData.title,
+      content: formData.content,
+      authorId: formData.userId,
+      subId: formData.subId,
     }
     myAxios.post<IResponseEntity<IThread>>(`/api/threads/`, { Thread: thread })
       .then(res => {

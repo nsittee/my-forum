@@ -54,10 +54,10 @@ export const getOneThread = async (threadId: string): Promise<IxThread> => {
 
 export const createNewThread = async (reqThread: any): Promise<IxThread> => {
   const thread = new Thread({
-    Title: reqThread.Title,
-    Author: mongoose.Types.ObjectId(reqThread.Author._id),
-    SubParent: mongoose.Types.ObjectId(reqThread.SubParent._id),
-    Content: reqThread.Content
+    Title: reqThread.title,
+    Author: mongoose.Types.ObjectId(reqThread.authorId),
+    SubParent: mongoose.Types.ObjectId(reqThread.subId),
+    Content: reqThread.content
   })
   const user = await User.findOne({ _id: thread.Author }).exec()
   const sub = await Sub.findOne({ _id: thread.SubParent }).exec()
