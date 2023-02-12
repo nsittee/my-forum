@@ -1,7 +1,7 @@
 import { authenticate } from './../middleware/authenticate'
 import { graphqlHTTP } from "express-graphql"
 import { schemas } from "./schema"
-import { resolvers } from './resolver'
+import { resolvers } from './resolvers'
 import { Router } from 'express'
 
 // Setup context for req/res from express
