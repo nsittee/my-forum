@@ -1,11 +1,12 @@
-import { IxSub } from './../model/sub-model'
+import { IxSub } from '../../model/sub-model'
 import {
   getOneThread,
   getAllThread,
   applyVoteStatus,
-  getSubFromId
-} from './../services/thread-service'
-import { getUserFromContext } from './util'
+  getSubFromId,
+  createNewThread
+} from '../../services/thread-service'
+import { getUserFromContext } from '../util'
 
 export const resolvers = {
   // If function is defined under root...
@@ -33,5 +34,16 @@ export const resolvers = {
     if (!user) return null
 
     return user
+  },
+
+  createThread: async ({ input }, context, info) => {
+    const reqNewThread = {
+      title: input.title,
+      content: input.content,
+      authorId: input.authorId,
+      subId: input.subId
+    }
+    const createdThread = await createNewThread(reqNewThread)
+    return createdThread._id
   }
 }
