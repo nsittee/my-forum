@@ -20,7 +20,7 @@ export const graphQlQueries = {
     }
   `,
   getAllThreads: `
-    query A ($subName: String) {
+    query ($subName: String) {
       sub(subName: $subName) {
         _id
         SubThread {
@@ -43,7 +43,7 @@ export const graphQlQueries = {
     } 
   `,
   getAllThreadsAndUser: `
-    query B ($subName: String) {
+    query ($subName: String) {
       sub(subName: $subName) {
         _id
         SubThread {
