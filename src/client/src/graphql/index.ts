@@ -86,5 +86,19 @@ export const graphQlQueries = {
       }
     }
   `,
-  getOneThread: ``,
+  createThread: `
+    mutation (
+        $title: String,
+        $content: String,
+        $authorId: String,
+        $subId: String
+    ) {
+        createThread(input: {
+            title: $title,
+            content: $content,
+            authorId: $authorId,
+            subId: $subId
+        })
+    }
+  `,
 }
