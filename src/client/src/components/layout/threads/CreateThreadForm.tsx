@@ -7,10 +7,10 @@ import AuthContext from '../../../context/auth-context'
 import { useHistory } from "react-router-dom"
 import { MyButton } from "../../common/MyButton"
 import { myAxios } from "../../../config/axios-config"
-import { IThread } from "../../../shared/model/thread.model"
 import { IResponseEntity } from "../../../shared/response.model"
 import { IUser } from "../../../shared/model/user.model"
 import { ISub } from "../../../shared/model/sub.model"
+import { graphQlQueries } from "../../../graphql"
 
 const CreateThreadForm = () => {
   const [userSub, setUserSub] = useState<ISub[]>([])
@@ -29,19 +29,30 @@ const CreateThreadForm = () => {
     fetchData()
   }, [authContext])
 
-  const onSubmit = (formData: any) => {
-    const thread = {
-      title: formData.title,
-      content: formData.content,
-      authorId: formData.userId,
-      subId: formData.subId,
+  const onSubmit = async (formData: any) => {
+    const gql = {
+      query: graphQlQueries.createThread,
+      variables: {
+        title: formData.title,
+        content: formData.content,
+        authorId: formData.userId,
+        subId: formData.subId,
+      }
     }
-    myAxios.post<IResponseEntity<IThread>>(`/api/threads/`, { Thread: thread })
-      .then(res => {
-        console.log("Added New Thread" + res)
-      }).catch(err => {
-        console.log("ERROR " + err)
-      })
+    const res = await myAxios.post(`/api/graphql`, gql)
+    console.log(res.data.data.createThread)
+    // const thread = {
+    //   title: formData.title,
+    //   content: formData.content,
+    //   authorId: formData.userId,
+    //   subId: formData.subId,
+    // }
+    // myAxios.post<IResponseEntity<IThread>>(`/api/threads/`, { Thread: thread })
+    //   .then(res => {
+    //     console.log("Added New Thread" + res)
+    //   }).catch(err => {
+    //     console.log(err)
+    //   })
     history.push('/')
   }
 
