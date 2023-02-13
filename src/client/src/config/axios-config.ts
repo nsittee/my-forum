@@ -17,7 +17,8 @@ const refreshAxios = axios.create({
 myAxios.interceptors.request.use(config => {
   console.log(config.url)
   const token = localStorage.getItem("a-token")
-  config.headers!!["Authorization"] = `Bearer ${token}`
+  if (token !== null)
+    config.headers!!["Authorization"] = `Bearer ${token}`
   return config
 }, (error) => {
   console.log("intercepted error req")

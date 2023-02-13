@@ -10,8 +10,16 @@ interface JwtData {
   exp: string
 }
 
+// If token is provided in the header, it must be a valid token, otherwise, 401
+// If token is missing, then the `opt` must be `true`
 export const authenticate = (opt: boolean = false) => async (req, res, next): Promise<RequestHandler> => {
   const accessToken = req.headers.authorization as string
+  const emptyToken = accessToken === undefined || accessToken === null || accessToken === ''
+
+  if (emptyToken && opt) {
+    next()
+    return
+  }
   try {
     const token = accessToken.substring(7)
     jwt.verify(token, config.secretKey)
@@ -28,11 +36,9 @@ export const authenticate = (opt: boolean = false) => async (req, res, next): Pr
 
     res.locals.currentUser = currentUser
   } catch {
-    if (!opt) {
-      return res.status(401).json({
-        message: "auth failed",
-      })
-    }
+    return res.status(401).json({
+      message: "auth failed",
+    })
   }
   next()
 }
