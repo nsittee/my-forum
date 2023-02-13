@@ -12,11 +12,11 @@ interface JwtData {
 
 // If token is provided in the header, it must be a valid token, otherwise, 401
 // If token is missing, then the `opt` must be `true`
-export const authenticate = (opt: boolean = false) => async (req, res, next): Promise<RequestHandler> => {
+export const authenticate = (optional: boolean = false) => async (req, res, next): Promise<RequestHandler> => {
   const accessToken = req.headers.authorization as string
   const emptyToken = accessToken === undefined || accessToken === null || accessToken === ''
 
-  if (emptyToken && opt) {
+  if (emptyToken && optional) {
     next()
     return
   }
