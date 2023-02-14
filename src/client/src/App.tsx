@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 
 import AuthContext from './context/auth-context'
 import UiContext from './context/ui-context'
-import { AppRouter } from './page/AppRouter'
+import { AppRouter } from './AppRouter'
 import Header from './components/layout/general/Header'
 import { MuiThemeProvider, createTheme } from '@material-ui/core'
 import { BrowserRouter } from 'react-router-dom'

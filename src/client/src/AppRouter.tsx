@@ -1,12 +1,12 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 
-import ChangelogPage from './ChangelogPage'
-import ChatPage from './ChatPage'
-import MainPage from './MainPage'
-import ProfilePage from './ProfilePage'
-import SubmitPage from './SubmitPage'
-import UserSettingPage from './UserSettingPage'
+import ChangelogPage from './page/ChangelogPage'
+import ChatPage from './page/ChatPage'
+import MainPage from './page/MainPage'
+import ProfilePage from './page/ProfilePage'
+import SubmitPage from './page/SubmitPage'
+import UserSettingPage from './page/UserSettingPage'
 
 export const AppRouter = () => {
   return (
