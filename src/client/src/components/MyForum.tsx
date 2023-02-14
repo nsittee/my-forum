@@ -1,16 +1,10 @@
-import React, { useState } from 'react'
-import { Route, Switch } from 'react-router-dom'
 import jwt from 'jwt-decode'
+import React, { useState } from 'react'
 
-import Header from './layout/general/Header'
-import MainPage from '../page/MainPage'
-import ProfilePage from '../page/ProfilePage'
-import UserSettingPage from '../page/UserSettingPage'
-import SubmitPage from '../page/SubmitPage'
-import ChangelogPage from '../page/ChangelogPage'
 import AuthContext from '../context/auth-context'
 import UiContext from '../context/ui-context'
-import ChatPage from '../page/ChatPage'
+import { AppRouter } from '../page/AppRouter'
+import Header from './layout/general/Header'
 
 const MyForum = () => {
   const [signIn, setSignIn] = useState(false)
@@ -47,17 +41,7 @@ const MyForum = () => {
       <UiContext.Provider value={uiContextValue}>
         <AuthContext.Provider value={authContextValue}>
           <Header />
-          <Switch>
-            {/* Main routing each page */}
-            <Route path="/profile" component={ProfilePage} />
-            <Route path="/setting" component={UserSettingPage} />
-            <Route path="/submit" component={SubmitPage} />
-            <Route path="/changelog" component={ChangelogPage} />
-            <Route path="/chat" component={ChatPage} />
-
-            <Route path="/r/:sub" component={MainPage} />
-            <Route path="/" component={MainPage} />
-          </Switch>
+          <AppRouter />
         </AuthContext.Provider>
       </UiContext.Provider>
     </div>
