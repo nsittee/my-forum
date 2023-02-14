@@ -1,12 +1,14 @@
 import jwt from 'jwt-decode'
 import React, { useState } from 'react'
 
-import AuthContext from '../context/auth-context'
-import UiContext from '../context/ui-context'
-import { AppRouter } from '../page/AppRouter'
-import Header from './layout/general/Header'
+import AuthContext from './context/auth-context'
+import UiContext from './context/ui-context'
+import { AppRouter } from './page/AppRouter'
+import Header from './components/layout/general/Header'
+import { MuiThemeProvider, createTheme } from '@material-ui/core'
+import { BrowserRouter } from 'react-router-dom'
 
-const MyForum = () => {
+const App = () => {
   const [signIn, setSignIn] = useState(false)
   const [signUp, setSignUp] = useState(false)
   // const [cookies, setCookie, removeCookie] = useCookies()
@@ -37,15 +39,30 @@ const MyForum = () => {
   }
 
   return (
-    <div>
-      <UiContext.Provider value={uiContextValue}>
-        <AuthContext.Provider value={authContextValue}>
-          <Header />
-          <AppRouter />
-        </AuthContext.Provider>
-      </UiContext.Provider>
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <MuiThemeProvider theme={AppTheme}>
+          <UiContext.Provider value={uiContextValue}>
+            <AuthContext.Provider value={authContextValue}>
+              <Header />
+              <AppRouter />
+            </AuthContext.Provider>
+          </UiContext.Provider>
+        </MuiThemeProvider>
+      </div>
+    </BrowserRouter>
   )
 }
 
-export default MyForum
+const AppTheme = createTheme({
+  palette: {
+    primary: {
+      main: '#2196f3'
+    },
+    secondary: {
+      main: '#FFFFFF'
+    },
+  },
+})
+
+export default App
