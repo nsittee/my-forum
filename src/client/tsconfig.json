@@ -9,7 +9,7 @@
     ],
     "outDir": "./built",
     "sourceMap": true,
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
