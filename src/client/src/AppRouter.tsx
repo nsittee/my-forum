@@ -5,8 +5,8 @@ import ChangelogPage from './page/ChangelogPage'
 import ChatPage from './page/ChatPage'
 import MainPage from './page/MainPage'
 import ProfilePage from './page/ProfilePage'
-import SubmitPage from './page/SubmitPage'
 import UserSettingPage from './page/UserSettingPage'
+import { SubmitPage } from './page/SubmitPage'
 
 export const AppRouter = () => {
   return (
