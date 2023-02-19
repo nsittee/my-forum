@@ -39,18 +39,18 @@ const App = () => {
   }
 
   return (
-    <BrowserRouter>
+    <MuiThemeProvider theme={AppTheme}>
       <div className="App">
-        <MuiThemeProvider theme={AppTheme}>
+        <BrowserRouter>
           <UiContext.Provider value={uiContextValue}>
             <AuthContext.Provider value={authContextValue}>
               <Header />
               <AppRouter />
             </AuthContext.Provider>
           </UiContext.Provider>
-        </MuiThemeProvider>
+        </BrowserRouter>
       </div>
-    </BrowserRouter>
+    </MuiThemeProvider>
   )
 }
 
