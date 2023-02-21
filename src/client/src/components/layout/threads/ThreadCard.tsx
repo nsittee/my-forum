@@ -38,16 +38,18 @@ const ThreadCard = (props: any) => {
 	}
 	return (
 		<Card onClick={() => history.push(`/r/${subParent}/${thread._id}`)}>
-			<Grid container spacing={1}>
-				<Card onClick={e => e.stopPropagation()} style={{ justifyContent: "center" }}>
-					<IconButton onClick={(e: any) => voteHandler(e, 'up')}>
-						<KeyboardArrowUp color={vote === 'up' ? "primary" : "inherit"} />
-					</IconButton>
-					<Typography align='center' variant='subtitle2'>{displayVote}</Typography>
-					<IconButton onClick={(e: any) => voteHandler(e, 'down')}>
-						<KeyboardArrowDown color={vote === 'down' ? "error" : "inherit"} />
-					</IconButton>
-				</Card>
+			<Grid container spacing={1} >
+				<Grid item>
+					<Card style={{}} onClick={e => e.stopPropagation()} >
+						<IconButton onClick={(e: any) => voteHandler(e, 'up')}>
+							<KeyboardArrowUp color={vote === 'up' ? "primary" : "inherit"} />
+						</IconButton>
+						<Typography align='center' variant='subtitle2'>{displayVote}</Typography>
+						<IconButton onClick={(e: any) => voteHandler(e, 'down')}>
+							<KeyboardArrowDown color={vote === 'down' ? "error" : "inherit"} />
+						</IconButton>
+					</Card>
+				</Grid>
 				<Grid item xs={10}>
 					<Typography color="textSecondary" noWrap={true}>
 						<a href={`/r/${subParent}`} onClick={e => e.stopPropagation()}>
