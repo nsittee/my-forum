@@ -40,7 +40,7 @@ const ThreadCard = (props: any) => {
 		<Card onClick={() => history.push(`/r/${subParent}/${thread._id}`)}>
 			<Grid container spacing={1} >
 				<Grid item>
-					<Card style={{}} onClick={e => e.stopPropagation()} >
+					<Card onClick={e => e.stopPropagation()} >
 						<IconButton onClick={(e: any) => voteHandler(e, 'up')}>
 							<KeyboardArrowUp color={vote === 'up' ? "primary" : "inherit"} />
 						</IconButton>
