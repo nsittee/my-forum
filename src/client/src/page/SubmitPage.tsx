@@ -39,7 +39,7 @@ export const SubmitPage = () => {
         subId: formData.subId,
       }
     }
-    const res = await myAxios.post(`/api/graphql`, gql)
+    await myAxios.post(`/api/graphql`, gql)
     // const thread = {
     //   title: formData.title,
     //   content: formData.content,
@@ -80,26 +80,24 @@ export const SubmitPage = () => {
                 onSubmit={onSubmit}
                 validate={validate}
                 initialValues={{
-                  subId: null,
+                  subId: "_",
                   title: "",
                   content: "",
                 }}
                 render={props => (
                   <form onSubmit={(event) => props.handleSubmit(event)}>
                     <Field name="userId" defaultValue={authContext.id} type="hidden" component="input" />
-                    <div>
-                      <Typography>Community</Typography>
-                      <Select name="subId" placeholder="xx">
-                        <MenuItem key="default" disabled value="Select Community">Select Community</MenuItem>
-                        {userSub.map((sub: any, i: number) => {
-                          return <MenuItem
-                            key={sub._id + "" + i}
-                            value={sub._id}>
-                            {sub.SubLongName}
-                          </MenuItem>
-                        })}
-                      </Select>
-                    </div>
+                    <Typography>Community</Typography>
+                    <Select name="subId" defaultValue="_">
+                      <MenuItem disabled key="default" value="_">Select Community</MenuItem>
+                      {userSub.map((sub: any, i: number) => {
+                        return <MenuItem
+                          key={sub._id + "" + i}
+                          value={sub._id}>
+                          {sub.SubLongName}
+                        </MenuItem>
+                      })}
+                    </Select>
 
                     <div>
                       <Typography>Title</Typography>
@@ -125,7 +123,7 @@ export const SubmitPage = () => {
       </Grid>
 
       <br />
-    </Container>
+    </Container >
   )
 }
 
