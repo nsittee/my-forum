@@ -5,7 +5,7 @@ import AuthContext from './context/auth-context'
 import UiContext from './context/ui-context'
 import { AppRouter } from './AppRouter'
 import Header from './components/layout/general/Header'
-import { MuiThemeProvider, createTheme } from '@material-ui/core'
+import { ThemeProvider, createTheme } from '@mui/material'
 import { BrowserRouter } from 'react-router-dom'
 
 const App = () => {
@@ -39,7 +39,7 @@ const App = () => {
   }
 
   return (
-    <MuiThemeProvider theme={AppTheme}>
+    <ThemeProvider theme={AppTheme}>
       <div className="App">
         <BrowserRouter>
           <UiContext.Provider value={uiContextValue}>
@@ -50,7 +50,7 @@ const App = () => {
           </UiContext.Provider>
         </BrowserRouter>
       </div>
-    </MuiThemeProvider>
+    </ThemeProvider>
   )
 }
 

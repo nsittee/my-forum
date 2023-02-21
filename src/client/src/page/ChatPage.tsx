@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Container, Paper } from '@material-ui/core'
+import { Container, Paper } from '@mui/material'
 import { MyCard } from '../components/common/MyCard'
 
 import { io, Socket } from 'socket.io-client'

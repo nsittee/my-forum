@@ -1,4 +1,4 @@
-import { Card, CardContent, Container, Grid, MenuItem, Select, TextField, Typography } from '@material-ui/core'
+import { Card, CardContent, Container, Grid, MenuItem, Select, TextField, Typography } from '@mui/material'
 import React, { useContext, useEffect, useState } from 'react'
 import { useHistory } from 'react-router'
 import { MyCard } from '../components/common/MyCard'

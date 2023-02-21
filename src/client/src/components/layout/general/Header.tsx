@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import { TextField } from '@material-ui/core'
+import AppBar from '@mui/material/AppBar'
+import Toolbar from '@mui/material/Toolbar'
+import { TextField } from '@mui/material'
 
 import AuthContext from '../../../context/auth-context'
 import SignInDialog from './SignInDialog'

@@ -24,8 +24,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
     "@graphql-tools/graphql-file-loader": "^7.3.10",
     "@graphql-tools/load": "^7.5.9",
+    "@mui/material": "^5.11.10",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",

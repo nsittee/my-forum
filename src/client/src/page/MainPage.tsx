@@ -1,13 +1,13 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { Route } from 'react-router-dom'
-import { Container, Grid } from '@material-ui/core'
+import { Container, Grid } from '@mui/material'
+import { Skeleton } from '@mui/lab'
 
 import ThreadCard from '../components/layout/threads/ThreadCard'
 import ThreadDialog from '../components/layout/threads/ThreadDialog'
 import CreateThreadCard from '../components/layout/threads/CreateThreadCard'
 import ThreadFilter from '../components/layout/threads/ThreadFilter'
 import SubBanner from '../components/layout/sub/SubBanner'
-import { Skeleton } from '@material-ui/lab'
 import { myAxios } from '../config/axios-config'
 import { IThread } from '../shared/model/thread.model'
 import { ISub } from '../shared/model/sub.model'
@@ -121,7 +121,7 @@ const MainPage = (props: any) => {
             {threads.length > 0 ?
               <ThreadFilter />
               :
-              <Skeleton variant="rect" height={100} />
+              <Skeleton variant="rectangular" height={100} />
             }
           </Grid>
 
@@ -133,7 +133,7 @@ const MainPage = (props: any) => {
             )
             :
             <Grid item xs={12}>
-              <Skeleton variant="rect" height={800} />
+              <Skeleton variant="rectangular" height={800} />
             </Grid>
           }
           <Route exact path='/r/:sub/:id' component={ThreadDialog} />

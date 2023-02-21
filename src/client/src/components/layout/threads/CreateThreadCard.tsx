@@ -1,6 +1,6 @@
 import React from 'react'
 import { useHistory } from 'react-router'
-import { Card, TextField } from '@material-ui/core'
+import { Card, TextField } from '@mui/material'
 
 const CreateThreadCard = () => {
   const history = useHistory()

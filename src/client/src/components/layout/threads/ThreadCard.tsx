@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { useHistory } from 'react-router'
-import { Card, Typography, Grid, IconButton } from '@material-ui/core'
-import { KeyboardArrowUp, KeyboardArrowDown } from '@material-ui/icons'
+import { Card, Typography, Grid, IconButton } from '@mui/material'
+import { KeyboardArrowUp, KeyboardArrowDown } from '@mui/icons-material'
 import { myAxios } from '../../../config/axios-config'
 import { IThread } from '../../../shared/model/thread.model'
 import AuthContext from '../../../context/auth-context'
@@ -39,7 +39,7 @@ const ThreadCard = (props: any) => {
 	return (
 		<Card onClick={() => history.push(`/r/${subParent}/${thread._id}`)}>
 			<Grid container spacing={1}>
-				<Card onClick={e => e.stopPropagation()}>
+				<Card onClick={e => e.stopPropagation()} style={{ justifyContent: "center" }}>
 					<IconButton onClick={(e: any) => voteHandler(e, 'up')}>
 						<KeyboardArrowUp color={vote === 'up' ? "primary" : "inherit"} />
 					</IconButton>

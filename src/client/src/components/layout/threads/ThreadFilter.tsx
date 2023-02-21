@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Card } from '@material-ui/core'
+import { Button, Card } from '@mui/material'
 
 const ThreadFilter = () => {
   return (

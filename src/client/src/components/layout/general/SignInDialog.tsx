@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { Dialog, Card, CardContent } from '@material-ui/core'
+import { Dialog, Card, CardContent } from '@mui/material'
 
 import UiContext from '../../../context/ui-context'
 import { useHistory } from 'react-router-dom'

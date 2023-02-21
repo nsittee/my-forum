@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { Dialog, Card, CardContent, Typography } from '@material-ui/core'
+import { Dialog, Card, CardContent, Typography } from '@mui/material'
 import UiContext from '../../../context/ui-context'
 import { Form } from 'react-final-form'
 import { TextField } from 'mui-rff'

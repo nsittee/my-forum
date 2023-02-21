@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Card, Typography, CardContent, Dialog } from '@material-ui/core'
-import { Skeleton } from '@material-ui/lab';
+import { Card, Typography, CardContent, Dialog } from '@mui/material'
+import { Skeleton } from '@mui/lab';
 import { useHistory, useParams } from 'react-router-dom'
 import { myAxios } from '../../../config/axios-config';
 import { defaultThread, IThread } from '../../../shared/model/thread.model';
